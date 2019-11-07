@@ -1,6 +1,8 @@
 package model;
 
-public class User {
+import java.util.Comparator;
+
+public class User implements Comparator<User>{
 
 	private String name;
 	private String id;
@@ -10,7 +12,7 @@ public class User {
 	private String phoneNumber;
 	
 	private User left;
-	private User right;
+	private User right; 
 	private ReservedRoom rRooms;
 	private FavoriteRoom fRooms;
 	private CustomList customList;
@@ -72,5 +74,27 @@ public class User {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
+
+	public User getLeft() {
+		return left;
+	}
+
+	public void setLeft(User left) {
+		this.left = left;
+	}
+
+	public User getRight() {
+		return right;
+	}
+
+	public void setRight(User right) {
+		this.right = right;
+	}
+
+	@Override
+	public int compare(User u1, User u2) {
+		int obtainedNumber = u1.getName().compareTo(u2.getName());
+		return obtainedNumber;
+	}
+
 }

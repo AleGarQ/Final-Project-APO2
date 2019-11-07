@@ -21,5 +21,20 @@ public class Principal {
 		this.hotels = hotels;
 	}
 
+	public void addNewUser(User newUser, User node) {
+		if(newUser.getEmail().compareTo(node.getEmail()) < 0) {
+			if(node.getLeft() == null) {
+				node.setLeft(newUser);
+			} else {
+				addNewUser(newUser, node.getLeft());
+			}
+		} else {
+			if(node.getRight() == null) {
+				node.setRight(newUser);
+			} else {
+				addNewUser(newUser, node.getRight());
+			}
+		}
+	}
 	
 }
