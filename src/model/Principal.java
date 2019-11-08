@@ -37,11 +37,18 @@ public class Principal {
 		}
 	}
 	
-	public boolean searchUser(String newEmail, User node){
+	public boolean searchUser(User newUser, User node){
 		
-		
-		
-		return true;
+		if(node != null) {
+			if(newUser.getEmail().compareTo(node.getEmail()) == 0) {
+				return true;
+			}else if(newUser.getEmail().compareTo(node.getEmail()) < 0){
+				return searchUser(newUser, node.getLeft());
+			}else {
+				return searchUser(newUser, node.getRight());
+			}
+		}
+		return false;
 	}
 	
 }
