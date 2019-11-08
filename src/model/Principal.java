@@ -52,4 +52,13 @@ public class Principal {
 		return false;
 	}
 	
+	public boolean addNewUserFinal(User newUser) {
+		boolean added = false;
+		
+		if(searchUser(newUser, users) == false) {
+			addNewUser(newUser, users);
+			added = true;
+		}	
+		return added;
+	}
 }

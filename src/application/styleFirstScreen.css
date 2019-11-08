@@ -22,4 +22,8 @@ VBox, AnchorPane{
     -fx-max-width: 250;
     -fx-min-height: 30;
 }
+HBox, VBox{
+	 -fx-alignment: center;
+    -fx-padding: 10;
+}
 

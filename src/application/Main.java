@@ -15,7 +15,7 @@ public class Main extends Application {
 			root.getStylesheets().add(getClass().getResource("styleFirstScreen.css").toExternalForm());
 			primaryStage.setTitle("Inicio");
             primaryStage.setScene(new Scene(root));
-			primaryStage.show();
+            primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
