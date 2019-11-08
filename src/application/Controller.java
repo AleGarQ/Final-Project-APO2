@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.*;
@@ -19,7 +20,7 @@ import model.*;
 public class Controller implements Initializable{
 	private User users;
 	private Hotel hotels;
-	@FXML Pane firstScreen = new AnchorPane();
+	@FXML AnchorPane firstScreen = new AnchorPane();
 	@FXML Button signIn = new Button();
 	@FXML Button signUp = new Button();
 	@FXML ImageView logo = new ImageView();
@@ -44,6 +45,7 @@ public class Controller implements Initializable{
 		vb.getChildren().add(0, logoIMG);
 		vb.getChildren().add(1, tf);
 		vb.getChildren().add(2, tf2);
+		HBox hb = new HBox(2);
 		Button back = new Button("Atras");
 		back.setOnAction(e -> {
 			firstScreen.getChildren().clear();
@@ -51,13 +53,13 @@ public class Controller implements Initializable{
 			firstScreen.getChildren().add(signIn);
 			firstScreen.getChildren().add(signUp);
 		});
-		back.setAlignment(Pos.TOP_LEFT);
-		vb.getChildren().add(3, back);
 		Button next = new Button("Entrar");
 		next.setOnAction(e -> {
 			
 		});
-		vb.getChildren().add(3, next);
+		hb.getChildren().add(0, back);
+		hb.getChildren().add(1, next);
+		vb.getChildren().add(3, hb);
 		vb.setMinSize(firstScreen.getWidth(), firstScreen.getHeight());
 		firstScreen.getChildren().add(vb);
 	}
@@ -88,6 +90,7 @@ public class Controller implements Initializable{
 		vb.getChildren().add(4, phone);
 		vb.getChildren().add(5, email);
 		vb.getChildren().add(6, password);
+		HBox hb = new HBox(2);
 		Button back = new Button("Atras");
 		back.setOnAction(e -> {
 			firstScreen.getChildren().clear();
@@ -95,7 +98,13 @@ public class Controller implements Initializable{
 			firstScreen.getChildren().add(signIn);
 			firstScreen.getChildren().add(signUp);
 		});
-		vb.getChildren().add(7, back);
+		Button next = new Button("Crear");
+		next.setOnAction(e -> {
+			
+		});
+		hb.getChildren().add(0, back);
+		hb.getChildren().add(1, next);
+		vb.getChildren().add(7, hb);
 		vb.setMinSize(firstScreen.getWidth(), firstScreen.getHeight());
 		firstScreen.getChildren().add(vb);
 	}
