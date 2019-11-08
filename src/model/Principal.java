@@ -37,4 +37,10 @@ public class Principal {
 		}
 	}
 	
+	public boolean searchUser(String newEmail, User node){
+		
+		
+		
+		return true;
+	}
 }
