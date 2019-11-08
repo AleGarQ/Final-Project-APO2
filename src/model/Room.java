@@ -43,6 +43,11 @@ public class Room {
 	private int typeOfBeds;
 	
 	/**
+	 * Attribute that has the availability of the room
+	 */
+	private boolean availability;
+	
+	/**
 	 * Relation with the previous room in the list
 	 */
 	private Room previous;
@@ -58,11 +63,12 @@ public class Room {
 	 * @param id - Room ID
 	 * @param typeOfBeds - Type of beds in the room
 	 */
-	public Room(String number, String id, int typeOfBeds) {
+	public Room(String number, String id, int typeOfBeds, boolean availability) {
 		super();
 		this.number = number;
 		this.id = id;
 		this.typeOfBeds = typeOfBeds;
+		this.availability = availability;
 	}
 
 	// -----------------------------------------------------------------
@@ -115,5 +121,13 @@ public class Room {
 	 */
 	public void setTypeOfBeds(int typeOfBeds) {
 		this.typeOfBeds = typeOfBeds;
+	}
+	
+	public boolean getAvailability() {
+		return availability;
+	}
+	
+	public void setAvailability(boolean availability) {
+		this.availability = availability;
 	}
 }
