@@ -8,7 +8,7 @@ public class User implements Comparator<User>{
 	private String id;
 	private String password;
 	private String email;
-	private int age;
+	private String age;
 	private String phoneNumber;
 	
 	private User left;
@@ -18,7 +18,7 @@ public class User implements Comparator<User>{
 	private CustomList customList;
 	private SearchHistory record;
 	
-	public User(String name, String id, String password, String email, int age, String phoneNumber) {
+	public User(String name, String id, String password, String email, String age, String phoneNumber) {
 		this.name = name;
 		this.id = id;
 		this.password = password;
@@ -59,11 +59,11 @@ public class User implements Comparator<User>{
 		this.email = email;
 	}
 
-	public int getAge() {
+	public String getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(String age) {
 		this.age = age;
 	}
 
