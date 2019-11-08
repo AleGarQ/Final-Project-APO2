@@ -5,6 +5,11 @@ public class FavoriteRoom {
 	private FavoriteRoom previous;
 	private FavoriteRoom next;
 	
+	public FavoriteRoom(FavoriteRoom previous, FavoriteRoom next) {
+		this.previous = previous;
+		this.next = next;
+	}
+	
 	public FavoriteRoom getPrevious() {
 		return previous;
 	}

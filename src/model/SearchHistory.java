@@ -5,6 +5,10 @@ public class SearchHistory {
 	private SearchHistory left;
 	private SearchHistory right;
 	
+	public SearchHistory(SearchHistory left, SearchHistory right) {
+		this.left = left;
+		this.right = right;
+	}
 	public SearchHistory getLeft() {
 		return left;
 	}
