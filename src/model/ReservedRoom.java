@@ -1,14 +1,16 @@
 package model;
 
-public class ReservedRoom {
+public class ReservedRoom extends Room {
 
 	private ReservedRoom previous;
 	private ReservedRoom next;
 	
-	public ReservedRoom(ReservedRoom previous, ReservedRoom next) {
+	public ReservedRoom(String number, String id, int typeOfBeds, boolean availability, ReservedRoom previous, ReservedRoom next) {
+		super(number, id, typeOfBeds, availability);
 		this.previous = previous;
 		this.next = next;
 	}
+	
 	public ReservedRoom getPrevious() {
 		return previous;
 	}

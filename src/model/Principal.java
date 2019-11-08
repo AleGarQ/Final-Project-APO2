@@ -4,6 +4,7 @@ public class Principal {
 
 	private User users;
 	private Hotel hotels;
+	
 	public Principal(User users, Hotel hotels) {
 		this.users = users;
 		this.hotels = hotels;

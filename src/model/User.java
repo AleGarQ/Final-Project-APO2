@@ -90,6 +90,31 @@ public class User implements Comparator<User>{
 	public void setRight(User right) {
 		this.right = right;
 	}
+	
+	public ReservedRoom getRRooms() {
+		return rRooms;
+	}
+	
+	public void setRRooms(ReservedRoom rRooms) {
+		this.rRooms = rRooms;
+	}
+	
+	public void addReservedRoom(Room chosenRoom) {
+		ReservedRoom aux = rRooms;
+		if(aux == null) {
+			setRRooms((ReservedRoom)chosenRoom);
+			chosenRoom.setAvailability(false);
+		} else {
+			while(aux != null) {
+				if(aux.getNext() == null) {
+					aux.setNext((ReservedRoom)chosenRoom);
+					chosenRoom.setAvailability(false);
+				} else {
+					aux = aux.getNext();
+				}
+			}
+		}
+	}
 
 	@Override
 	public int compare(User u1, User u2) {
