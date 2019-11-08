@@ -8,17 +8,20 @@ public class Hotel {
 	private double stars;
 	private double score;
 	
-	private Hotel left;
-	private Hotel right;
+	private Hotel previous;
+	private Hotel next;
 	private Room rooms;
 	
-	public Hotel(String name, String id, String priceRange, double stars, double score) {
+	public Hotel(String name, String id, String priceRange, double stars, double score, Hotel previous, Hotel next, Room rooms) {
 		super();
 		this.name = name;
 		this.id = id;
 		this.priceRange = priceRange;
 		this.stars = stars;
 		this.score = score;
+		this.previous = previous;
+		this.next = next;
+		this.rooms = rooms;
 	}
 
 	public String getName() {
@@ -60,5 +63,30 @@ public class Hotel {
 	public void setScore(double score) {
 		this.score = score;
 	}
+
+	public Hotel getPrevious() {
+		return previous;
+	}
+
+	public void setPrevious(Hotel previous) {
+		this.previous = previous;
+	}
+
+	public Hotel getNext() {
+		return next;
+	}
+
+	public void setNext(Hotel next) {
+		this.next = next;
+	}
+
+	public Room getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(Room rooms) {
+		this.rooms = rooms;
+	}
+	
 	
 }
