@@ -13,11 +13,10 @@
     -fx-font-weight: bold;
     -fx-font-size: 14px;
     -fx-padding: 12 60 12 60;
-    -fx-alignment: center;
 }
 VBox, AnchorPane{
-    -fx-alignment: center ;
-    -fx-padding: 10 ;
+    -fx-alignment: center;
+    -fx-padding: 10;
 }
 .text-field{
     -fx-max-width: 250;
