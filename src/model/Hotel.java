@@ -12,16 +12,12 @@ public class Hotel {
 	private Hotel next;
 	private Room rooms;
 	
-	public Hotel(String name, String id, String priceRange, double stars, double score, Hotel previous, Hotel next, Room rooms) {
-		super();
+	public Hotel(String name, String id, String priceRange, double stars, double score) {
 		this.name = name;
 		this.id = id;
 		this.priceRange = priceRange;
 		this.stars = stars;
 		this.score = score;
-		this.previous = previous;
-		this.next = next;
-		this.rooms = rooms;
 	}
 
 	public String getName() {
