@@ -68,4 +68,10 @@ public class Principal {
 			throw new UnderAge("No esta permitido crear cuentas a un menor de edad");
 		}
 	}
+	
+//	public void setHotelScore(double score, Hotel chosenHotel) {
+//		chosenHotel.setScore(score);
+//	}
+	
+	
 }
