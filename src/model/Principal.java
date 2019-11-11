@@ -1,5 +1,8 @@
 package model;
 
+import exceptions.ExistentUser;
+import exceptions.UnderAge;
+
 public class Principal {
 
 	private User users;
@@ -52,13 +55,18 @@ public class Principal {
 		return false;
 	}
 	
-	public boolean addNewUserFinal(User newUser) {
-		boolean added = false;
+	public void addNewUserFinal(User newUser) throws ExistentUser, UnderAge{
+		String[] ageA = newUser.getAge().split("/");
+		int age = Integer.parseInt(ageA[2]);
 		
-		if(searchUser(newUser, users) == false) {
-			addNewUser(newUser, users);
-			added = true;
-		}	
-		return added;
+		if(2019-age >= 18) {
+			if(searchUser(newUser, users) == false) {
+				addNewUser(newUser, users);
+			}else {
+				throw new ExistentUser("El correo ingresado ya está registrado");
+			}
+		}else {
+			throw new UnderAge("No esta permitido crear cuentas a un menor de edad");
+		}
 	}
 }

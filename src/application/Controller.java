@@ -2,13 +2,17 @@ package application;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import exceptions.ExistentUser;
+import exceptions.UnderAge;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -18,8 +22,7 @@ import javafx.scene.layout.VBox;
 import model.*;
 
 public class Controller implements Initializable{
-	private User users;
-	private Hotel hotels;
+	private Principal system;
 	@FXML AnchorPane firstScreen = new AnchorPane();
 	@FXML Button signIn = new Button();
 	@FXML Button signUp = new Button();
@@ -100,7 +103,28 @@ public class Controller implements Initializable{
 		});
 		Button next = new Button("Crear");
 		next.setOnAction(e -> {
-			
+			try {
+				String name = fullName.getText();
+				String iD = id.getText();
+				String pW = password.getText();
+				String mail = email.getText();
+				String bDate = age.getText();
+				String pNumber = phone.getText();
+				User nU = new User(name, iD, pW, mail, bDate, pNumber);
+				system.addNewUserFinal(nU);
+			}catch(ExistentUser error) {
+				Alert user = new Alert(AlertType.INFORMATION);
+				user.setTitle("Error");
+				user.setHeaderText(error.getMessage());
+				user.setContentText("Ingrese sesion con el correo y contraseña ya registrados");
+				user.showAndWait();
+			}catch(UnderAge error) {
+				Alert user = new Alert(AlertType.INFORMATION);
+				user.setTitle("Error");
+				user.setHeaderText(error.getMessage());
+				user.setContentText("Pidale a un adulto responsable que cree la cuenta por usted");
+				user.showAndWait();
+			}
 		});
 		hb.getChildren().add(0, back);
 		hb.getChildren().add(1, next);
