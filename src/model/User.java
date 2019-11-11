@@ -28,6 +28,7 @@ public class User implements Comparator<User>{
 		this.phoneNumber = phoneNumber;
 		this.left = left;
 		this.right = right;
+		customList = new ArrayList<CustomList>();
 	}
 
 	public String getName() {

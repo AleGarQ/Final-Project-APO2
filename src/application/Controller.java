@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -19,6 +20,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import model.*;
 
 public class Controller implements Initializable{
@@ -112,6 +115,7 @@ public class Controller implements Initializable{
 				String pNumber = phone.getText();
 				User nU = new User(name, iD, pW, mail, bDate, pNumber, null, null);
 				system.addNewUserFinal(nU);
+				welcome();
 			}catch(ExistentUser error) {
 				Alert user = new Alert(AlertType.INFORMATION);
 				user.setTitle("Error");
@@ -133,4 +137,23 @@ public class Controller implements Initializable{
 		firstScreen.getChildren().add(vb);
 	}
 	
+	public void welcome() {
+		firstScreen.getChildren().clear();
+		VBox vb = new VBox();
+		Image img = new Image("/resources/bienvenido.png");
+		ImageView logoIMG = new ImageView(img);
+		logoIMG.setFitHeight(200);
+		logoIMG.setFitWidth(400);
+		vb.getChildren().add(logoIMG);
+		Label lbl = new Label("Ahora puedes realizar reserva en diversos \n hoteles de Colombia!!!");
+		lbl.setFont(new Font("Arial", 20));
+		lbl.setTextAlignment(TextAlignment.CENTER);
+		vb.getChildren().add(lbl);
+		Button next = new Button("Siguiente");
+		next.setLayoutX(285);
+		next.setLayoutY(348);
+		vb.getChildren().add(next);
+		
+		firstScreen.getChildren().add(vb);
+	}
 }
