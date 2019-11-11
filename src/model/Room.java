@@ -142,4 +142,38 @@ public class Room {
 	public void setAvailability(boolean availability) {
 		this.availability = availability;
 	}
+
+	/**
+	 * Method to get the relation previous
+	 * @return The relation with the previous room in the list
+	 */
+	public Room getPrevious() {
+		return previous;
+	}
+
+	/**
+	 * Method to set the relation previous
+	 * @param previous - New previous room
+	 */
+	public void setPrevious(Room previous) {
+		this.previous = previous;
+	}
+
+	/**
+	 * Method to get the relation next
+	 * @return The relation with the next room in the list
+	 */
+	public Room getNext() {
+		return next;
+	}
+
+	/**
+	 * Method to set the relation next
+	 * @param next - New next room
+	 */
+	public void setNext(Room next) {
+		this.next = next;
+	}
+	
+	
 }
