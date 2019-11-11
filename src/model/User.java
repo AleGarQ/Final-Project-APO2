@@ -99,16 +99,18 @@ public class User implements Comparator<User>{
 		this.rRooms = rRooms;
 	}
 	
-	public void addReservedRoom(Room chosenRoom) {
+	public void addReservedRoom(ReservedRoom chosenRoom) {
 		ReservedRoom aux = rRooms;
 		if(aux == null) {
-			setRRooms((ReservedRoom)chosenRoom);
 			chosenRoom.setAvailability(false);
+			setRRooms(chosenRoom);	
 		} else {
-			while(aux != null) {
+			boolean added = false;
+			while(aux != null && !added) {
 				if(aux.getNext() == null) {
-					aux.setNext((ReservedRoom)chosenRoom);
+					aux.setNext(chosenRoom);
 					chosenRoom.setAvailability(false);
+					added = true;
 				} else {
 					aux = aux.getNext();
 				}
