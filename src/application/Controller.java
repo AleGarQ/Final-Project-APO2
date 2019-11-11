@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
 import model.*;
 
 public class Controller implements Initializable{
-	private Principal system;
+	private Principal system = new Principal();
 	@FXML AnchorPane firstScreen = new AnchorPane();
 	@FXML Button signIn = new Button();
 	@FXML Button signUp = new Button();
@@ -110,7 +110,7 @@ public class Controller implements Initializable{
 				String mail = email.getText();
 				String bDate = age.getText();
 				String pNumber = phone.getText();
-				User nU = new User(name, iD, pW, mail, bDate, pNumber);
+				User nU = new User(name, iD, pW, mail, bDate, pNumber, null, null);
 				system.addNewUserFinal(nU);
 			}catch(ExistentUser error) {
 				Alert user = new Alert(AlertType.INFORMATION);

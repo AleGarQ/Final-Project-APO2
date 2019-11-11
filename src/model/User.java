@@ -19,8 +19,7 @@ public class User implements Comparator<User>{
 	private ArrayList<CustomList> customList;
 	private SearchHistory record;
 	
-	public User(String name, String id, String password, String email, String age, String phoneNumber, User left, User right, 
-			ReservedRoom rRooms, FavoriteRoom fRooms, ArrayList<CustomList> customList, SearchHistory record) {
+	public User(String name, String id, String password, String email, String age, String phoneNumber, User left, User right) {
 		this.name = name;
 		this.id = id;
 		this.password = password;
@@ -29,10 +28,6 @@ public class User implements Comparator<User>{
 		this.phoneNumber = phoneNumber;
 		this.left = left;
 		this.right = right;
-		this.rRooms = rRooms;
-		this.fRooms = fRooms;
-		customList = new ArrayList<CustomList>();
-		this.record = record;
 	}
 
 	public String getName() {

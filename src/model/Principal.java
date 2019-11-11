@@ -8,9 +8,8 @@ public class Principal {
 	private User users;
 	private Hotel hotels;
 	
-	public Principal(User users, Hotel hotels) {
-		this.users = users;
-		this.hotels = hotels;
+	public Principal() {
+		users = new User("Alejandro Garcia", "1193151954", "Elclasico1", "alejo.gar.122@gmail.com", "22/01/2001", "3114209888", null, null);
 	}
 	public User getUsers() {
 		return users;
