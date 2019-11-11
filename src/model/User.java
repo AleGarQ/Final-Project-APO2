@@ -152,6 +152,11 @@ public class User implements Comparator<User>{
 			}
 		}
 	}
+	
+	public void createNewCustomList(String listName, HotelsListed hotelList) {
+		CustomList c = new CustomList(listName, hotelList);
+		customList.add(c);
+	}
 
 	@Override
 	public int compare(User u1, User u2) {
