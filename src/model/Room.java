@@ -85,7 +85,7 @@ public class Room {
 
 	/**
 	 * Method to set the attribute number
-	 * @param New room number
+	 * @param number - New room number
 	 */
 	public void setNumber(String number) {
 		this.number = number;
@@ -101,7 +101,7 @@ public class Room {
 
 	/**
 	 * Method to set the attribute id
-	 * @param new room id
+	 * @param id - new room id
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -117,16 +117,24 @@ public class Room {
 
 	/**
 	 * Method to set the attribute typeOfBeds
-	 * @param New type of beds in the room
+	 * @param typeOfBeds - New type of beds in the room
 	 */
 	public void setTypeOfBeds(int typeOfBeds) {
 		this.typeOfBeds = typeOfBeds;
 	}
 	
+	/**
+	 * Method to get the attribute availability
+	 * @return Availability of the room
+	 */
 	public boolean getAvailability() {
 		return availability;
 	}
 	
+	/**
+	 * Method to set the attribute availability
+	 * @param availability - New availability of the room
+	 */
 	public void setAvailability(boolean availability) {
 		this.availability = availability;
 	}

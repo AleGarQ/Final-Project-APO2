@@ -29,6 +29,10 @@ public class Principal{
 		users = new User("Alejandro Garcia", "1193151954", "Elclasico1", "alejo.gar.122@gmail.com", "22/01/2001", "3114209888", null, null);
 	}
 	
+	// -----------------------------------------------------------------
+	// Methods
+	// -----------------------------------------------------------------
+	
 	/**
 	 * Method to get the relation users
 	 * @return The relation with the users
