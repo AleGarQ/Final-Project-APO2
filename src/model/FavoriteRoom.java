@@ -2,25 +2,25 @@ package model;
 
 public class FavoriteRoom {
 
-	private FavoriteRoom previous;
-	private FavoriteRoom next;
+	private FavoriteRoom left;
+	private FavoriteRoom right;
 	
-	public FavoriteRoom(FavoriteRoom previous, FavoriteRoom next) {
-		this.previous = previous;
-		this.next = next;
+	public FavoriteRoom(FavoriteRoom left, FavoriteRoom right) {
+		this.left = left;
+		this.right = right;
 	}
 	
-	public FavoriteRoom getPrevious() {
-		return previous;
+	public FavoriteRoom getLeft() {
+		return left;
 	}
-	public void setPrevious(FavoriteRoom previous) {
-		this.previous = previous;
+	public void setLeft(FavoriteRoom left) {
+		this.left = left;
 	}
-	public FavoriteRoom getNext() {
-		return next;
+	public FavoriteRoom getRight() {
+		return right;
 	}
-	public void setNext(FavoriteRoom next) {
-		this.next = next;
+	public void setRight(FavoriteRoom right) {
+		this.right = right;
 	}
 	
 }
