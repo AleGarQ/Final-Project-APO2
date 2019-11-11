@@ -57,6 +57,10 @@ public class Room {
 	 */
 	private Room next;
 	
+	// -----------------------------------------------------------------
+	// Constructor
+	// -----------------------------------------------------------------
+	
 	/**
 	 * Constructor of the Room class
 	 * @param number - Room number

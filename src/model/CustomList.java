@@ -25,4 +25,17 @@ public class CustomList {
 	public void setHotelList(HotelsListed hotelList) {
 		this.hotelList = hotelList;
 	}
+	
+	public void addHotelToList(HotelsListed newHotelToList) {
+		if(newHotelToList != null) {
+			if(hotelList == null) {
+				hotelList = newHotelToList;
+			}else {
+				HotelsListed aux = hotelList;
+				aux.setPrevious(newHotelToList);
+				newHotelToList.setNext(aux);
+				hotelList = newHotelToList;
+			}
+		}
+	}
 }
