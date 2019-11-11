@@ -3,27 +3,69 @@ package model;
 import exceptions.ExistentUser;
 import exceptions.UnderAge;
 
-public class Principal {
+public class Principal{
 
+	// -----------------------------------------------------------------
+	// Attributes and relations
+	// -----------------------------------------------------------------
+	
+	/**
+	 * Relation with the users
+	 */
 	private User users;
+	/**
+	 * Relation with the hotels
+	 */
 	private Hotel hotels;
 	
+	// -----------------------------------------------------------------
+	// Constructor
+	// -----------------------------------------------------------------
+	
+	/**
+	 * Constructor of the Principal class
+	 */
 	public Principal() {
 		users = new User("Alejandro Garcia", "1193151954", "Elclasico1", "alejo.gar.122@gmail.com", "22/01/2001", "3114209888", null, null);
 	}
+	
+	/**
+	 * Method to get the relation users
+	 * @return The relation with the users
+	 */
 	public User getUsers() {
 		return users;
 	}
+	
+	/**
+	 * Method to set the relation users
+	 * @param users - New user
+	 */
 	public void setUsers(User users) {
 		this.users = users;
 	}
+	
+	/**
+	 * Method to get the relation hotels
+	 * @return The relation with the hotels
+	 */
 	public Hotel getHotels() {
 		return hotels;
 	}
+	
+	/**
+	 * Method to set the relation hotels
+	 * @param hotels - New hotel
+	 */
 	public void setHotels(Hotel hotels) {
 		this.hotels = hotels;
 	}
 
+	/**
+	 * Previous method to add an user without check the root
+	 * @param newUser - New user
+	 * @param node - Root of the tree
+	 */
 	public void addNewUser(User newUser, User node) {
 		if(newUser.getEmail().compareTo(node.getEmail()) < 0) {
 			if(node.getLeft() == null) {
@@ -40,6 +82,11 @@ public class Principal {
 		}
 	}
 	
+	/**
+	 * Method to search an user in the tree
+	 * @param newUser - New user
+	 * @param node - Root of the tree
+	 */
 	public boolean searchUser(User newUser, User node){
 		
 		if(node != null) {
@@ -54,6 +101,12 @@ public class Principal {
 		return false;
 	}
 	
+	/**
+	 * Method to add an user checking the root
+	 * @param newUser - New user
+	 * @throws ExistentUser - Exception if the email is registered
+	 * @throws UnderAge - Exception if the new user is younger
+	 */
 	public void addNewUserFinal(User newUser) throws ExistentUser, UnderAge{
 		String[] ageA = newUser.getAge().split("/");
 		int age = Integer.parseInt(ageA[2]);
@@ -68,10 +121,6 @@ public class Principal {
 			throw new UnderAge("No esta permitido crear cuentas a un menor de edad");
 		}
 	}
-	
-//	public void setHotelScore(double score, Hotel chosenHotel) {
-//		chosenHotel.setScore(score);
-//	}
-	
-	
+
+
 }
