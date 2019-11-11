@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 import exceptions.ExistentUser;
 import exceptions.UnderAge;
+import exceptions.WrongInformation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -58,8 +59,19 @@ public class Controller implements Initializable{
 		});
 		Button next = new Button("Entrar");
 		next.setOnAction(e -> {
-			
-		});
+			try {
+				String email = tf.getText();
+				String password = tf2.getText();
+				system.signInFinal(email, password);
+				welcome();
+			}catch(WrongInformation error) {
+				Alert user = new Alert(AlertType.INFORMATION);
+				user.setTitle("Error");
+				user.setHeaderText(error.getMessage());
+				user.setContentText("Verifique que las credenciales ingresadas sean las correctas");
+				user.showAndWait();
+			}
+			});
 		hb.getChildren().add(0, back);
 		hb.getChildren().add(1, next);
 		vb.getChildren().add(3, hb);

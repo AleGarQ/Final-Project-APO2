@@ -2,6 +2,7 @@ package model;
 
 import exceptions.ExistentUser;
 import exceptions.UnderAge;
+import exceptions.WrongInformation;
 
 public class Principal{
 
@@ -121,6 +122,23 @@ public class Principal{
 			throw new UnderAge("No esta permitido crear cuentas a un menor de edad");
 		}
 	}
+	
+	public boolean signIn(String email, String password, User node) {
+		if(node != null) {
+			if(email.compareTo(node.getEmail()) == 0 && password.compareTo(node.getPassword()) == 0) {
+				return true;
+			}else if(email.compareTo(node.getEmail()) < 0 && password.compareTo(node.getPassword()) < 0){
+				return signIn(email, password, node.getLeft());
+			}else {
+				return signIn(email, password, node.getRight());
+			}
+		}
+		return false;
+	}
 
-
+	public void signInFinal(String email, String password) throws WrongInformation{
+		if(signIn(email, password, users) == false) {
+			throw new WrongInformation("El correo o clave ingresados son incorrectos");
+		}
+	}
 }
