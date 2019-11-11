@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import exceptions.ListNotFoundException;
+
 public class User implements Comparator<User>{
 
 	// -----------------------------------------------------------------
@@ -307,10 +309,9 @@ public class User implements Comparator<User>{
 	/**
 	 * Method to set the relation rRooms
 	 * @param listName - Name of the new custom list
-	 * @param hotelList - Hotels listed
 	 */
-	public void createNewCustomList(String listName, HotelsListed hotelList) {
-		CustomList c = new CustomList(listName, hotelList);
+	public void createNewCustomList(String listName) {
+		CustomList c = new CustomList(listName, null);
 		customList.add(c);
 	}
 
@@ -320,4 +321,24 @@ public class User implements Comparator<User>{
 		return obtainedNumber;
 	}
 
+	public void addHotelToCustomList(String listName, HotelsListed newHotelToList) throws ListNotFoundException {
+		boolean found = false;
+		int start = 0;
+		int end = customList.size() - 1;
+		
+		while(start <= end && !found) {
+			int half = (start + end) / 2;
+			if(customList.get(half).getListName().compareTo(listName) == 0) {
+				found = true;
+				customList.get(half).addHotelToList(newHotelToList);
+			}else if(customList.get(half).getListName().compareTo(listName) > 0) {
+				end = half - 1;
+			}else {
+				start = half + 1;
+			}
+		}
+		if(found == false) {
+			throw new ListNotFoundException("No se ha encontrado ninguna lista con ese nombre");
+		}
+	}
 }
