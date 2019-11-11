@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class User implements Comparator<User>{
@@ -15,16 +16,23 @@ public class User implements Comparator<User>{
 	private User right; 
 	private ReservedRoom rRooms;
 	private FavoriteRoom fRooms;
-	private CustomList customList;
+	private ArrayList<CustomList> customList;
 	private SearchHistory record;
 	
-	public User(String name, String id, String password, String email, String age, String phoneNumber) {
+	public User(String name, String id, String password, String email, String age, String phoneNumber, User left, User right, 
+			ReservedRoom rRooms, FavoriteRoom fRooms, ArrayList<CustomList> customList, SearchHistory record) {
 		this.name = name;
 		this.id = id;
 		this.password = password;
 		this.email = email;
 		this.age = age;
 		this.phoneNumber = phoneNumber;
+		this.left = left;
+		this.right = right;
+		this.rRooms = rRooms;
+		this.fRooms = fRooms;
+		customList = new ArrayList<CustomList>();
+		this.record = record;
 	}
 
 	public String getName() {
@@ -99,6 +107,38 @@ public class User implements Comparator<User>{
 		this.rRooms = rRooms;
 	}
 	
+	public ReservedRoom getrRooms() {
+		return rRooms;
+	}
+
+	public void setrRooms(ReservedRoom rRooms) {
+		this.rRooms = rRooms;
+	}
+
+	public FavoriteRoom getfRooms() {
+		return fRooms;
+	}
+
+	public void setfRooms(FavoriteRoom fRooms) {
+		this.fRooms = fRooms;
+	}
+
+	public ArrayList<CustomList> getCustomList() {
+		return customList;
+	}
+
+	public void setCustomList(ArrayList<CustomList> customList) {
+		this.customList = customList;
+	}
+
+	public SearchHistory getRecord() {
+		return record;
+	}
+
+	public void setRecord(SearchHistory record) {
+		this.record = record;
+	}
+
 	public void addReservedRoom(ReservedRoom chosenRoom) {
 		ReservedRoom aux = rRooms;
 		if(aux == null) {
