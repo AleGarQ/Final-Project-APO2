@@ -158,11 +158,24 @@ public class Controller implements Initializable{
 		lbl.setFont(new Font("Arial", 20));
 		lbl.setTextAlignment(TextAlignment.CENTER);
 		vb.getChildren().add(lbl);
-		Button next = new Button("Siguiente");
-		next.setLayoutX(285);
-		next.setLayoutY(348);
-		vb.getChildren().add(next);
-		
+		HBox hb = new HBox();
+		Button next = new Button("Siguiente ->");
+		next.setOnAction(e -> {
+			
+		});
+		Button logOut = new Button("Cerrar sesion X");
+		logOut.setOnAction(e ->{
+			firstScreen.getChildren().clear();
+			firstScreen.getChildren().add(logo);
+			firstScreen.getChildren().add(signIn);
+			firstScreen.getChildren().add(signUp);
+		});
+		hb.getChildren().add(logOut);
+		hb.getChildren().add(next);
+		vb.getChildren().add(hb);
+		vb.setMinSize(firstScreen.getWidth(), firstScreen.getHeight());
 		firstScreen.getChildren().add(vb);
 	}
+	
+	
 }
