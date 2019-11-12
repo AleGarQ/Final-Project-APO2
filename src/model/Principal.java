@@ -140,9 +140,30 @@ public class Principal{
 		return false;
 	}
 
-	public void signInFinal(String email, String password) throws WrongInformation{
+	public User signInFinal(String email, String password) throws WrongInformation{
+		User actual;
+		
 		if(signIn(email, password, users) == false) {
 			throw new WrongInformation("El correo o clave ingresados son incorrectos");
+		}else {
+			actual = findUser(email, users);
 		}
+		
+		return actual;
+	}
+	
+	public User findUser(String email, User node){
+		User actual = null;
+		
+		if(node != null) {
+			if(email.compareTo(node.getEmail()) == 0) {
+				return actual = node;
+			}else if(email.compareTo(node.getEmail()) < 0){
+				return findUser(email, node.getLeft());
+			}else {
+				return findUser(email, node.getRight());
+			}
+		}
+		return actual;
 	}
 }

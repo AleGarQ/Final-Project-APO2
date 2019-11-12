@@ -7,10 +7,13 @@ import exceptions.UnderAge;
 import exceptions.WrongInformation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -20,10 +23,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import model.*;
 
 public class Controller implements Initializable{
 	private Principal system = new Principal();
+	private User actualUser;
 	@FXML AnchorPane firstScreen = new AnchorPane();
 	@FXML Button signIn = new Button();
 	@FXML Button signUp = new Button();
@@ -63,7 +68,8 @@ public class Controller implements Initializable{
 				String email = tf.getText();
 				String password = tf2.getText();
 				system.signInFinal(email, password);
-				welcome();
+				actualUser = system.signInFinal(email, password);
+				welcome(email);
 			}catch(WrongInformation error) {
 				Alert user = new Alert(AlertType.INFORMATION);
 				user.setTitle("Error");
@@ -122,9 +128,9 @@ public class Controller implements Initializable{
 				String mail = email.getText();
 				String bDate = age.getText();
 				String pNumber = phone.getText();
-				User nU = new User(name, iD, pW, mail, bDate, pNumber, null, null);
-				system.addNewUserFinal(nU);
-				welcome();
+				actualUser = new User(name, iD, pW, mail, bDate, pNumber, null, null);
+				system.addNewUserFinal(actualUser);
+				welcome(mail);
 			}catch(ExistentUser error) {
 				Alert user = new Alert(AlertType.INFORMATION);
 				user.setTitle("Error");
@@ -146,7 +152,7 @@ public class Controller implements Initializable{
 		firstScreen.getChildren().add(vb);
 	}
 	
-	public void welcome() {
+	public void welcome(String email) {
 		firstScreen.getChildren().clear();
 		VBox vb = new VBox();
 		Image img = new Image("/resources/bienvenido.png");
@@ -161,7 +167,7 @@ public class Controller implements Initializable{
 		HBox hb = new HBox();
 		Button next = new Button("Siguiente ->");
 		next.setOnAction(e -> {
-			
+			principalScreen();
 		});
 		Button logOut = new Button("Cerrar sesion X");
 		logOut.setOnAction(e ->{
@@ -177,5 +183,16 @@ public class Controller implements Initializable{
 		firstScreen.getChildren().add(vb);
 	}
 	
-	
+	public void principalScreen() {
+		AnchorPane ap = new AnchorPane();
+		Tab perfil = new Tab(actualUser.getName(), ap);
+		TabPane tp = new TabPane(perfil);
+		Label email = new Label(actualUser.getEmail());
+		ap.getChildren().add(email);
+		Scene sc2 = new Scene(tp);
+		Stage s = new Stage();
+		s.setTitle("Inicio");
+		s.setScene(sc2);
+		s.show();
+	}
 }
