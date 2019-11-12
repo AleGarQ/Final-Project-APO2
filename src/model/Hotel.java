@@ -27,14 +27,6 @@ public class Hotel {
 	 */
 	private double score;
 	/**
-	 * Attribute that has relation with the previous hotel
-	 */
-	private Hotel previous;
-	/**
-	 * Attribute that has relation with the next hotel
-	 */
-	private Hotel next;
-	/**
 	 * Attribute that has relation with the rooms
 	 */
 	private Room rooms;
@@ -141,38 +133,6 @@ public class Hotel {
 	 */
 	public void setScore(double score) {
 		this.score = score;
-	}
-
-	/**
-	 * Method to get the relation previous
-	 * @return The relation with the previous hotel in the list
-	 */
-	public Hotel getPrevious() {
-		return previous;
-	}
-
-	/**
-	 * Method to set the relation previous
-	 * @param previous - New previous hotel
-	 */
-	public void setPrevious(Hotel previous) {
-		this.previous = previous;
-	}
-
-	/**
-	 * Method to get the relation next
-	 * @return The relation with the next hotel in the list
-	 */
-	public Hotel getNext() {
-		return next;
-	}
-
-	/**
-	 * Method to set the relation next
-	 * @param next - New next hotel
-	 */
-	public void setNext(Hotel next) {
-		this.next = next;
 	}
 
 	/**

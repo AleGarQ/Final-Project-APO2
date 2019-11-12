@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import exceptions.ExistentUser;
 import exceptions.UnderAge;
 import exceptions.WrongInformation;
@@ -17,7 +19,7 @@ public class Principal{
 	/**
 	 * Relation with the hotels
 	 */
-	private Hotel hotels;
+	private ArrayList<Hotel> hotels;
 	
 	// -----------------------------------------------------------------
 	// Constructor
@@ -27,6 +29,7 @@ public class Principal{
 	 * Constructor of the Principal class
 	 */
 	public Principal() {
+		hotels = new ArrayList<Hotel>();
 		users = new User("Alejandro Garcia", "1193151954", "Elclasico1", "alejo.gar.122@gmail.com", "22/01/2001", "3114209888", null, null);
 	}
 	
@@ -54,7 +57,7 @@ public class Principal{
 	 * Method to get the relation hotels
 	 * @return The relation with the hotels
 	 */
-	public Hotel getHotels() {
+	public ArrayList<Hotel> getHotels() {
 		return hotels;
 	}
 	
@@ -62,7 +65,7 @@ public class Principal{
 	 * Method to set the relation hotels
 	 * @param hotels - New hotel
 	 */
-	public void setHotels(Hotel hotels) {
+	public void setHotels(ArrayList<Hotel> hotels) {
 		this.hotels = hotels;
 	}
 
