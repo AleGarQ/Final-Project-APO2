@@ -21,11 +21,15 @@ public class Hotel {
 	/**
 	 * Attribute that has the Hotel's stars
 	 */
-	private double stars;
+	private int stars;
 	/**
 	 * Attribute that has the Hotel's score
 	 */
 	private double score;
+	/**
+	 * Attribute that has the city where the hotel is
+	 */
+	private String city;
 	/**
 	 * Attribute that has relation with the rooms
 	 */
@@ -43,12 +47,13 @@ public class Hotel {
 	 * @param stars - Hotel's stars
 	 * @param score - Hotel's score
 	 */
-	public Hotel(String name, String id, String priceRange, double stars, double score) {
+	public Hotel(String name, String id, String priceRange, int stars, double score, String city) {
 		this.name = name;
 		this.id = id;
 		this.priceRange = priceRange;
 		this.stars = stars;
 		this.score = score;
+		this.city = city;
 	}
 
 	// -----------------------------------------------------------------
@@ -107,7 +112,7 @@ public class Hotel {
 	 * Method to get the attribute stars
 	 * @return Hotel's stars
 	 */
-	public double getStars() {
+	public int getStars() {
 		return stars;
 	}
 
@@ -115,7 +120,7 @@ public class Hotel {
 	 * Method to set the attribute stars
 	 * @param stars - New hotel's stars
 	 */
-	public void setStars(double stars) {
+	public void setStars(int stars) {
 		this.stars = stars;
 	}
 
@@ -133,6 +138,22 @@ public class Hotel {
 	 */
 	public void setScore(double score) {
 		this.score = score;
+	}
+	
+	/**
+	 * Method to get the attribute city
+	 * @return Hotel's city
+	 */
+	public String getCity() {
+		return city;
+	}
+	
+	/**
+	 * Method that set the attribute city
+	 * @return city - New hotel's city
+	 */
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	/**

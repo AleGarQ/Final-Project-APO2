@@ -4,8 +4,8 @@ public class HotelsListed extends Hotel{
 	
 	private HotelsListed previous, next;
 
-	public HotelsListed(String name, String id, String priceRange, double stars, double score) {
-		super(name, id, priceRange, stars, score);	
+	public HotelsListed(String name, String id, String priceRange, int stars, double score, String city) {
+		super(name, id, priceRange, stars, score, city);	
 	}
 
 	public HotelsListed getPrevious() {

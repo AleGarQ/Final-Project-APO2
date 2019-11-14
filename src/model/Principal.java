@@ -169,4 +169,12 @@ public class Principal{
 		}
 		return actual;
 	}
+	
+	public void alphabeticalSortHotels() {
+		
+	}
+	
+	public void searchHotelByName(String hotelName) {
+		
+	}
 }
