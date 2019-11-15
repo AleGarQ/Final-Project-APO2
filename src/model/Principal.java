@@ -183,6 +183,22 @@ public class Principal{
 		}
 	}
 	
+	public void sortHotelsByScore() {
+		for(int i = 0; i < hotels.size()-1; i++) {
+			int min = i;
+			for(int j = i+1; j < hotels.size(); j++) {
+				if(hotels.get(j).getScore() < hotels.get(min).getScore()) {
+					min = j;
+				}
+			}
+			if(i != min) {
+				Hotel aux = hotels.get(i);
+				hotels.set(i, hotels.get(min));
+				hotels.set(min, aux);
+			}
+		}
+	}
+	
 	public void searchHotelByName(String hotelName) {
 		
 	}
