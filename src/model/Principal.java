@@ -31,6 +31,8 @@ public class Principal{
 	public Principal() {
 		hotels = new ArrayList<Hotel>();
 		users = new User("Alejandro Garcia", "1193151954", "Elclasico1", "alejo.gar.122@gmail.com", "22/01/2001", "3114209888", null, null);
+		User i = new User("Isaac", "1321", "p", "p", "02/12/2000", "3312", null, null);
+		users.setRight(i);
 	}
 	
 	// -----------------------------------------------------------------
@@ -174,9 +176,11 @@ public class Principal{
 		for(int i = 1; i < hotels.size(); i++) {
 			Hotel aux = hotels.get(i);
 			int k = i-1;
-			while(k > -1 && hotels.get(k).compareTo(aux) > 0) {
-				 
+			while(k >= 0 && hotels.get(k).compareTo(aux) > 0) {
+				 hotels.set(k+1, hotels.get(k));
+				 k--;
 			}
+			hotels.set(k+1, aux);
 		}
 	}
 	
