@@ -175,12 +175,11 @@ public class Principal{
 	public void alphabeticalSortHotels() {
 		for(int i = 1; i < hotels.size(); i++) {
 			Hotel aux = hotels.get(i);
-			int k = i-1;
-			while(k >= 0 && hotels.get(k).compareTo(aux) > 0) {
-				 hotels.set(k+1, hotels.get(k));
-				 k--;
+			for(int j = i; j > 0 && hotels.get(j-1).compareTo(aux) > 0; j--) {
+				Hotel temp = hotels.get(j);
+				hotels.set(j, hotels.get(j-1));
+				hotels.set(j-1, temp);
 			}
-			hotels.set(k+1, aux);
 		}
 	}
 	
