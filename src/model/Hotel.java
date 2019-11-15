@@ -1,6 +1,6 @@
 package model;
 
-public class Hotel {
+public class Hotel implements Comparable<Hotel>{
 
 	// -----------------------------------------------------------------
 	// Attributes and relations
@@ -170,6 +170,12 @@ public class Hotel {
 	 */
 	public void setRooms(Room rooms) {
 		this.rooms = rooms;
+	}
+
+	@Override
+	public int compareTo(Hotel o) {
+		int value = name.compareTo(o.getName());
+		return value;
 	}
 	
 	

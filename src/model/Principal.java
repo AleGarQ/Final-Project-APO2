@@ -171,7 +171,13 @@ public class Principal{
 	}
 	
 	public void alphabeticalSortHotels() {
-		
+		for(int i = 1; i < hotels.size(); i++) {
+			Hotel aux = hotels.get(i);
+			int k = i-1;
+			while(k > -1 && hotels.get(k).compareTo(aux) > 0) {
+				 
+			}
+		}
 	}
 	
 	public void searchHotelByName(String hotelName) {
