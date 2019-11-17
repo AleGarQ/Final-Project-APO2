@@ -5,12 +5,12 @@ import java.util.Comparator;
 
 import exceptions.ListNotFoundException;
 
-public class User implements Comparator<User>{
+public class User implements Comparator<User> {
 
 	// -----------------------------------------------------------------
 	// Attributes and relations
 	// -----------------------------------------------------------------
-	
+
 	/**
 	 * Attribute that has the user's name
 	 */
@@ -42,7 +42,7 @@ public class User implements Comparator<User>{
 	/**
 	 * Relation with the user in the right
 	 */
-	private User right; 
+	private User right;
 	/**
 	 * Relation with the reserved rooms
 	 */
@@ -59,23 +59,25 @@ public class User implements Comparator<User>{
 	 * Relation with the search history
 	 */
 	private SearchHistory record;
-	
+
 	// -----------------------------------------------------------------
 	// Constructor
 	// -----------------------------------------------------------------
-	
+
 	/**
 	 * Constructor of the User class
-	 * @param name - User's name
-	 * @param id - User's id
-	 * @param password - User's password
-	 * @param email - User's email
-	 * @param age - User's age
+	 * 
+	 * @param name        - User's name
+	 * @param id          - User's id
+	 * @param password    - User's password
+	 * @param email       - User's email
+	 * @param age         - User's age
 	 * @param phoneNumber - User's phone number
-	 * @param left - Relation with the user at the left
-	 * @param right - Relation with the user at the right
+	 * @param left        - Relation with the user at the left
+	 * @param right       - Relation with the user at the right
 	 */
-	public User(String name, String id, String password, String email, String age, String phoneNumber, User left, User right) {
+	public User(String name, String id, String password, String email, String age, String phoneNumber, User left,
+			User right) {
 		this.name = name;
 		this.id = id;
 		this.password = password;
@@ -85,14 +87,16 @@ public class User implements Comparator<User>{
 		this.left = left;
 		this.right = right;
 		customList = new ArrayList<CustomList>();
+		sortListByName();
 	}
 
 	// -----------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------
-	
+
 	/**
 	 * Method to get the attribute name
+	 * 
 	 * @return User's name
 	 */
 	public String getName() {
@@ -101,14 +105,16 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to set the attribute name
+	 * 
 	 * @param name - New User's name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
 	 * Method to get the attribute id
+	 * 
 	 * @return User's id
 	 */
 	public String getId() {
@@ -117,6 +123,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to set the attribute id
+	 * 
 	 * @param id - New User's id
 	 */
 	public void setId(String id) {
@@ -125,6 +132,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to get the attribute password
+	 * 
 	 * @return User's password
 	 */
 	public String getPassword() {
@@ -133,6 +141,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to set the attribute password
+	 * 
 	 * @param password - New User's password
 	 */
 	public void setPassword(String password) {
@@ -141,6 +150,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to get the attribute email
+	 * 
 	 * @return User's email
 	 */
 	public String getEmail() {
@@ -149,6 +159,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to set the attribute email
+	 * 
 	 * @param email - New User's email
 	 */
 	public void setEmail(String email) {
@@ -157,6 +168,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to get the attribute age
+	 * 
 	 * @return User's age
 	 */
 	public String getAge() {
@@ -165,6 +177,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to set the attribute age
+	 * 
 	 * @param age - New User's age
 	 */
 	public void setAge(String age) {
@@ -173,6 +186,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to get the attribute phoneNumber
+	 * 
 	 * @return User's phone number
 	 */
 	public String getPhoneNumber() {
@@ -181,6 +195,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to set the attribute phoneNumber
+	 * 
 	 * @param phoneNumber - New User's phone number
 	 */
 	public void setPhoneNumber(String phoneNumber) {
@@ -189,6 +204,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to get the relation left
+	 * 
 	 * @return The user in the left
 	 */
 	public User getLeft() {
@@ -197,6 +213,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to set the relation left
+	 * 
 	 * @param left - New User in the left
 	 */
 	public void setLeft(User left) {
@@ -205,6 +222,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to get the relation right
+	 * 
 	 * @return The user in the right
 	 */
 	public User getRight() {
@@ -213,30 +231,34 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to set the relation right
+	 * 
 	 * @param right - New User in the right
 	 */
 	public void setRight(User right) {
 		this.right = right;
 	}
-	
+
 	/**
 	 * Method to get the relation rRooms
+	 * 
 	 * @return Reserved rooms
 	 */
 	public ReservedRoom getRRooms() {
 		return rRooms;
 	}
-	
+
 	/**
 	 * Method to set the relation rRooms
+	 * 
 	 * @param rRooms - New reserved rooms
 	 */
 	public void setRRooms(ReservedRoom rRooms) {
 		this.rRooms = rRooms;
 	}
-	
+
 	/**
 	 * Method to get the relation fRooms
+	 * 
 	 * @return Favorite rooms
 	 */
 	public FavoriteRoom getfRooms() {
@@ -245,6 +267,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to set the relation fRooms
+	 * 
 	 * @param fRooms - New favorite rooms
 	 */
 	public void setfRooms(FavoriteRoom fRooms) {
@@ -253,6 +276,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to get the ArrayList customList
+	 * 
 	 * @return Custom lists
 	 */
 	public ArrayList<CustomList> getCustomList() {
@@ -261,6 +285,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to set the ArrayList customList
+	 * 
 	 * @param customList - New custom lists
 	 */
 	public void setCustomList(ArrayList<CustomList> customList) {
@@ -269,6 +294,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to get the relation record
+	 * 
 	 * @return Search history
 	 */
 	public SearchHistory getRecord() {
@@ -277,6 +303,7 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to set the relation record
+	 * 
 	 * @param record - New search history
 	 */
 	public void setRecord(SearchHistory record) {
@@ -285,17 +312,18 @@ public class User implements Comparator<User>{
 
 	/**
 	 * Method to add a reserved room
+	 * 
 	 * @param chosenRoom - New reserved rooms
 	 */
 	public void addReservedRoom(ReservedRoom chosenRoom) {
 		ReservedRoom aux = rRooms;
-		if(aux == null) {
+		if (aux == null) {
 			chosenRoom.setAvailability(false);
-			setRRooms(chosenRoom);	
+			setRRooms(chosenRoom);
 		} else {
 			boolean added = false;
-			while(aux != null && !added) {
-				if(aux.getNext() == null) {
+			while (aux != null && !added) {
+				if (aux.getNext() == null) {
 					aux.setNext(chosenRoom);
 					chosenRoom.setAvailability(false);
 					added = true;
@@ -305,9 +333,10 @@ public class User implements Comparator<User>{
 			}
 		}
 	}
-	
+
 	/**
 	 * Method to set the relation rRooms
+	 * 
 	 * @param listName - Name of the new custom list
 	 */
 	public void createNewCustomList(String listName) {
@@ -315,30 +344,60 @@ public class User implements Comparator<User>{
 		customList.add(c);
 	}
 
+	/**
+	 * Method to compare 2 users
+	 * @param u1 - First user to compare
+	 * @param u2 - Second user to compare
+	 */
 	@Override
 	public int compare(User u1, User u2) {
 		int obtainedNumber = u1.getName().compareTo(u2.getName());
 		return obtainedNumber;
 	}
 
+	/**
+	 * Method to sort the custom lists by name
+	 */
+	public void sortListByName() {
+		for (int i = 0; i < customList.size() - 1; i++) {
+			int min = i;
+			for (int j = i + 1; j < customList.size(); j++) {
+				if (customList.get(j).getListName().compareTo(customList.get(min).getListName()) < 0) {
+					min = j;
+				}
+			}
+			if (i != min) {
+				CustomList aux = customList.get(i);
+				customList.set(i, customList.get(min));
+				customList.set(min, aux);
+			}
+		}
+	}
+
+	/**
+	 * Method to add an hotel to a custom list
+	 * @param listName - Name of the list where the user will add the hotel
+	 * @param newHotelToList - Hotel to add
+	 * @throws ListNotFoundException - Exception if the list is not found
+	 */
 	public void addHotelToCustomList(String listName, HotelsListed newHotelToList) throws ListNotFoundException {
 		boolean found = false;
 		int start = 0;
 		int end = customList.size() - 1;
-		
-		while(start <= end && !found) {
+
+		while (start <= end && !found) {
 			int half = (start + end) / 2;
-			if(customList.get(half).getListName().compareTo(listName) == 0) {
+			if (customList.get(half).getListName().compareTo(listName) == 0) {
 				found = true;
 				customList.get(half).addHotelToList(newHotelToList);
-			}else if(customList.get(half).getListName().compareTo(listName) > 0) {
+			} else if (customList.get(half).getListName().compareTo(listName) > 0) {
 				end = half - 1;
-			}else {
+			} else {
 				start = half + 1;
 			}
 		}
-		if(found == false) {
+		if (found == false) {
 			throw new ListNotFoundException("No se ha encontrado ninguna lista con ese nombre");
 		}
 	}
-}
+}//final

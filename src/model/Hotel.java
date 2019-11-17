@@ -46,6 +46,7 @@ public class Hotel implements Comparable<Hotel>{
 	 * @param priceRange - Hotel's priceRange
 	 * @param stars - Hotel's stars
 	 * @param score - Hotel's score
+	 * @param city - City where the hotel is
 	 */
 	public Hotel(String name, String id, String priceRange, int stars, double score, String city) {
 		this.name = name;
@@ -172,6 +173,10 @@ public class Hotel implements Comparable<Hotel>{
 		this.rooms = rooms;
 	}
 
+	/**
+	 * Method to compare hotels by name
+	 * @param o - Hotel to compare with the actual
+	 */
 	@Override
 	public int compareTo(Hotel o) {
 		int value = name.compareTo(o.getName());
@@ -179,4 +184,4 @@ public class Hotel implements Comparable<Hotel>{
 	}
 	
 	
-}
+}//final
