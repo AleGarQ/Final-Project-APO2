@@ -282,4 +282,22 @@ public class Principal {
 			}
 		}
 	}
+	
+	public ArrayList<Hotel> searchHotelsWithAvaiblesRoom() {
+		ArrayList<Hotel> avaibleHotels = new ArrayList<Hotel>();
+		for(int i = 0; i < hotels.size(); i++) {
+			Hotel auxH = hotels.get(i);
+			Room auxR = auxH.getRooms();
+			Boolean stopPoint = false;
+			while(auxR != null && !stopPoint) {
+				if(auxR.getAvailability() == true) {
+					avaibleHotels.add(auxH);
+					stopPoint = true;
+				} else {
+					auxR.getNext();
+				}
+			}
+		}
+		return avaibleHotels;
+	}
 }// final
