@@ -6,7 +6,7 @@ import exceptions.ExistentUser;
 import exceptions.UnderAge;
 import exceptions.WrongInformation;
 
-public class Principal {
+public class Principal implements AddUserToTree{
 
 	// -----------------------------------------------------------------
 	// Attributes and relations
@@ -82,6 +82,8 @@ public class Principal {
 	 * @param newUser - New user
 	 * @param node    - Root of the tree
 	 */
+	
+	@Override
 	public void addNewUser(User newUser, User node) {
 		if (newUser.getEmail().compareTo(node.getEmail()) < 0) {
 			if (node.getLeft() == null) {
@@ -104,6 +106,8 @@ public class Principal {
 	 * @param newUser - New user
 	 * @param node    - Root of the tree
 	 */
+	
+	@Override
 	public boolean searchUser(User newUser, User node) {
 
 		if (node != null) {
@@ -125,6 +129,8 @@ public class Principal {
 	 * @throws ExistentUser - Exception if the email is registered
 	 * @throws UnderAge     - Exception if the new user is younger
 	 */
+	
+	@Override
 	public void addNewUserFinal(User newUser) throws ExistentUser, UnderAge {
 		String[] ageA = newUser.getAge().split("/");
 		int age = Integer.parseInt(ageA[2]);

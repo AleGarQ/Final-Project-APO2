@@ -179,8 +179,7 @@ public class Hotel implements Comparable<Hotel>{
 	 */
 	@Override
 	public int compareTo(Hotel o) {
-		int value = name.compareTo(o.getName());
-		return value;
+		return name.compareTo(o.getName());
 	}
 	
 	
