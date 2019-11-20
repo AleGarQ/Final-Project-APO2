@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 import exceptions.ListNotFoundException;
 
-public class User implements Comparator<User> {
+public class User implements Comparator<User>, AddFavoriteHotelToTree {
 
 	// -----------------------------------------------------------------
 	// Attributes and relations
@@ -50,7 +50,7 @@ public class User implements Comparator<User> {
 	/**
 	 * Relation with favorites rooms
 	 */
-	private FavoriteRoom fRooms;
+	private FavoriteHotel fHotel;
 	/**
 	 * ArrayList of custom lists
 	 */
@@ -257,12 +257,12 @@ public class User implements Comparator<User> {
 	}
 
 	/**
-	 * Method to get the relation fRooms
+	 * Method to get the relation fHotel
 	 * 
-	 * @return Favorite rooms
+	 * @return Favorite hotel
 	 */
-	public FavoriteRoom getfRooms() {
-		return fRooms;
+	public FavoriteHotel getfHotel() {
+		return fHotel;
 	}
 
 	/**
@@ -270,8 +270,8 @@ public class User implements Comparator<User> {
 	 * 
 	 * @param fRooms - New favorite rooms
 	 */
-	public void setfRooms(FavoriteRoom fRooms) {
-		this.fRooms = fRooms;
+	public void setfRooms(FavoriteHotel fHotel) {
+		this.fHotel = fHotel;
 	}
 
 	/**
@@ -346,6 +346,7 @@ public class User implements Comparator<User> {
 
 	/**
 	 * Method to compare 2 users
+	 * 
 	 * @param u1 - First user to compare
 	 * @param u2 - Second user to compare
 	 */
@@ -376,7 +377,8 @@ public class User implements Comparator<User> {
 
 	/**
 	 * Method to add an hotel to a custom list
-	 * @param listName - Name of the list where the user will add the hotel
+	 * 
+	 * @param listName       - Name of the list where the user will add the hotel
 	 * @param newHotelToList - Hotel to add
 	 * @throws ListNotFoundException - Exception if the list is not found
 	 */
@@ -400,4 +402,54 @@ public class User implements Comparator<User> {
 			throw new ListNotFoundException("No se ha encontrado ninguna lista con ese nombre");
 		}
 	}
-}//final
+
+	@Override
+	public void addNewFavoriteHotel(FavoriteHotel newHotel, FavoriteHotel node) {
+		if (newHotel.getId().compareTo(node.getId()) < 0) {
+			if (node.getLeft() != null) {
+				addNewFavoriteHotel(newHotel, node.getLeft());
+			} else {
+				node.setLeft(newHotel);
+			}
+		} else {
+			if (node.getLeft() != null) {
+				addNewFavoriteHotel(newHotel, node.getRight());
+			} else {
+				node.setRight(newHotel);
+			}
+		}
+	}
+
+	@Override
+	public boolean searchHotel(FavoriteHotel newHotel, FavoriteHotel node) {
+		if (newHotel.getId().compareTo(node.getId()) == 0) {
+			return true;
+		} else if (newHotel.getId().compareTo(node.getId()) < 0) {
+			if (node.getLeft() != null) {
+				return searchHotel(newHotel, node.getLeft());
+			}
+		}else {
+			if(node.getRight() != null) {
+				return searchHotel(newHotel, node.getRight());
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void addNewFavoriteHotelFinal(Hotel newHotel) {
+		
+		if(newHotel != null) {
+		
+			FavoriteHotel newHotel1 = new FavoriteHotel(newHotel.getName(), newHotel.getId(), newHotel.getPriceRange(), newHotel.getStars(), newHotel.getScore(), newHotel.getCity(), null, null);
+			
+			if(fHotel != null) {
+				if(searchHotel(newHotel1, fHotel) == false) {
+					addNewFavoriteHotel(newHotel1, fHotel);
+				}
+			}else {
+				fHotel = newHotel1;
+			}
+		}
+	}
+}// final
