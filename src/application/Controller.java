@@ -1,4 +1,5 @@
 package application;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -26,20 +27,24 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.*;
 
-public class Controller implements Initializable{
+public class Controller implements Initializable {
 	private Principal system = new Principal();
 	private User actualUser;
-	@FXML AnchorPane firstScreen = new AnchorPane();
-	@FXML Button signIn = new Button();
-	@FXML Button signUp = new Button();
-	@FXML ImageView logo = new ImageView();
-	
+	@FXML
+	AnchorPane firstScreen = new AnchorPane();
+	@FXML
+	Button signIn = new Button();
+	@FXML
+	Button signUp = new Button();
+	@FXML
+	ImageView logo = new ImageView();
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-	
+
 	}
-	
+
 	public void signInScreen() {
 		firstScreen.getChildren().clear();
 		VBox vb = new VBox(4);
@@ -51,16 +56,12 @@ public class Controller implements Initializable{
 		PasswordField tf2 = new PasswordField();
 		tf.setPromptText("Correo electronico");
 		tf2.setPromptText("Contraseña");
-		vb.getChildren().add(0, logoIMG);
-		vb.getChildren().add(1, tf);
-		vb.getChildren().add(2, tf2);
+		vb.getChildren().addAll(logoIMG, tf, tf2);
 		HBox hb = new HBox(2);
 		Button back = new Button("Atras");
 		back.setOnAction(e -> {
 			firstScreen.getChildren().clear();
-			firstScreen.getChildren().add(logo);
-			firstScreen.getChildren().add(signIn);
-			firstScreen.getChildren().add(signUp);
+			firstScreen.getChildren().addAll(logo, signIn, signUp);
 		});
 		Button next = new Button("Entrar");
 		next.setOnAction(e -> {
@@ -70,21 +71,20 @@ public class Controller implements Initializable{
 				system.signInFinal(email, password);
 				actualUser = system.signInFinal(email, password);
 				welcome(email);
-			}catch(WrongInformation error) {
+			} catch (WrongInformation error) {
 				Alert user = new Alert(AlertType.INFORMATION);
 				user.setTitle("Error");
 				user.setHeaderText(error.getMessage());
 				user.setContentText("Verifique que las credenciales ingresadas sean las correctas");
 				user.showAndWait();
 			}
-			});
-		hb.getChildren().add(0, back);
-		hb.getChildren().add(1, next);
+		});
+		hb.getChildren().addAll(back, next);
 		vb.getChildren().add(3, hb);
 		vb.setMinSize(firstScreen.getWidth(), firstScreen.getHeight());
 		firstScreen.getChildren().add(vb);
 	}
-	
+
 	public void signUpScreen() {
 		firstScreen.getChildren().clear();
 		VBox vb = new VBox(8);
@@ -104,20 +104,12 @@ public class Controller implements Initializable{
 		phone.setPromptText("Numero de telefono");
 		email.setPromptText("Correo electronico");
 		password.setPromptText("Contraseña");
-		vb.getChildren().add(0, logoIMG);
-		vb.getChildren().add(1, fullName);
-		vb.getChildren().add(2, id);
-		vb.getChildren().add(3, age);
-		vb.getChildren().add(4, phone);
-		vb.getChildren().add(5, email);
-		vb.getChildren().add(6, password);
+		vb.getChildren().addAll(logoIMG, fullName, id, age, phone, email, password);
 		HBox hb = new HBox(2);
 		Button back = new Button("Atras");
 		back.setOnAction(e -> {
 			firstScreen.getChildren().clear();
-			firstScreen.getChildren().add(logo);
-			firstScreen.getChildren().add(signIn);
-			firstScreen.getChildren().add(signUp);
+			firstScreen.getChildren().addAll(logo, signIn, signUp);
 		});
 		Button next = new Button("Crear");
 		next.setOnAction(e -> {
@@ -131,13 +123,13 @@ public class Controller implements Initializable{
 				actualUser = new User(name, iD, pW, mail, bDate, pNumber, null, null);
 				system.addNewUserFinal(actualUser);
 				welcome(mail);
-			}catch(ExistentUser error) {
+			} catch (ExistentUser error) {
 				Alert user = new Alert(AlertType.INFORMATION);
 				user.setTitle("Error");
 				user.setHeaderText(error.getMessage());
 				user.setContentText("Ingrese sesion con el correo y contraseña ya registrados");
 				user.showAndWait();
-			}catch(UnderAge error) {
+			} catch (UnderAge error) {
 				Alert user = new Alert(AlertType.INFORMATION);
 				user.setTitle("Error");
 				user.setHeaderText(error.getMessage());
@@ -151,7 +143,7 @@ public class Controller implements Initializable{
 		vb.setMinSize(firstScreen.getWidth(), firstScreen.getHeight());
 		firstScreen.getChildren().add(vb);
 	}
-	
+
 	public void welcome(String email) {
 		firstScreen.getChildren().clear();
 		VBox vb = new VBox();
@@ -170,11 +162,9 @@ public class Controller implements Initializable{
 			principalScreen();
 		});
 		Button logOut = new Button("Cerrar sesion X");
-		logOut.setOnAction(e ->{
+		logOut.setOnAction(e -> {
 			firstScreen.getChildren().clear();
-			firstScreen.getChildren().add(logo);
-			firstScreen.getChildren().add(signIn);
-			firstScreen.getChildren().add(signUp);
+			firstScreen.getChildren().addAll(logo, signIn, signUp);
 		});
 		hb.getChildren().add(logOut);
 		hb.getChildren().add(next);
@@ -182,13 +172,62 @@ public class Controller implements Initializable{
 		vb.setMinSize(firstScreen.getWidth(), firstScreen.getHeight());
 		firstScreen.getChildren().add(vb);
 	}
-	
+
 	public void principalScreen() {
-		AnchorPane ap = new AnchorPane();
+		//User's information Tab---------------------------------------
+		HBox ap = new HBox();
+		VBox vbl = new VBox();
+		VBox vbb = new VBox();
+		VBox vbr = new VBox();
 		Tab perfil = new Tab(actualUser.getName(), ap);
-		TabPane tp = new TabPane(perfil);
-		Label email = new Label(actualUser.getEmail());
-		ap.getChildren().add(email);
+		TextField email = new TextField(actualUser.getEmail());
+		email.setDisable(true);
+		TextField name = new TextField(actualUser.getName());
+		name.setDisable(true);
+		TextField id = new TextField(actualUser.getId());
+		id.setDisable(true);
+		vbl.getChildren().addAll(name, email, id);
+		
+		for (int i = 0; i < vbl.getChildren().size(); i++) {
+			Image img = new Image("/resources/Editar.png");
+			ImageView edit = new ImageView(img);
+			edit.setFitHeight(20);
+			edit.setFitWidth(20);
+			Button b = new Button("", edit);
+			int j = i;
+			b.setOnAction(e -> {
+				vbl.getChildren().get(j).setDisable(false);
+				vbr.getChildren().get(j).setVisible(true);
+
+			});
+			vbb.getChildren().add(b);
+		}
+		
+		for (int i = 0; i < vbl.getChildren().size(); i++) {
+			Image im = new Image("/resources/Ready.png");
+			ImageView rdy = new ImageView(im);
+			rdy.setFitHeight(20);
+			rdy.setFitWidth(20);
+			int j = i;
+			Button ready = new Button("", rdy);
+			ready.setVisible(false);
+			ready.setOnAction(r -> {
+				ready.setVisible(false);
+				vbl.getChildren().get(j).setDisable(true);
+			});
+			vbr.getChildren().add(i, ready);
+		}
+
+		ap.getChildren().addAll(vbl, vbb, vbr);
+		
+		//Hotel reservations tab---------------------------------------
+		AnchorPane reserveScreen = new AnchorPane();
+		Tab reserve = new Tab("Reservar", reserveScreen);
+
+		
+		
+		//Stage set----------------------------------------------------
+		TabPane tp = new TabPane(perfil, reserve);
 		Scene sc2 = new Scene(tp);
 		Stage s = new Stage();
 		s.setTitle("Inicio");
