@@ -72,20 +72,47 @@ public class CustomList {
 	}
 
 	/**
+	 * Method to search an hotel in the list
+	 * 
+	 * @param newHotelToList - New hotel to add
+	 * 
+	 * @return If the hotel is in the list or not
+	 */
+	public boolean searchHotelListed(String id) {
+		boolean esta = false;
+		if(hotelList != null) {
+			HotelsListed aux = hotelList;
+			while(aux != null && !esta) {
+				if(aux.getId().compareTo(id) == 0) {
+					esta = true;
+				}else {
+					aux = aux.getNext();
+				}
+			}
+		}
+		
+		return esta;
+	}
+	
+	/**
 	 * Method to add an hotel to the list
 	 * 
 	 * @param newHotelToList - New hotel to add
 	 */
-	public void addHotelToList(HotelsListed newHotelToList) {
+	public void addHotelToList(Hotel newHotelToList) {
 		if (newHotelToList != null) {
-			if (hotelList == null) {
-				hotelList = newHotelToList;
-			} else {
-				HotelsListed aux = hotelList;
-				aux.setPrevious(newHotelToList);
-				newHotelToList.setNext(aux);
-				hotelList = newHotelToList;
-			}
+			HotelsListed newHotelToList1 = new HotelsListed(newHotelToList.getName(), newHotelToList.getId(),
+					newHotelToList.getPriceRange(), newHotelToList.getStars(), newHotelToList.getScore(), newHotelToList.getCity());
+			if(searchHotelListed(newHotelToList1.getId()) == false) {
+				if (hotelList == null) {
+					hotelList = newHotelToList1;
+				} else {
+					HotelsListed aux = hotelList;
+					aux.setPrevious(newHotelToList1);
+					newHotelToList1.setNext(aux);
+					hotelList = newHotelToList1;
+				}
+			}	
 		}
 	}
 }// final
