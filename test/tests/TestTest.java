@@ -20,7 +20,7 @@ class TestTest {
 		init();
 		String psw = "contraseña";
 		String email = "isak@gmail.com";
-		assertEquals();
+	//	assertEquals();
 		}
 
 }
