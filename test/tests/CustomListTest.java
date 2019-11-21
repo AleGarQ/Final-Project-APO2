@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import model.CustomList;
+import model.Hotel;
 import model.HotelsListed;
 
 class CustomListTest {
@@ -39,5 +40,15 @@ class CustomListTest {
 	void searchHotelListedTestFalse() {
 		init();
 		assertFalse(customList.searchHotelListed("1005"));
+	}
+	
+	@Test
+	void addHotelToListTest() {
+		init();
+		
+		Hotel test = new Hotel("Spiwak", "1005", "390393", 4, 4.5, "Cali");
+		customList.addHotelToList(test);
+		
+		assertTrue(customList.searchHotelListed("1005"));
 	}
 }
