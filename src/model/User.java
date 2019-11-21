@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import exceptions.ExistentException;
 import exceptions.ListNotFoundException;
 
 public class User implements Comparator<User>, AddFavoriteHotelToTree {
@@ -437,15 +438,18 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 	}
 
 	@Override
-	public void addNewFavoriteHotelFinal(Hotel newHotel) {
+	public void addNewFavoriteHotelFinal(Hotel newHotel) throws ExistentException{
 		
 		if(newHotel != null) {
 		
-			FavoriteHotel newHotel1 = new FavoriteHotel(newHotel.getName(), newHotel.getId(), newHotel.getPriceRange(), newHotel.getStars(), newHotel.getScore(), newHotel.getCity(), null, null);
+			FavoriteHotel newHotel1 = new FavoriteHotel(newHotel.getName(), newHotel.getId(), newHotel.getPriceRange(),
+														newHotel.getStars(), newHotel.getScore(), newHotel.getCity(), null, null);
 			
 			if(fHotel != null) {
 				if(searchHotel(newHotel1, fHotel) == false) {
 					addNewFavoriteHotel(newHotel1, fHotel);
+				}else {
+					throw new ExistentException("El hotel ya está en la lista de favoritos");
 				}
 			}else {
 				fHotel = newHotel1;

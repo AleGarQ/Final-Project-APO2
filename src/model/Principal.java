@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-import exceptions.ExistentUser;
+import exceptions.ExistentException;
 import exceptions.UnderAge;
 import exceptions.WrongInformation;
 
@@ -131,19 +131,23 @@ public class Principal implements AddUserToTree{
 	 */
 	
 	@Override
-	public void addNewUserFinal(User newUser) throws ExistentUser, UnderAge {
-		String[] ageA = newUser.getAge().split("/");
-		int age = Integer.parseInt(ageA[2]);
-
-		if (2019 - age >= 18) {
-			if (searchUser(newUser, users) == false) {
-				addNewUser(newUser, users);
+	public void addNewUserFinal(User newUser) throws ExistentException, UnderAge {
+		if(newUser != null) {
+			String[] ageA = newUser.getAge().split("/");
+			int age = Integer.parseInt(ageA[2]);
+	
+			if (2019 - age >= 18) {
+				if (searchUser(newUser, users) == false) {
+					addNewUser(newUser, users);
+				} else {
+					throw new ExistentException("El correo ingresado ya está registrado");
+				}
 			} else {
-				throw new ExistentUser("El correo ingresado ya está registrado");
+				throw new UnderAge("No esta permitido crear cuentas a un menor de edad");
 			}
-		} else {
-			throw new UnderAge("No esta permitido crear cuentas a un menor de edad");
-		}
+		}else {
+			throw new NullPointerException("El usuario nuevo está vacío");
+		}	
 	}
 
 	/**

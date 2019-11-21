@@ -1,6 +1,6 @@
 package model;
 
-import exceptions.ExistentUser;
+import exceptions.ExistentException;
 import exceptions.UnderAge;
 
 public interface AddUserToTree {
@@ -9,5 +9,5 @@ public interface AddUserToTree {
 		
 	 boolean searchUser(User newUser, User node);
 	 
-	 void addNewUserFinal(User newUser)throws ExistentUser, UnderAge;
+	 void addNewUserFinal(User newUser)throws ExistentException, UnderAge;
 }
