@@ -1,6 +1,8 @@
 package model;
 
-public class HotelsListed extends Hotel {
+import java.util.Comparator;
+
+public class HotelsListed extends Hotel implements Comparator<HotelsListed>{
 
 	// -----------------------------------------------------------------
 	// Attributes and relations
@@ -69,4 +71,10 @@ public class HotelsListed extends Hotel {
 	public void setNext(HotelsListed next) {
 		this.next = next;
 	}
+
+	@Override
+	public int compare(HotelsListed o1, HotelsListed o2) {
+		return o1.getName().compareTo(o2.getName());
+	}
+	
 }// final

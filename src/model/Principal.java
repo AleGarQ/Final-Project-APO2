@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 import exceptions.ExistentException;
+import exceptions.ListNotFoundException;
 import exceptions.UnderAge;
 import exceptions.WrongInformation;
 
@@ -309,5 +310,55 @@ public class Principal implements AddUserToTree{
 			}
 		}
 		return avaibleHotels;
+	}
+	
+	public Hotel searchHotelByName(String hotelName) throws ListNotFoundException {
+		Hotel found1 = null;
+		
+		boolean found = false;
+		int start = 0;
+		int end = hotels.size() - 1;
+
+		while (start <= end && !found) {
+			int half = (start + end) / 2;
+			if (hotels.get(half).getName().compareTo(hotelName) == 0) {
+				found = true;
+				found1 = hotels.get(half);
+			} else if (hotels.get(half).getName().compareTo(hotelName) > 0) {
+				end = half - 1;
+			} else {
+				start = half + 1;
+			}
+		}
+		if (found == false) {
+			throw new ListNotFoundException("No se ha encontrado ninguna lista con ese nombre");
+		}
+		
+		return found1;
+	}
+	
+	public Hotel searchHotelById(String hotelId) throws ListNotFoundException {
+		Hotel found1 = null;
+		
+		boolean found = false;
+		int start = 0;
+		int end = hotels.size() - 1;
+
+		while (start <= end && !found) {
+			int half = (start + end) / 2;
+			if (hotels.get(half).getId().compareTo(hotelId) == 0) {
+				found = true;
+				found1 = hotels.get(half);
+			} else if (hotels.get(half).getId().compareTo(hotelId) > 0) {
+				end = half - 1;
+			} else {
+				start = half + 1;
+			}
+		}
+		if (found == false) {
+			throw new ListNotFoundException("No se ha encontrado ninguna lista con ese nombre");
+		}
+		
+		return found1;
 	}
 }// final

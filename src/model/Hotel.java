@@ -182,5 +182,4 @@ public class Hotel implements Comparable<Hotel>{
 		return name.compareTo(o.getName());
 	}
 	
-	
 }//final

@@ -456,4 +456,29 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 			}
 		}
 	}
+	
+	public CustomList searchCustomListByName(String listName) throws ListNotFoundException {
+		CustomList found1 = null;
+		
+		boolean found = false;
+		int start = 0;
+		int end = customList.size() - 1;
+
+		while (start <= end && !found) {
+			int half = (start + end) / 2;
+			if (customList.get(half).getListName().compareTo(listName) == 0) {
+				found = true;
+				found1 = customList.get(half);
+			} else if (customList.get(half).getListName().compareTo(listName) > 0) {
+				end = half - 1;
+			} else {
+				start = half + 1;
+			}
+		}
+		if (found == false) {
+			throw new ListNotFoundException("No se ha encontrado ninguna lista con ese nombre");
+		}
+		
+		return found1;
+	}
 }// final
