@@ -179,6 +179,9 @@ public class Controller implements Initializable {
 		VBox vbl = new VBox();
 		VBox vbb = new VBox();
 		VBox vbr = new VBox();
+		Label lbl = new Label("Informacion Personal");
+		lbl.setFont(new Font("Arial", 20));
+		lbl.setTextAlignment(TextAlignment.CENTER);
 		Tab perfil = new Tab(actualUser.getName(), ap);
 		TextField email = new TextField(actualUser.getEmail());
 		email.setDisable(true);
@@ -198,7 +201,7 @@ public class Controller implements Initializable {
 			b.setOnAction(e -> {
 				vbl.getChildren().get(j).setDisable(false);
 				vbr.getChildren().get(j).setVisible(true);
-
+				b.setVisible(false);
 			});
 			vbb.getChildren().add(b);
 		}
@@ -211,10 +214,13 @@ public class Controller implements Initializable {
 			int j = i;
 			Button ready = new Button("", rdy);
 			ready.setVisible(false);
+			
 			ready.setOnAction(r -> {
 				ready.setVisible(false);
 				vbl.getChildren().get(j).setDisable(true);
+				vbb.getChildren().get(j).setVisible(true);
 			});
+			
 			vbr.getChildren().add(i, ready);
 		}
 
@@ -228,6 +234,7 @@ public class Controller implements Initializable {
 		
 		//Stage set----------------------------------------------------
 		TabPane tp = new TabPane(perfil, reserve);
+		tp.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());		
 		Scene sc2 = new Scene(tp);
 		Stage s = new Stage();
 		s.setTitle("Inicio");

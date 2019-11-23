@@ -1,0 +1,28 @@
+.root{
+	-fx-background-color: #acb3f7;
+}
+.button{
+	-fx-background-color: 
+        #000000,
+        linear-gradient(#7ebcea, #2f4b8f),
+        linear-gradient(#426ab7, #263e75),
+        linear-gradient(#395cab, #223768);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 5 30 5 30;
+}
+VBox, AnchorPane{
+    -fx-alignment: center;
+    -fx-padding: 10;
+}
+.text-field{
+    -fx-max-width: 250;
+    -fx-min-height: 30;
+}
+HBox, VBox{
+	 -fx-alignment: center;
+    -fx-padding: 10;
+}
