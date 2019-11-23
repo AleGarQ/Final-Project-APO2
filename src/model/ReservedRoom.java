@@ -23,5 +23,11 @@ public class ReservedRoom extends Room {
 	public void setNext(ReservedRoom next) {
 		this.next = next;
 	}
+
+	@Override
+	public String toString() {
+		return "ReservedRoom [number=" + getNumber() + ", id=" + getId() + ", typeOfBeds=" + getTypeOfBeds() +
+				", availability=" + getAvailability() + "]";
+	}
 	
 }

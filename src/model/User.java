@@ -271,7 +271,7 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 	 * 
 	 * @param fRooms - New favorite rooms
 	 */
-	public void setfRooms(FavoriteHotel fHotel) {
+	public void setfHotel(FavoriteHotel fHotel) {
 		this.fHotel = fHotel;
 	}
 
@@ -480,5 +480,79 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 		}
 		
 		return found1;
+	}
+	
+	public String favoriteHotelsText() {
+		
+		String toString = "";
+		ArrayList<FavoriteHotel> epale = new ArrayList<>();
+		
+		if(fHotel != null) {
+			epale.add(fHotel);
+			fHotel.arrayToArchive(epale);
+		}
+		
+		for(int i = 0; i < epale.size(); i++) {
+			toString += epale.get(i).toString() + ", ";
+		}
+		
+		return toString;
+	}
+	
+	public String reservedRoomText() {
+		String toString = "";
+		ReservedRoom aux = rRooms;
+		
+		while(aux != null) {
+			toString += aux.toString() + ", ";
+		}
+		
+		return toString;
+	}
+	
+	public String customListText() {
+		String toString = "";
+		
+		for(int i = 0; i < customList.size(); i++) {
+			toString += customList.get(i).hotelsListedText() + ", ";
+		}
+		
+		return toString;
+	}
+	
+	public String searchHistoryText() {
+		
+		String toString = "";
+		ArrayList<SearchHistory> epale = new ArrayList<>();
+		
+		if(record != null) {
+			epale.add(record);
+			record.arrayToArchive(epale);
+		}
+		
+		for(int i = 0; i < epale.size(); i++) {
+			toString += epale.get(i).toString() + ", ";
+		}
+		
+		return toString;
+	}
+	
+	@Override
+	public String toString() {
+		return "+User [name=" + name + ", id=" + id + ", password=" + password + ", email=" + email + ", age=" + age
+				+ ", phoneNumber=" + phoneNumber + "\n"+ favoriteHotelsText() + "\n" + reservedRoomText() +
+				"\n"+ searchHistoryText() + "\n" + searchHistoryText() + "]";
+	}
+	
+	public void arrayToArchive(ArrayList<User> lista){
+		
+		if(left != null) {
+			lista.add(left);
+			left.arrayToArchive(lista);
+		}
+		if(right != null) {
+			lista.add(right);
+			right.arrayToArchive(lista);
+		}	
 	}
 }// final

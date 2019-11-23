@@ -315,4 +315,22 @@ public class CustomList {
 			}while(ord);
 		}
 	}
+	
+	public String hotelsListedText() {
+		String toString = "";
+		HotelsListed aux = hotelList;
+		
+		while(aux != null) {
+			toString += aux.toString() + ", ";
+		}
+		
+		return toString;
+	}
+
+	@Override
+	public String toString() {
+		return "CustomList [listName=" + listName + hotelsListedText() + "]";
+	}
+	
+	
 }// final

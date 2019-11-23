@@ -1,6 +1,8 @@
 package model;
 
-public class Hotel implements Comparable<Hotel>{
+import java.io.Serializable;
+
+public class Hotel implements Comparable<Hotel>, Serializable{
 
 	// -----------------------------------------------------------------
 	// Attributes and relations
@@ -182,4 +184,9 @@ public class Hotel implements Comparable<Hotel>{
 		return name.compareTo(o.getName());
 	}
 	
+	@Override
+	public String toString() {
+		return "Hotel [name=" + name + ", id=" + id + ", priceRange=" + priceRange + ", stars=" + stars + ", score="
+				+ score + ", city=" + city + "]";
+	}
 }//final
