@@ -29,10 +29,13 @@ class UserTest {
 		assertTrue(user.searchHotel(aux, user.getfHotel()));
 	}
 	
+	@Test
 	void searchHotelTestFalse() {
 		init();
 		FavoriteHotel aux = new FavoriteHotel("Marriot", "123", "50000", 5, 4.5, "Cali", null, null);
 		assertFalse(user.searchHotel(aux, user.getfHotel()));
 	}
+	
+	
 
 }
