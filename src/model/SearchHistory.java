@@ -43,11 +43,17 @@ public class SearchHistory {
 	public void arrayToArchive(ArrayList<SearchHistory> lista){
 		
 		if(left != null) {
-			lista.add(left);
+			SearchHistory auxL = left;
+			auxL.setLeft(null);
+			auxL.setRight(null);
+			lista.add(auxL);
 			left.arrayToArchive(lista);
 		}
 		if(right != null) {
-			lista.add(right);
+			SearchHistory auxR = right;
+			auxR.setLeft(null);
+			auxR.setRight(null);
+			lista.add(auxR);
 			right.arrayToArchive(lista);
 		}	
 	}

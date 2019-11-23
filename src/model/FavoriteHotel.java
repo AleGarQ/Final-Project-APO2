@@ -37,11 +37,17 @@ public class FavoriteHotel extends Hotel{
 	public void arrayToArchive(ArrayList<FavoriteHotel> lista){
 		
 		if(left != null) {
-			lista.add(left);
+			FavoriteHotel auxL = left;
+			auxL.setLeft(null);
+			auxL.setRight(null);
+			lista.add(auxL);
 			left.arrayToArchive(lista);
 		}
 		if(right != null) {
-			lista.add(right);
+			FavoriteHotel auxR = right;
+			auxR.setLeft(null);
+			auxR.setRight(null);
+			lista.add(auxR);
 			right.arrayToArchive(lista);
 		}	
 	}

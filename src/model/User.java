@@ -488,7 +488,10 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 		ArrayList<FavoriteHotel> epale = new ArrayList<>();
 		
 		if(fHotel != null) {
-			epale.add(fHotel);
+			FavoriteHotel auxSH = fHotel;
+			auxSH.setLeft(null);
+			auxSH.setRight(null);
+			epale.add(auxSH);
 			fHotel.arrayToArchive(epale);
 		}
 		
@@ -526,7 +529,10 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 		ArrayList<SearchHistory> epale = new ArrayList<>();
 		
 		if(record != null) {
-			epale.add(record);
+			SearchHistory auxSH = record;
+			auxSH.setLeft(null);
+			auxSH.setRight(null);
+			epale.add(auxSH);
 			record.arrayToArchive(epale);
 		}
 		
@@ -547,11 +553,17 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 	public void arrayToArchive(ArrayList<User> lista){
 		
 		if(left != null) {
-			lista.add(left);
+			User auxL = left;
+			auxL.setLeft(null);
+			auxL.setRight(null);
+			lista.add(auxL);
 			left.arrayToArchive(lista);
 		}
 		if(right != null) {
-			lista.add(right);
+			User auxR = right;
+			auxR.setLeft(null);
+			auxR.setRight(null);
+			lista.add(auxR);
 			right.arrayToArchive(lista);
 		}	
 	}
