@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import exceptions.ExistentException;
 import exceptions.ListNotFoundException;
 
 public class User implements Comparator<User>, AddFavoriteHotelToTree {
@@ -270,7 +271,7 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 	 * 
 	 * @param fRooms - New favorite rooms
 	 */
-	public void setfRooms(FavoriteHotel fHotel) {
+	public void setfHotel(FavoriteHotel fHotel) {
 		this.fHotel = fHotel;
 	}
 
@@ -437,19 +438,121 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 	}
 
 	@Override
-	public void addNewFavoriteHotelFinal(Hotel newHotel) {
+	public void addNewFavoriteHotelFinal(Hotel newHotel) throws ExistentException{
 		
 		if(newHotel != null) {
 		
-			FavoriteHotel newHotel1 = new FavoriteHotel(newHotel.getName(), newHotel.getId(), newHotel.getPriceRange(), newHotel.getStars(), newHotel.getScore(), newHotel.getCity(), null, null);
+			FavoriteHotel newHotel1 = new FavoriteHotel(newHotel.getName(), newHotel.getId(), newHotel.getPriceRange(),
+														newHotel.getStars(), newHotel.getScore(), newHotel.getCity(), null, null);
 			
 			if(fHotel != null) {
 				if(searchHotel(newHotel1, fHotel) == false) {
 					addNewFavoriteHotel(newHotel1, fHotel);
+				}else {
+					throw new ExistentException("El hotel ya está en la lista de favoritos");
 				}
 			}else {
 				fHotel = newHotel1;
 			}
 		}
+	}
+	
+	public CustomList searchCustomListByName(String listName) throws ListNotFoundException {
+		CustomList found1 = null;
+		
+		boolean found = false;
+		int start = 0;
+		int end = customList.size() - 1;
+
+		while (start <= end && !found) {
+			int half = (start + end) / 2;
+			if (customList.get(half).getListName().compareTo(listName) == 0) {
+				found = true;
+				found1 = customList.get(half);
+			} else if (customList.get(half).getListName().compareTo(listName) > 0) {
+				end = half - 1;
+			} else {
+				start = half + 1;
+			}
+		}
+		if (found == false) {
+			throw new ListNotFoundException("No se ha encontrado ninguna lista con ese nombre");
+		}
+		
+		return found1;
+	}
+	
+	public String favoriteHotelsText() {
+		
+		String toString = "";
+		ArrayList<FavoriteHotel> epale = new ArrayList<>();
+		
+		if(fHotel != null) {
+			epale.add(fHotel);
+			fHotel.arrayToArchive(epale);
+		}
+		
+		for(int i = 0; i < epale.size(); i++) {
+			toString += epale.get(i).toString() + ", ";
+		}
+		
+		return toString;
+	}
+	
+	public String reservedRoomText() {
+		String toString = "";
+		ReservedRoom aux = rRooms;
+		
+		while(aux != null) {
+			toString += aux.toString() + ", ";
+		}
+		
+		return toString;
+	}
+	
+	public String customListText() {
+		String toString = "";
+		
+		for(int i = 0; i < customList.size(); i++) {
+			toString += customList.get(i).hotelsListedText() + ", ";
+		}
+		
+		return toString;
+	}
+	
+	public String searchHistoryText() {
+		
+		String toString = "";
+		ArrayList<SearchHistory> epale = new ArrayList<>();
+		
+		if(record != null) {
+			epale.add(record);
+			record.arrayToArchive(epale);
+		}
+		
+		for(int i = 0; i < epale.size(); i++) {
+			toString += epale.get(i).toString() + ", ";
+		}
+		
+		return toString;
+	}
+	
+	@Override
+	public String toString() {
+		return "+User [name=" + name + ", id=" + id + ", password=" + password + ", email=" + email + ", age=" + age
+				+ ", phoneNumber=" + phoneNumber + "\n"+ favoriteHotelsText() + "\n" + reservedRoomText() +
+				"\n"+ searchHistoryText() + "\n" + searchHistoryText() + "]";
+	}
+	
+	public void arrayToArchive(ArrayList<User> lista){
+		
+		if(left != null) {
+			lista.add(left);
+			left.arrayToArchive(lista);
+		}
+		if(right != null) {
+			lista.add(right);
+			right.arrayToArchive(lista);
+		}	
 	}
 }// final

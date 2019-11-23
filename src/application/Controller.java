@@ -3,7 +3,7 @@ package application;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import exceptions.ExistentUser;
+import exceptions.ExistentException;
 import exceptions.UnderAge;
 import exceptions.WrongInformation;
 import javafx.fxml.FXML;
@@ -123,7 +123,7 @@ public class Controller implements Initializable {
 				actualUser = new User(name, iD, pW, mail, bDate, pNumber, null, null);
 				system.addNewUserFinal(actualUser);
 				welcome(mail);
-			} catch (ExistentUser error) {
+			} catch (ExistentException error) {
 				Alert user = new Alert(AlertType.INFORMATION);
 				user.setTitle("Error");
 				user.setHeaderText(error.getMessage());

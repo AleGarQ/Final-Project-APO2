@@ -72,20 +72,265 @@ public class CustomList {
 	}
 
 	/**
+	 * Method to search an hotel in the list
+	 * 
+	 * @param newHotelToList - New hotel to add
+	 * 
+	 * @return If the hotel is in the list or not
+	 */
+	public boolean searchHotelListed(String id) {
+		boolean esta = false;
+		if(hotelList != null) {
+			HotelsListed aux = hotelList;
+			while(aux != null && !esta) {
+				if(aux.getId().compareTo(id) == 0) {
+					esta = true;
+				}else {
+					aux = aux.getNext();
+				}
+			}
+		}
+		
+		return esta;
+	}
+	
+	/**
 	 * Method to add an hotel to the list
 	 * 
 	 * @param newHotelToList - New hotel to add
 	 */
-	public void addHotelToList(HotelsListed newHotelToList) {
+	public void addHotelToList(Hotel newHotelToList) {
 		if (newHotelToList != null) {
-			if (hotelList == null) {
-				hotelList = newHotelToList;
-			} else {
-				HotelsListed aux = hotelList;
-				aux.setPrevious(newHotelToList);
-				newHotelToList.setNext(aux);
-				hotelList = newHotelToList;
-			}
+			HotelsListed newHotelToList1 = new HotelsListed(newHotelToList.getName(), newHotelToList.getId(),
+					newHotelToList.getPriceRange(), newHotelToList.getStars(), newHotelToList.getScore(), newHotelToList.getCity());
+			if(searchHotelListed(newHotelToList1.getId()) == false) {
+				if (hotelList == null) {
+					hotelList = newHotelToList1;
+				} else {
+					HotelsListed aux = hotelList;
+					aux.setPrevious(newHotelToList1);
+					newHotelToList1.setNext(aux);
+					hotelList = newHotelToList1;
+				}
+			}	
 		}
 	}
+	
+	public void sortHotelsByName() {		
+		if(hotelList != null) {
+			boolean ord;
+			do {
+				ord = false;
+				HotelsListed temp = hotelList;
+				HotelsListed tempN = hotelList.getNext();
+				HotelsListed temp2 = null;
+				
+			
+				while(tempN != null) {
+					if(temp.compare(temp, tempN) > 0) {
+						ord = true;
+						if(temp2 != null) {
+							HotelsListed next2 = tempN.getNext();
+							temp2.setNext(tempN);
+							tempN.setPrevious(temp2);
+							tempN.setNext(temp);
+							temp.setPrevious(tempN);
+							temp.setNext(next2);
+						}else {
+							HotelsListed tempN2 = tempN.getNext();
+							hotelList = tempN;
+							tempN.setNext(temp);
+							temp.setPrevious(tempN);
+							temp.setNext(tempN2);
+							tempN2.setPrevious(temp);
+						}
+						temp2= tempN;
+						tempN = temp.getNext().getNext();
+					}else {
+						temp2 = temp;
+						temp = tempN;
+						tempN = tempN.getNext();
+					}
+				}
+			}while(ord);
+		}
+	}
+	
+	public void sortHotelsByPriceRange() {		
+		if(hotelList != null) {
+			boolean ord;
+			do {
+				ord = false;
+				HotelsListed temp = hotelList;
+				HotelsListed tempN = hotelList.getNext();
+				HotelsListed temp2 = null;
+				
+			
+				while(tempN != null) {
+					if(temp.getPriceRange().compareTo(tempN.getPriceRange()) > 0) {
+						ord = true;
+						if(temp2 != null) {
+							HotelsListed next2 = tempN.getNext();
+							temp2.setNext(tempN);
+							tempN.setPrevious(temp2);
+							tempN.setNext(temp);
+							temp.setPrevious(tempN);
+							temp.setNext(next2);
+						}else {
+							HotelsListed tempN2 = tempN.getNext();
+							hotelList = tempN;
+							tempN.setNext(temp);
+							temp.setPrevious(tempN);
+							temp.setNext(tempN2);
+							tempN2.setPrevious(temp);
+						}
+						temp2= tempN;
+						tempN = temp.getNext().getNext();
+					}else {
+						temp2 = temp;
+						temp = tempN;
+						tempN = tempN.getNext();
+					}
+				}
+			}while(ord);
+		}
+	}
+	
+	public void sortHotelsByStarsInDescendingOrder() {		
+		if(hotelList != null) {
+			boolean ord;
+			do {
+				ord = false;
+				HotelsListed temp = hotelList;
+				HotelsListed tempN = hotelList.getNext();
+				HotelsListed temp2 = null;
+				
+			
+				while(tempN != null) {
+					if(temp.getStars() < tempN.getStars()) {
+						ord = true;
+						if(temp2 != null) {
+							HotelsListed next2 = tempN.getNext();
+							temp2.setNext(tempN);
+							tempN.setPrevious(temp2);
+							tempN.setNext(temp);
+							temp.setPrevious(tempN);
+							temp.setNext(next2);
+						}else {
+							HotelsListed tempN2 = tempN.getNext();
+							hotelList = tempN;
+							tempN.setNext(temp);
+							temp.setPrevious(tempN);
+							temp.setNext(tempN2);
+							tempN2.setPrevious(temp);
+						}
+						temp2= tempN;
+						tempN = temp.getNext().getNext();
+					}else {
+						temp2 = temp;
+						temp = tempN;
+						tempN = tempN.getNext();
+					}
+				}
+			}while(ord);
+		}
+	}
+	
+	public void sortHotelsByScoreInDescendingOrder() {		
+		if(hotelList != null) {
+			boolean ord;
+			do {
+				ord = false;
+				HotelsListed temp = hotelList;
+				HotelsListed tempN = hotelList.getNext();
+				HotelsListed temp2 = null;
+				
+			
+				while(tempN != null) {
+					if(temp.getScore() < tempN.getScore()) {
+						ord = true;
+						if(temp2 != null) {
+							HotelsListed next2 = tempN.getNext();
+							temp2.setNext(tempN);
+							tempN.setPrevious(temp2);
+							tempN.setNext(temp);
+							temp.setPrevious(tempN);
+							temp.setNext(next2);
+						}else {
+							HotelsListed tempN2 = tempN.getNext();
+							hotelList = tempN;
+							tempN.setNext(temp);
+							temp.setPrevious(tempN);
+							temp.setNext(tempN2);
+							tempN2.setPrevious(temp);
+						}
+						temp2= tempN;
+						tempN = temp.getNext().getNext();
+					}else {
+						temp2 = temp;
+						temp = tempN;
+						tempN = tempN.getNext();
+					}
+				}
+			}while(ord);
+		}
+	}
+	
+	public void sortHotelsByCity() {		
+		if(hotelList != null) {
+			boolean ord;
+			do {
+				ord = false;
+				HotelsListed temp = hotelList;
+				HotelsListed tempN = hotelList.getNext();
+				HotelsListed temp2 = null;
+				
+			
+				while(tempN != null) {
+					if(temp.getCity().compareTo(tempN.getCity()) > 0) {
+						ord = true;
+						if(temp2 != null) {
+							HotelsListed next2 = tempN.getNext();
+							temp2.setNext(tempN);
+							tempN.setPrevious(temp2);
+							tempN.setNext(temp);
+							temp.setPrevious(tempN);
+							temp.setNext(next2);
+						}else {
+							HotelsListed tempN2 = tempN.getNext();
+							hotelList = tempN;
+							tempN.setNext(temp);
+							temp.setPrevious(tempN);
+							temp.setNext(tempN2);
+							tempN2.setPrevious(temp);
+						}
+						temp2= tempN;
+						tempN = temp.getNext().getNext();
+					}else {
+						temp2 = temp;
+						temp = tempN;
+						tempN = tempN.getNext();
+					}
+				}
+			}while(ord);
+		}
+	}
+	
+	public String hotelsListedText() {
+		String toString = "";
+		HotelsListed aux = hotelList;
+		
+		while(aux != null) {
+			toString += aux.toString() + ", ";
+		}
+		
+		return toString;
+	}
+
+	@Override
+	public String toString() {
+		return "CustomList [listName=" + listName + hotelsListedText() + "]";
+	}
+	
+	
 }// final

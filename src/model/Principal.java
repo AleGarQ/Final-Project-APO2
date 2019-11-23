@@ -1,12 +1,19 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import exceptions.ExistentUser;
+import exceptions.ExistentException;
+import exceptions.ListNotFoundException;
 import exceptions.UnderAge;
 import exceptions.WrongInformation;
 
-public class Principal implements AddUserToTree{
+public class Principal implements AddUserToTree {
 
 	// -----------------------------------------------------------------
 	// Attributes and relations
@@ -29,17 +36,42 @@ public class Principal implements AddUserToTree{
 	 * Constructor of the Principal class
 	 */
 	public Principal() {
-		hotels = new ArrayList<Hotel>();
-		users = new User("Alejandro Garcia", "1193151954", "Elclasico1", "alejo.gar.122@gmail.com", "22/01/2001",
-				"3114209888", null, null);
-		User i = new User("Isaac", "1321", "p", "p", "02/12/2000", "3312", null, null);
-		users.setRight(i);
+		hotels = new ArrayList<Hotel>();	
+		serializeHotelsAndRooms();
+		generateUserArchive();
+		init();
 	}
 
 	// -----------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------
 
+	public void init() {
+		users = new User("Alejandro Garcia", "1193151954", "Elclasico1", "alejo.gar.122@gmail.com", "22/01/2001", "3114209888", null, null);
+		User userAux = new User("Isaac", "1321", "p", "p", "02/12/2000", "3312", null, null);
+		users.setRight(userAux);
+		
+		ReservedRoom rrAux = new ReservedRoom("A1", "101", Room.DOUBLE, false, null, null);
+		users.setRRooms(rrAux);
+		
+		FavoriteHotel fhAux = new FavoriteHotel("Marriot", "1007707024", "150000", 5, 4.7, "Cali", null, null);
+		users.setfHotel(fhAux);
+		
+		SearchHistory shAux = new SearchHistory("Sandra Rueda en bola", null, null);
+		users.setRecord(shAux);
+		
+		HotelsListed hlAux = new HotelsListed("Marriot", "1007707024", "150000", 5, 4.7, "Cali");
+		CustomList clAux = new CustomList("Los más perrenques", hlAux);
+		ArrayList<CustomList> listica = new ArrayList<>();
+		listica.add(clAux);
+		users.setCustomList(listica);
+		
+		Hotel hotel = new Hotel("Marriot", "1007707024", "150000", 5, 4.7, "Cali");
+		Room roomi = new Room("A1", "101", Room.DOUBLE, false);
+		hotel.setRooms(roomi);
+		hotels.add(hotel);
+	}
+	
 	/**
 	 * Method to get the relation users
 	 * 
@@ -82,7 +114,7 @@ public class Principal implements AddUserToTree{
 	 * @param newUser - New user
 	 * @param node    - Root of the tree
 	 */
-	
+
 	@Override
 	public void addNewUser(User newUser, User node) {
 		if (newUser.getEmail().compareTo(node.getEmail()) < 0) {
@@ -106,7 +138,7 @@ public class Principal implements AddUserToTree{
 	 * @param newUser - New user
 	 * @param node    - Root of the tree
 	 */
-	
+
 	@Override
 	public boolean searchUser(User newUser, User node) {
 
@@ -129,20 +161,24 @@ public class Principal implements AddUserToTree{
 	 * @throws ExistentUser - Exception if the email is registered
 	 * @throws UnderAge     - Exception if the new user is younger
 	 */
-	
-	@Override
-	public void addNewUserFinal(User newUser) throws ExistentUser, UnderAge {
-		String[] ageA = newUser.getAge().split("/");
-		int age = Integer.parseInt(ageA[2]);
 
-		if (2019 - age >= 18) {
-			if (searchUser(newUser, users) == false) {
-				addNewUser(newUser, users);
+	@Override
+	public void addNewUserFinal(User newUser) throws ExistentException, UnderAge {
+		if (newUser != null) {
+			String[] ageA = newUser.getAge().split("/");
+			int age = Integer.parseInt(ageA[2]);
+
+			if (2019 - age >= 18) {
+				if (searchUser(newUser, users) == false) {
+					addNewUser(newUser, users);
+				} else {
+					throw new ExistentException("El correo ingresado ya está registrado");
+				}
 			} else {
-				throw new ExistentUser("El correo ingresado ya está registrado");
+				throw new UnderAge("No esta permitido crear cuentas a un menor de edad");
 			}
 		} else {
-			throw new UnderAge("No esta permitido crear cuentas a un menor de edad");
+			throw new NullPointerException("El usuario nuevo está vacío");
 		}
 	}
 
@@ -288,15 +324,15 @@ public class Principal implements AddUserToTree{
 			}
 		}
 	}
-	
+
 	public ArrayList<Hotel> searchHotelsWithAvaiblesRoom() {
 		ArrayList<Hotel> avaibleHotels = new ArrayList<Hotel>();
-		for(int i = 0; i < hotels.size(); i++) {
+		for (int i = 0; i < hotels.size(); i++) {
 			Hotel auxH = hotels.get(i);
 			Room auxR = auxH.getRooms();
 			Boolean stopPoint = false;
-			while(auxR != null && !stopPoint) {
-				if(auxR.getAvailability() == true) {
+			while (auxR != null && !stopPoint) {
+				if (auxR.getAvailability() == true) {
 					avaibleHotels.add(auxH);
 					stopPoint = true;
 				} else {
@@ -305,5 +341,93 @@ public class Principal implements AddUserToTree{
 			}
 		}
 		return avaibleHotels;
+	}
+
+	public Hotel searchHotelByName(String hotelName) throws ListNotFoundException {
+		Hotel found1 = null;
+
+		boolean found = false;
+		int start = 0;
+		int end = hotels.size() - 1;
+
+		while (start <= end && !found) {
+			int half = (start + end) / 2;
+			if (hotels.get(half).getName().compareTo(hotelName) == 0) {
+				found = true;
+				found1 = hotels.get(half);
+			} else if (hotels.get(half).getName().compareTo(hotelName) > 0) {
+				end = half - 1;
+			} else {
+				start = half + 1;
+			}
+		}
+		if (found == false) {
+			throw new ListNotFoundException("No se ha encontrado ninguna lista con ese nombre");
+		}
+
+		return found1;
+	}
+
+	public Hotel searchHotelById(String hotelId) throws ListNotFoundException {
+		Hotel found1 = null;
+
+		boolean found = false;
+		int start = 0;
+		int end = hotels.size() - 1;
+
+		while (start <= end && !found) {
+			int half = (start + end) / 2;
+			if (hotels.get(half).getId().compareTo(hotelId) == 0) {
+				found = true;
+				found1 = hotels.get(half);
+			} else if (hotels.get(half).getId().compareTo(hotelId) > 0) {
+				end = half - 1;
+			} else {
+				start = half + 1;
+			}
+		}
+		if (found == false) {
+			throw new ListNotFoundException("No se ha encontrado ninguna lista con ese nombre");
+		}
+
+		return found1;
+	}
+	
+	public void serializeHotelsAndRooms() {
+		try {
+			File f = new File("files/Hotels and Rooms");
+			FileOutputStream fo = new FileOutputStream(f);	
+			ObjectOutputStream oos = new ObjectOutputStream(fo);
+			
+			oos.writeObject(hotels);
+			oos.close();
+					
+		}catch(IOException e ) {	
+		}
+	}
+	
+	public ArrayList<User> arrayToText(){
+		ArrayList<User> users1 = new ArrayList<>();
+		
+		if(users != null) {
+			users1.add(users);
+			users.arrayToArchive(users1);
+		}
+		
+		return users1;
+	}
+	
+	public void generateUserArchive() {
+		ArrayList<User> usuarios = arrayToText();
+		try {
+			PrintWriter pw = new PrintWriter("files/Users");
+			
+			for(int i = 0; i < usuarios.size(); i++) {
+				pw.write(usuarios.get(i).toString());
+			}
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }// final
