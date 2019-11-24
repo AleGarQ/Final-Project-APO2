@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
@@ -20,6 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -41,7 +43,6 @@ public class Controller implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -175,6 +176,7 @@ public class Controller implements Initializable {
 
 	public void principalScreen() {
 		//User's information Tab---------------------------------------
+		BorderPane infoScreen = new BorderPane();
 		HBox ap = new HBox();
 		VBox vbl = new VBox();
 		VBox vbb = new VBox();
@@ -182,14 +184,16 @@ public class Controller implements Initializable {
 		Label lbl = new Label("Informacion Personal");
 		lbl.setFont(new Font("Arial", 20));
 		lbl.setTextAlignment(TextAlignment.CENTER);
-		Tab perfil = new Tab(actualUser.getName(), ap);
+		Tab perfil = new Tab(actualUser.getName(), infoScreen);
 		TextField email = new TextField(actualUser.getEmail());
 		email.setDisable(true);
 		TextField name = new TextField(actualUser.getName());
 		name.setDisable(true);
 		TextField id = new TextField(actualUser.getId());
 		id.setDisable(true);
-		vbl.getChildren().addAll(name, email, id);
+		TextField phone = new TextField(actualUser.getPhoneNumber());
+		phone.setDisable(true);
+		vbl.getChildren().addAll(name, email, id, phone);
 		
 		for (int i = 0; i < vbl.getChildren().size(); i++) {
 			Image img = new Image("/resources/Editar.png");
@@ -219,24 +223,64 @@ public class Controller implements Initializable {
 				ready.setVisible(false);
 				vbl.getChildren().get(j).setDisable(true);
 				vbb.getChildren().get(j).setVisible(true);
+				//TODO
 			});
 			
 			vbr.getChildren().add(i, ready);
 		}
 
 		ap.getChildren().addAll(vbl, vbb, vbr);
+		infoScreen.setCenter(ap);
+		infoScreen.setTop(lbl);
 		
 		//Hotel reservations tab---------------------------------------
-		AnchorPane reserveScreen = new AnchorPane();
+		BorderPane reserveScreen = new BorderPane();
+		VBox order = new VBox();
 		Tab reserve = new Tab("Reservar", reserveScreen);
-
+		Label lblres = new Label("Reservar un hotel");
+		lblres.setFont(new Font("Arial", 20));
+		lblres.setTextAlignment(TextAlignment.CENTER);
+		Label cty = new Label("Ciudad a visitar:");
+		cty.setFont(new Font("Arial", 15));
+		cty.setTextAlignment(TextAlignment.LEFT);
+		TextField city = new TextField();
+		city.setPromptText("Ciudad");
+		Label dte1 = new Label("Fecha de ida:");
+		dte1.setFont(new Font("Arial", 15));
+		dte1.setTextAlignment(TextAlignment.LEFT);
+		DatePicker date1 = new DatePicker();
+		Label dte2 = new Label("Fecha de regreso:");
+		dte2.setFont(new Font("Arial", 15));
+		dte2.setTextAlignment(TextAlignment.LEFT);
+		DatePicker date2 = new DatePicker();
+		Button search = new Button("Buscar");
+		search.setOnAction(e -> {
+			//TODO
+		});
 		
+		order.getChildren().addAll(cty, city, dte1, date1, dte2, date2, search);
+		reserveScreen.setCenter(order);
+		reserveScreen.setTop(lblres);
+		
+		//Favorites Hotels tab-----------------------------------------
+		BorderPane favoritesScreen = new BorderPane();
+		VBox or = new VBox();
+		Tab favs = new Tab("Favoritos", favoritesScreen);
+		Label lblfav = new Label("Hoteles Favoritos");
+		lblfav.setFont(new Font("Arial", 20));
+		lblfav.setTextAlignment(TextAlignment.CENTER);
+		
+		
+		favoritesScreen.setCenter(or);
+		favoritesScreen.setTop(lblfav);
 		
 		//Stage set----------------------------------------------------
-		TabPane tp = new TabPane(perfil, reserve);
+		TabPane tp = new TabPane(reserve, favs, perfil);
 		tp.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());		
 		Scene sc2 = new Scene(tp);
 		Stage s = new Stage();
+		s.setMinHeight(reserveScreen.getHeight());
+		s.setMinWidth(reserveScreen.getWidth());
 		s.setTitle("Inicio");
 		s.setScene(sc2);
 		s.show();
