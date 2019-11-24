@@ -7,13 +7,13 @@ public class SearchHistory {
 	private String text;
 	private SearchHistory left;
 	private SearchHistory right;
-	
+
 	public SearchHistory(String text, SearchHistory left, SearchHistory right) {
 		this.text = text;
 		this.left = left;
 		this.right = right;
 	}
-	
+
 	public String getText() {
 		return text;
 	}
@@ -25,12 +25,15 @@ public class SearchHistory {
 	public SearchHistory getLeft() {
 		return left;
 	}
+
 	public void setLeft(SearchHistory left) {
 		this.left = left;
 	}
+
 	public SearchHistory getRight() {
 		return right;
 	}
+
 	public void setRight(SearchHistory right) {
 		this.right = right;
 	}
@@ -39,22 +42,41 @@ public class SearchHistory {
 	public String toString() {
 		return "SearchHistory [text=" + text + "]";
 	}
-	
-	public void arrayToArchive(ArrayList<SearchHistory> lista){
-		
-		if(left != null) {
+
+	public void arrayToArchive(ArrayList<SearchHistory> lista) {
+
+		if (left != null) {
 			SearchHistory auxL = left;
 			auxL.setLeft(null);
 			auxL.setRight(null);
 			lista.add(auxL);
 			left.arrayToArchive(lista);
 		}
-		if(right != null) {
+		if (right != null) {
 			SearchHistory auxR = right;
 			auxR.setLeft(null);
 			auxR.setRight(null);
 			lista.add(auxR);
 			right.arrayToArchive(lista);
-		}	
+		}
+	}
+
+	public void addRecord(SearchHistory search) {
+		if (search.getText().equals(text)) {
+		} else {
+			if (search.getText().compareTo(text) < 0) {
+				if (left != null) {
+					left.addRecord(search);
+				} else {
+					left = search;
+				}
+			} else {
+				if (right != null) {
+					right.addRecord(search);
+				} else {
+					right = search;
+				}
+			}
+		}
 	}
 }

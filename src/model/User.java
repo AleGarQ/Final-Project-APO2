@@ -567,4 +567,14 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 			right.arrayToArchive(lista);
 		}	
 	}
+	
+	public void addRecordFinal(String search) {
+		SearchHistory searchT = new SearchHistory(search, null, null);
+		
+		if(record != null) {
+			record.addRecord(searchT);
+		}else {
+			record = searchT;
+		}
+	}
 }// final
