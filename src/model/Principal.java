@@ -173,11 +173,15 @@ public class Principal implements AddUserToTree {
 			int age = Integer.parseInt(ageA[2]);
 
 			if (2019 - age >= 18) {
-				if (searchUser(newUser, users) == false) {
-					addNewUser(newUser, users);
-				} else {
-					throw new ExistentException("El correo ingresado ya está registrado");
-				}
+				if(users == null) {
+					users = newUser;
+				}else {
+					if (searchUser(newUser, users) == false) {
+						addNewUser(newUser, users);
+					} else {
+						throw new ExistentException("El correo ingresado ya está registrado");
+					}
+				}	
 			} else {
 				throw new UnderAge("No esta permitido crear cuentas a un menor de edad");
 			}

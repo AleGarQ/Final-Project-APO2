@@ -15,27 +15,28 @@ class PrincipalTest {
 	public void init() {
 		Principal p = new Principal();
 	}
-	
-	public boolean addNewUserAux(User aux) {
-		boolean obtained = false;
-		if(p.getUsers() == aux) {
-			obtained = true;
-		}
-		return obtained;
-	}
 
-	@Test
-	void addNewUserTest() {
-		init();
-		User u = new User("I", "132", "u", "u", "02/12/2000", "123456", null, null);
-		try {
-			p.addNewUserFinal(u);
-		} catch (ExistentException e) {
-			e.printStackTrace();
-		} catch (UnderAge e) {
-			e.printStackTrace();
+	boolean searchUser(User newUser, User node) {
+		if (node != null) {
+			if (newUser.getEmail().compareTo(node.getEmail()) == 0) {
+				return true;
+			} else if (newUser.getEmail().compareTo(node.getEmail()) < 0) {
+				return searchUser(newUser, node.getLeft());
+			} else {
+				return searchUser(newUser, node.getRight());
+			}
 		}
-		assertTrue(addNewUserAux(u));
+		return false;
+	}
+	
+	@Test
+	void addNewUserTest() throws ExistentException, UnderAge {
+		p = new Principal();
+		User u1 = new User("I", "132", "u", "u", "02/12/2000", "123456", null, null);
+		
+		p.addNewUserFinal(u1);
+		
+		assertTrue(searchUser(u1, p.getUsers()));
 	}
 
 }
