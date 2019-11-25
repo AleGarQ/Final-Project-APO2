@@ -45,7 +45,7 @@ class UserTest {
 		assertFalse(user.searchHotel(aux, user.getfHotel()));
 	}
 	
-	public boolean reservedRoomAux(ReservedRoom aux) {
+	boolean reservedRoomAux(ReservedRoom aux) {
 		boolean obtained = false;
 		if(user.getRRooms() == aux) {
 			obtained = true;
