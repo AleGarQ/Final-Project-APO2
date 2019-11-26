@@ -5,8 +5,8 @@ public class ReservedRoom extends Room {
 	private ReservedRoom previous;
 	private ReservedRoom next;
 	
-	public ReservedRoom(String number, String id, int typeOfBeds, boolean availability, ReservedRoom previous, ReservedRoom next) {
-		super(number, id, typeOfBeds, availability);
+	public ReservedRoom(String number, String id, int typeOfBeds, boolean availability, String hotel, ReservedRoom previous, ReservedRoom next) {
+		super(number, id, typeOfBeds, availability, hotel);
 		this.previous = previous;
 		this.next = next;
 	}

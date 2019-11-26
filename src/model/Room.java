@@ -50,6 +50,11 @@ public class Room implements Serializable{
 	private boolean availability;
 	
 	/**
+	 * Attribute that has the hotel where is the room 
+	 */
+	private String hotel;
+	
+	/**
 	 * Relation with the previous room in the list
 	 */
 	private Room previous;
@@ -69,12 +74,13 @@ public class Room implements Serializable{
 	 * @param id - Room ID
 	 * @param typeOfBeds - Type of beds in the room
 	 */
-	public Room(String number, String id, int typeOfBeds, boolean availability) {
+	public Room(String number, String id, int typeOfBeds, boolean availability, String hotel) {
 		super();
 		this.number = number;
 		this.id = id;
 		this.typeOfBeds = typeOfBeds;
 		this.availability = availability;
+		this.hotel = hotel;
 	}
 
 	// -----------------------------------------------------------------
@@ -176,6 +182,20 @@ public class Room implements Serializable{
 	public void setNext(Room next) {
 		this.next = next;
 	}
+
+	/**
+	 * Method to get the attribute hotel
+	 * @return Hotel where is the room
+	 */
+	public String getHotel() {
+		return hotel;
+	}
 	
-	
+	/**
+	 * Method to set the attribute hotel
+	 * @param hotel - New hotel where is the room
+	 */
+	public void setHotel(String hotel) {
+		this.hotel = hotel;
+	}
 }//final

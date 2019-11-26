@@ -1,8 +1,10 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
@@ -52,8 +54,7 @@ public class Principal implements AddUserToTree {
 		User userAux = new User("Isaac", "1321", "p", "p", "02/12/2000", "3312", null, null);
 		users.setRight(userAux);
 
-		ReservedRoom rrAux = new ReservedRoom("A1", "101", Room.DOUBLE, false, null, null);
-		users.setRRooms(rrAux);
+		
 
 		FavoriteHotel fhAux = new FavoriteHotel("Marriot", "1007707024", "150000", 5, 4.7, "Cali", null, null);
 		users.setfHotel(fhAux);
@@ -68,9 +69,12 @@ public class Principal implements AddUserToTree {
 		users.setCustomList(listica);
 
 		Hotel hotel = new Hotel("Marriot", "1007707024", "150000", 5, 4.7, "Cali");
-		Room roomi = new Room("A1", "101", Room.DOUBLE, false);
+		Room roomi = new Room("A1", "101", Room.DOUBLE, false, hotel.getName());
 		hotel.setRooms(roomi);
 		hotels.add(hotel);
+		
+		ReservedRoom rrAux = new ReservedRoom("A1", "101", Room.DOUBLE, false, hotel.getName(), null, null);
+		users.setRRooms(rrAux);
 		
 		serializeHotelsAndRooms();
 		//generateUserArchive();
@@ -438,6 +442,71 @@ public class Principal implements AddUserToTree {
 			}
 			pw.close();
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadHotels() {
+		try {
+			File file = new File("files/Hotels file");
+			
+			if(file.exists()) {
+				FileReader fileR = new FileReader(file);
+				BufferedReader br = new BufferedReader(fileR);
+				String line = br.readLine();
+				
+				while(line != null) {
+					if(line.charAt(0) != '#') {
+						String parts[] = line.split(",");
+						String name = parts[0];
+						String id = parts[1];
+						String priceRange = parts[2];
+						int stars = Integer.parseInt(parts[3]);
+						double score = Double.parseDouble(parts[4]);
+						String city = parts[5];
+						
+						Hotel nuevesito = new Hotel(name, id, priceRange, stars, score, city);
+						hotels.add(nuevesito);
+						
+						br.readLine();
+					}
+				}
+				br.close();
+			}
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadUsers() throws ExistentException, UnderAge {
+		
+		try {
+			File file = new File("files/Users file");
+			
+			if(file.exists()) {
+				FileReader fileR = new FileReader(file);
+				BufferedReader br = new BufferedReader(fileR);
+				String line = br.readLine();
+				
+				while(line != null) {
+					if(line.charAt(0) != '#') {
+						String parts[] = line.split(",");
+						String name = parts[0];
+						String id = parts[1];
+						String password = parts[2];
+						String email = parts[3];
+						String age = parts[4];
+						String phoneNumber = parts[5];
+						
+						User epale = new User(name, id, password, email, age, phoneNumber, null, null);
+						addNewUserFinal(epale);
+						
+						br.readLine();
+					}
+				}
+				br.close();
+			}
+		}catch(IOException e) {
 			e.printStackTrace();
 		}
 	}

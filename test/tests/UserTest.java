@@ -56,7 +56,7 @@ class UserTest {
 	@Test
 	void addReservedRoomTestTrue() {
 		init();
-		ReservedRoom r = new ReservedRoom("01", "123", 1, true, null, null);
+		ReservedRoom r = new ReservedRoom("01", "123", 1, false, "Marriot", null, null);
 		user.addReservedRoom(r);
 		assertTrue(reservedRoomAux(r));
 	}
