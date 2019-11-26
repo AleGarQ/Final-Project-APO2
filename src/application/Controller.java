@@ -206,7 +206,7 @@ public class Controller implements Initializable {
 		DatePicker date2 = new DatePicker();
 		Button search = new Button("Buscar");
 		search.setOnAction(e -> {
-			// TODO
+			String searching = city.getText();
 		});
 		sb.setMin(0);
 		sb.setMax(reserveScreen.getHeight()+20);

@@ -41,8 +41,8 @@ public class Principal implements AddUserToTree {
 	 */
 	public Principal() {
 		hotels = new ArrayList<Hotel>();
-	init();
-		
+		init();
+		loadHotels();
 		
 	}
 
@@ -70,16 +70,16 @@ public class Principal implements AddUserToTree {
 		listica.add(clAux);
 		users.setCustomList(listica);
 
-		Hotel hotel = new Hotel("Marriot", "1007707024", "150000", 5, 4.7, "Cali");
-		Room roomi = new Room("A1", "101", Room.DOUBLE, false, hotel.getName());
-		hotel.setRooms(roomi);
-		hotels.add(hotel);
+//		Hotel hotel = new Hotel("Marriot", "1007707024", "150000", 5, 4.7, "Cali");
+//		Room roomi = new Room("A1", "101", Room.DOUBLE, false, hotel.getName());
+//		hotel.setRooms(roomi);
+//		hotels.add(hotel);
 		
-		ReservedRoom rrAux = new ReservedRoom("A1", "101", Room.DOUBLE, false, hotel.getName(), null, null);
-		users.setRRooms(rrAux);
+//		ReservedRoom rrAux = new ReservedRoom("A1", "101", Room.DOUBLE, false, hotel.getName(), null, null);
+//		users.setRRooms(rrAux);
 		
 		serializeHotelsAndRooms();
-		generateUserArchive();
+//		generateUserArchive();
 	}
 
 	/**
@@ -463,7 +463,7 @@ public class Principal implements AddUserToTree {
 	
 	public void loadHotels() {
 		try {
-			File file = new File("files/Hotels file");
+			File file = new File("files/Hotelsfile.csv");
 			
 			if(file.exists()) {
 				FileReader fileR = new FileReader(file);
@@ -471,22 +471,21 @@ public class Principal implements AddUserToTree {
 				String line = br.readLine();
 				
 				while(line != null) {
-					if(line.charAt(0) != '#') {
-						String parts[] = line.split(",");
-						String name = parts[0];
-						String id = parts[1];
-						String priceRange = parts[2];
-						int stars = Integer.parseInt(parts[3]);
-						double score = Double.parseDouble(parts[4]);
-						String city = parts[5];
-						
-						Hotel nuevesito = new Hotel(name, id, priceRange, stars, score, city);
-						hotels.add(nuevesito);
-						
-						br.readLine();
-					}
+					String parts[] = line.split(",");
+					String name = parts[0];
+					String id = parts[1];
+					String priceRange = parts[2];
+					int stars = Integer.parseInt(parts[3]);
+					double score = Double.parseDouble(parts[4]);
+					String city = parts[5];
+
+					Hotel nuevesito = new Hotel(name, id, priceRange, stars, score, city);
+					hotels.add(nuevesito);
+
+					line = br.readLine();
 				}
 				br.close();
+				fileR.close();
 			}
 		}catch(IOException e) {
 			e.printStackTrace();
