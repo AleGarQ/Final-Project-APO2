@@ -550,7 +550,33 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	public void addReservedRoom(ReservedRoom nueva, User node) {
+		if(idActual.equals(node.getId())) {
+			node.addReservedRoom(nueva);
+		}else if(idActual.compareTo(node.getId()) < 0) {
+			addReservedRoom(nueva, node.getLeft());
+		}else {
+			addReservedRoom(nueva, node.getRight());
+		}
+	}
+	
+	
+	public void addReservedRoomFinal(ReservedRoom nueva) {
+		if(users != null) {
+			addReservedRoom(nueva, users);
+		}
+	}
+	
 	public void reserveRoom(String hotelName, String idRoom) {
 		
+		boolean ya = false;
+		for(int i = 0; i < hotels.size() && !ya; i++) {
+			if(hotels.get(i).getName().equals(hotelName)) {
+				Room aux = hotels.get(i).reserveRoom(idRoom);
+				ya = true;
+				ReservedRoom temp = new ReservedRoom(aux.getNumber(), aux.getId(), aux.getTypeOfBeds(), aux.getAvailability(), aux.getHotel(), null, null);
+				addReservedRoomFinal(temp);
+			}
+		}
 	}
 }// final
