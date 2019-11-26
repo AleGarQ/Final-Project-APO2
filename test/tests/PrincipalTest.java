@@ -40,24 +40,28 @@ class PrincipalTest {
 	@Test
 	void searchHotelByNameTest() throws ListNotFoundException {
 		init();
-		Hotel h = new Hotel("Marriot", "523", "50000", 5, 4.5, "Cali");
-		Hotel h2 = new Hotel("Inter", "423", "65000", 5, 5.0, "Cali");
+		Hotel h = new Hotel("Inter", "523", "50000", 5, 4.5, "Cali");
+		Hotel h2 = new Hotel("Marriot", "423", "65000", 5, 5.0, "Cali");
 		Hotel h3 = new Hotel("OtroHotel", "623", "55000", 4, 4.0, "Cali");
-		p.getHotels().add(h);
-		p.getHotels().add(h3);
-		p.getHotels().add(h2);
+		ArrayList<Hotel> hL = new ArrayList<Hotel>();
+		hL.add(h);
+		hL.add(h2);
+		hL.add(h3);
+		p.setHotels(hL);
 		assertEquals(h3, p.searchHotelByName("OtroHotel"));
 	}
 	
 	@Test
 	void searchHotelByIdTest() throws ListNotFoundException {
 		init();
-		Hotel h = new Hotel("Marriot", "523", "50000", 5, 4.5, "Cali");
-		Hotel h2 = new Hotel("Inter", "423", "65000", 5, 5.0, "Cali");
+		Hotel h = new Hotel("Marriot", "423", "50000", 5, 4.5, "Cali");
+		Hotel h2 = new Hotel("Inter", "523", "65000", 5, 5.0, "Cali");
 		Hotel h3 = new Hotel("OtroHotel", "623", "55000", 4, 4.0, "Cali");
-		p.getHotels().add(h);
-		p.getHotels().add(h3);
-		p.getHotels().add(h2);
-		assertEquals(h2, p.searchHotelById("423"));
+		ArrayList<Hotel> hL = new ArrayList<Hotel>();
+		hL.add(h);
+		hL.add(h2);
+		hL.add(h3);
+		p.setHotels(hL);
+		assertEquals(h, p.searchHotelById("423"));
 	}
 }
