@@ -560,8 +560,6 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 		
 		if(right != null) {
 			User auxR = right;
-			auxR.setLeft(null);
-			auxR.setRight(null);
 			lista.add(auxR);
 			right.arrayToArchive(lista);
 		}	

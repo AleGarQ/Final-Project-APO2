@@ -189,4 +189,26 @@ public class Hotel implements Comparable<Hotel>, Serializable{
 		return "Hotel [name=" + name + ", id=" + id + ", priceRange=" + priceRange + ", stars=" + stars + ", score="
 				+ score + ", city=" + city + "]";
 	}
+	
+	public Room reserveRoom(String idRoom) {
+		Room temp = null;
+		
+		if(rooms != null) {
+			if(rooms.getId().equals(idRoom)) {
+				rooms.setAvailability(false);
+			}else {
+				Room aux = rooms;
+				boolean ya = false;
+				
+				while(aux != null && !ya) {
+					if(aux.getId().equals(idRoom)) {
+						aux.setAvailability(false);
+						ya = true;
+						temp = aux;
+					}
+				}
+			}
+		}
+		return temp;
+	}
 }//final

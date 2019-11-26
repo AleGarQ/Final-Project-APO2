@@ -24,6 +24,10 @@ public class Principal implements AddUserToTree {
 	// -----------------------------------------------------------------
 
 	/**
+	 * Actual user's ID
+	 */
+	private String idActual;
+	/**
 	 * Relation with the users
 	 */
 	private User users;
@@ -79,7 +83,26 @@ public class Principal implements AddUserToTree {
 //		users.setRRooms(rrAux);
 		
 		serializeHotelsAndRooms();
-//		generateUserArchive();
+
+	//	generateUserArchive();
+	}
+
+	/**
+	 * Method to get the attribute idActual
+	 * 
+	 * @return ID of the actual user
+	 */
+	public String getIdActual() {
+		return idActual;
+	}
+
+	/**
+	 * Method to set the attribute idActual
+	 * 
+	 * @param idActual - New idActual
+	 */
+	public void setIdActual(String idActual) {
+		this.idActual = idActual;
 	}
 
 	/**
@@ -232,6 +255,8 @@ public class Principal implements AddUserToTree {
 		} else {
 			actual = findUser(email, users);
 		}
+		
+		setIdActual(actual.getId());
 
 		return actual;
 	}
@@ -522,6 +547,36 @@ public class Principal implements AddUserToTree {
 			}
 		}catch(IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void addReservedRoom(ReservedRoom nueva, User node) {
+		if(idActual.equals(node.getId())) {
+			node.addReservedRoom(nueva);
+		}else if(idActual.compareTo(node.getId()) < 0) {
+			addReservedRoom(nueva, node.getLeft());
+		}else {
+			addReservedRoom(nueva, node.getRight());
+		}
+	}
+	
+	
+	public void addReservedRoomFinal(ReservedRoom nueva) {
+		if(users != null) {
+			addReservedRoom(nueva, users);
+		}
+	}
+	
+	public void reserveRoom(String hotelName, String idRoom) {
+		
+		boolean ya = false;
+		for(int i = 0; i < hotels.size() && !ya; i++) {
+			if(hotels.get(i).getName().equals(hotelName)) {
+				Room aux = hotels.get(i).reserveRoom(idRoom);
+				ya = true;
+				ReservedRoom temp = new ReservedRoom(aux.getNumber(), aux.getId(), aux.getTypeOfBeds(), aux.getAvailability(), aux.getHotel(), null, null);
+				addReservedRoomFinal(temp);
+			}
 		}
 	}
 }// final
