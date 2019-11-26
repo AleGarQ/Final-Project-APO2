@@ -24,6 +24,10 @@ public class Principal implements AddUserToTree {
 	// -----------------------------------------------------------------
 
 	/**
+	 * Actual user's ID
+	 */
+	private String idActual;
+	/**
 	 * Relation with the users
 	 */
 	private User users;
@@ -79,7 +83,25 @@ public class Principal implements AddUserToTree {
 		users.setRRooms(rrAux);
 		
 		serializeHotelsAndRooms();
-		generateUserArchive();
+	//	generateUserArchive();
+	}
+
+	/**
+	 * Method to get the attribute idActual
+	 * 
+	 * @return ID of the actual user
+	 */
+	public String getIdActual() {
+		return idActual;
+	}
+
+	/**
+	 * Method to set the attribute idActual
+	 * 
+	 * @param idActual - New idActual
+	 */
+	public void setIdActual(String idActual) {
+		this.idActual = idActual;
 	}
 
 	/**
@@ -232,6 +254,8 @@ public class Principal implements AddUserToTree {
 		} else {
 			actual = findUser(email, users);
 		}
+		
+		setIdActual(actual.getId());
 
 		return actual;
 	}
@@ -524,5 +548,9 @@ public class Principal implements AddUserToTree {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void reserveRoom(String hotelName, String idRoom) {
+		
 	}
 }// final
