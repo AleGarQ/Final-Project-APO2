@@ -52,6 +52,9 @@ public class SearchHistory {
 			lista.add(auxL);
 			left.arrayToArchive(lista);
 		}
+		
+		lista.add(this);
+		
 		if (right != null) {
 			SearchHistory auxR = right;
 			auxR.setLeft(null);
