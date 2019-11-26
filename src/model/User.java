@@ -554,11 +554,10 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 		
 		if(left != null) {
 			User auxL = left;
-			auxL.setLeft(null);
-			auxL.setRight(null);
 			lista.add(auxL);
 			left.arrayToArchive(lista);
 		}
+		
 		if(right != null) {
 			User auxR = right;
 			auxR.setLeft(null);

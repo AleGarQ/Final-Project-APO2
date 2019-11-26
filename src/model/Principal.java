@@ -1,10 +1,12 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
@@ -39,7 +41,7 @@ public class Principal implements AddUserToTree {
 	 */
 	public Principal() {
 		hotels = new ArrayList<Hotel>();
-		init();
+	init();
 		
 		
 	}
@@ -77,7 +79,7 @@ public class Principal implements AddUserToTree {
 		users.setRRooms(rrAux);
 		
 		serializeHotelsAndRooms();
-		//generateUserArchive();
+		generateUserArchive();
 	}
 
 	/**
@@ -423,8 +425,6 @@ public class Principal implements AddUserToTree {
 
 		if (users != null) {
 			User auxP = users;
-			auxP.setLeft(null);
-			auxP.setRight(null);
 			usersArray.add(auxP);
 			users.arrayToArchive(usersArray);
 		}
@@ -441,6 +441,21 @@ public class Principal implements AddUserToTree {
 				pw.write(usuarios.get(i).toString());
 			}
 			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void generateUserArchive2() {
+		try {
+			File file = new File("files/Users");
+			FileWriter fw = new FileWriter(file);
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			for(int i = 0; i < arrayToText().size(); i++) {
+				bw.write(arrayToText().get(i).toString());
+			}
+			bw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
