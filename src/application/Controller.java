@@ -3,17 +3,22 @@ package application;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+
 import exceptions.ExistentException;
 import exceptions.UnderAge;
 import exceptions.WrongInformation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -161,6 +166,7 @@ public class Controller implements Initializable {
 		Button next = new Button("Siguiente ->");
 		next.setOnAction(e -> {
 			principalScreen();
+			firstScreen.setDisable(true);
 		});
 		Button logOut = new Button("Cerrar sesion X");
 		logOut.setOnAction(e -> {
@@ -175,68 +181,13 @@ public class Controller implements Initializable {
 	}
 
 	public void principalScreen() {
-		//User's information Tab---------------------------------------
-		BorderPane infoScreen = new BorderPane();
-		HBox ap = new HBox();
-		VBox vbl = new VBox();
-		VBox vbb = new VBox();
-		VBox vbr = new VBox();
-		Label lbl = new Label("Informacion Personal");
-		lbl.setFont(new Font("Arial", 20));
-		lbl.setTextAlignment(TextAlignment.CENTER);
-		Tab perfil = new Tab(actualUser.getName(), infoScreen);
-		TextField email = new TextField(actualUser.getEmail());
-		email.setDisable(true);
-		TextField name = new TextField(actualUser.getName());
-		name.setDisable(true);
-		TextField id = new TextField(actualUser.getId());
-		id.setDisable(true);
-		TextField phone = new TextField(actualUser.getPhoneNumber());
-		phone.setDisable(true);
-		vbl.getChildren().addAll(name, email, id, phone);
-		
-		for (int i = 0; i < vbl.getChildren().size(); i++) {
-			Image img = new Image("/resources/Editar.png");
-			ImageView edit = new ImageView(img);
-			edit.setFitHeight(20);
-			edit.setFitWidth(20);
-			Button b = new Button("", edit);
-			int j = i;
-			b.setOnAction(e -> {
-				vbl.getChildren().get(j).setDisable(false);
-				vbr.getChildren().get(j).setVisible(true);
-				b.setVisible(false);
-			});
-			vbb.getChildren().add(b);
-		}
-		
-		for (int i = 0; i < vbl.getChildren().size(); i++) {
-			Image im = new Image("/resources/Ready.png");
-			ImageView rdy = new ImageView(im);
-			rdy.setFitHeight(20);
-			rdy.setFitWidth(20);
-			int j = i;
-			Button ready = new Button("", rdy);
-			ready.setVisible(false);
-			
-			ready.setOnAction(r -> {
-				ready.setVisible(false);
-				vbl.getChildren().get(j).setDisable(true);
-				vbb.getChildren().get(j).setVisible(true);
-				//TODO
-			});
-			
-			vbr.getChildren().add(i, ready);
-		}
-
-		ap.getChildren().addAll(vbl, vbb, vbr);
-		infoScreen.setCenter(ap);
-		infoScreen.setTop(lbl);
-		
-		//Hotel reservations tab---------------------------------------
+		// Hotel reservations tab---------------------------------------
 		BorderPane reserveScreen = new BorderPane();
+		ScrollBar sb = new ScrollBar();
+		sb.setOrientation(Orientation.VERTICAL);
 		VBox order = new VBox();
 		Tab reserve = new Tab("Reservar", reserveScreen);
+		reserve.setClosable(false);
 		Label lblres = new Label("Reservar un hotel");
 		lblres.setFont(new Font("Arial", 20));
 		lblres.setTextAlignment(TextAlignment.CENTER);
@@ -255,34 +206,139 @@ public class Controller implements Initializable {
 		DatePicker date2 = new DatePicker();
 		Button search = new Button("Buscar");
 		search.setOnAction(e -> {
-			//TODO
+			// TODO
 		});
-		
+		sb.setMin(0);
+		sb.setMax(reserveScreen.getHeight()+20);
+		sb.setValue(100);
+		sb.valueProperty().addListener(ev -> {
+			reserveScreen.setTranslateY(-sb.getValue());
+		});
+
 		order.getChildren().addAll(cty, city, dte1, date1, dte2, date2, search);
 		reserveScreen.setCenter(order);
 		reserveScreen.setTop(lblres);
+		reserveScreen.setRight(sb);
 		
-		//Favorites Hotels tab-----------------------------------------
+		// User's information Tab---------------------------------------
+		BorderPane infoScreen = new BorderPane();
+		HBox ap = new HBox();
+		VBox vbl = new VBox();
+		VBox vbb = new VBox();
+		VBox vbr = new VBox();
+		Label lbl = new Label("Informacion Personal");
+		lbl.setFont(new Font("Arial", 20));
+		lbl.setTextAlignment(TextAlignment.CENTER);
+		Tab perfil = new Tab(actualUser.getName(), infoScreen);
+		perfil.setClosable(false);
+		TextField email = new TextField(actualUser.getEmail());
+		email.setDisable(true);
+		TextField name = new TextField(actualUser.getName());
+		name.setDisable(true);
+		TextField id = new TextField(actualUser.getId());
+		id.setDisable(true);
+		TextField phone = new TextField(actualUser.getPhoneNumber());
+		phone.setDisable(true);
+		vbl.getChildren().addAll(name, email, id, phone);
+
+		for (int i = 0; i < vbl.getChildren().size(); i++) {
+			Image img = new Image("/resources/Editar.png");
+			ImageView edit = new ImageView(img);
+			edit.setFitHeight(20);
+			edit.setFitWidth(20);
+			Button b = new Button("", edit);
+			int j = i;
+			b.setOnAction(e -> {
+				vbl.getChildren().get(j).setDisable(false);
+				vbr.getChildren().get(j).setVisible(true);
+				b.setVisible(false);
+			});
+			vbb.getChildren().add(b);
+		}
+
+		for (int i = 0; i < vbl.getChildren().size(); i++) {
+			Image im = new Image("/resources/Ready.png");
+			ImageView rdy = new ImageView(im);
+			rdy.setFitHeight(20);
+			rdy.setFitWidth(20);
+			int j = i;
+			Button ready = new Button("", rdy);
+			ready.setVisible(false);
+
+			ready.setOnAction(r -> {
+				ready.setVisible(false);
+				vbl.getChildren().get(j).setDisable(true);
+				vbb.getChildren().get(j).setVisible(true);
+				// TODO
+			});
+
+			vbr.getChildren().add(i, ready);
+		}
+
+		ap.getChildren().addAll(vbl, vbb, vbr);
+		infoScreen.setCenter(ap);
+		infoScreen.setTop(lbl);
+
+		// Favorites Hotels tab-----------------------------------------
 		BorderPane favoritesScreen = new BorderPane();
 		VBox or = new VBox();
 		Tab favs = new Tab("Favoritos", favoritesScreen);
+		favs.setClosable(false);
 		Label lblfav = new Label("Hoteles Favoritos");
 		lblfav.setFont(new Font("Arial", 20));
 		lblfav.setTextAlignment(TextAlignment.CENTER);
-		
-		
+
 		favoritesScreen.setCenter(or);
 		favoritesScreen.setTop(lblfav);
+
+		// Custom List Tab----------------------------------------------
+		BorderPane customListScreen = new BorderPane();
+		VBox ord = new VBox();
+		Tab custom = new Tab("Listas Personalizadas", customListScreen);
+		custom.setClosable(false);
+		Label lblcust = new Label("Listas Personalizadas");
+		lblcust.setFont(new Font("Arial", 20));
+		lblcust.setTextAlignment(TextAlignment.CENTER);
+
+		customListScreen.setCenter(ord);
+		customListScreen.setTop(lblcust);
+
+		// Reserved Room Tab----------------------------------------------
+		BorderPane reservedScreen = new BorderPane();
+		VBox o = new VBox();
+		Tab reserved = new Tab("Reservas", reservedScreen);
+		reserved.setClosable(false);
+		Label lblrese = new Label("Habitaciones Reservadas");
+		lblrese.setFont(new Font("Arial", 20));
+		lblrese.setTextAlignment(TextAlignment.CENTER);
+
+		reservedScreen.setCenter(o);
+		reservedScreen.setTop(lblrese);
 		
-		//Stage set----------------------------------------------------
-		TabPane tp = new TabPane(reserve, favs, perfil);
-		tp.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());		
+		//Recent Search Tab----------------------------------------------
+		BorderPane recentSearchScreen = new BorderPane();
+		VBox orde = new VBox();
+		Tab recent = new Tab("Recientes", recentSearchScreen);
+		recent.setClosable(false);
+		Label lblrecent = new Label("Busquedas Recientes");
+		lblrecent.setFont(new Font("Arial", 20));
+		lblrecent.setTextAlignment(TextAlignment.CENTER);
+
+		recentSearchScreen.setCenter(orde);
+		recentSearchScreen.setTop(lblrecent);
+				
+		// Stage set----------------------------------------------------
+		TabPane tp = new TabPane(reserve, reserved, recent, favs, custom, perfil);
+		tp.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
 		Scene sc2 = new Scene(tp);
 		Stage s = new Stage();
-		s.setMinHeight(reserveScreen.getHeight());
-		s.setMinWidth(reserveScreen.getWidth());
+		tp.setMinHeight(reserveScreen.getHeight());
+		tp.setMinWidth(reserveScreen.getWidth());
 		s.setTitle("Inicio");
 		s.setScene(sc2);
+		s.setOnCloseRequest(e ->{
+			firstScreen.setDisable(false);
+		});
 		s.show();
 	}
 }
