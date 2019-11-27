@@ -589,4 +589,84 @@ public class Principal implements AddUserToTree {
 			}
 		}
 	}
+	
+	public Hotel addFavoriteRoom1(String idHotel) {
+		boolean ya = false;
+		Hotel temp = null;
+		for(int i = 0; i < hotels.size() && !ya; i++) {
+			if(hotels.get(i).getId().equals(idHotel)) {
+				ya = true;
+				temp = hotels.get(i);
+			}
+		}
+		return temp;
+	}
+	
+	public void addFavoriteRoom2(String idHotel, User node) throws ExistentException {
+		if(idActual.equals(node.getId())) {
+			node.addNewFavoriteHotelFinal(addFavoriteRoom1(idHotel));
+		}else if(idActual.compareTo(node.getId()) < 0) {
+			addFavoriteRoom2(idHotel, node.getLeft());
+		}else {
+			addFavoriteRoom2(idHotel, node.getRight());
+		}
+	}
+	
+	public void addFavoriteRoomFinal(String idHotel) throws ExistentException {
+		if(users != null) {
+			addFavoriteRoom2(idHotel, users);
+		}
+	}
+	
+	public void createCustomList1(String listName, User node) {
+		if(idActual.equals(node.getId())) {
+			node.createNewCustomList(listName);
+		}else if(idActual.compareTo(node.getId()) < 0) {
+			createCustomList1(listName, node.getLeft());
+		}else {
+			createCustomList1(listName, node.getRight());
+		}
+	} 
+	
+	public void createCustomListFinal(String listName) {
+		if(users != null) {
+			createCustomList1(listName, users);
+		}
+	}
+	
+	public void addRecord(String search, User node) {
+		if(idActual.equals(node.getId())) {
+			node.addRecordFinal(search);
+		}else if(idActual.compareTo(node.getId()) < 0) {
+			addRecord(search, node.getLeft());
+		}else {
+			addRecord(search, node.getRight());
+		}
+	}
+	
+	public void addRecordFinal(String search) {
+		if(users != null) {
+			addRecord(search, users);
+		}
+	}
+	
+	public void addHotelToCustomList(String listName, HotelsListed newHotelToList, User node) throws ListNotFoundException {
+		if(idActual.equals(node.getId())) {
+			node.addHotelToCustomList(listName, newHotelToList);
+		}else if(idActual.compareTo(node.getId()) < 0) {
+			addHotelToCustomList(listName, newHotelToList, node.getLeft());
+		}else {
+			addHotelToCustomList(listName, newHotelToList, node.getRight());
+		}
+	}
+	
+	public void addHotelToCustomListFinal(String idHotel, String listName) throws ListNotFoundException {
+		if(listName != null) {
+			Hotel temp = addFavoriteRoom1(idHotel);
+			HotelsListed toAdd = new HotelsListed(temp.getName(), temp.getId(), temp.getPriceRange(), temp.getStars(), temp.getScore(), temp.getCity());
+			if(users != null) {
+				addHotelToCustomList(listName, toAdd, users);
+			}
+		}
+	}
 }// final
