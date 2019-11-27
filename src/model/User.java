@@ -6,20 +6,12 @@ import java.util.Comparator;
 import exceptions.ExistentException;
 import exceptions.ListNotFoundException;
 
-public class User implements Comparator<User>, AddFavoriteHotelToTree {
+public class User extends Person implements Comparator<User>, AddFavoriteHotelToTree {
 
 	// -----------------------------------------------------------------
 	// Attributes and relations
 	// -----------------------------------------------------------------
 
-	/**
-	 * Attribute that has the user's name
-	 */
-	private String name;
-	/**
-	 * Attribute that has the user's id
-	 */
-	private String id;
 	/**
 	 * Attribute that has the user's password
 	 */
@@ -28,10 +20,6 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 	 * Attribute that has the user's email
 	 */
 	private String email;
-	/**
-	 * Attribute that has the user's age
-	 */
-	private String age;
 	/**
 	 * Attribute that has the user's phone number
 	 */
@@ -77,17 +65,15 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 	 * @param left        - Relation with the user at the left
 	 * @param right       - Relation with the user at the right
 	 */
-	public User(String name, String id, String password, String email, String age, String phoneNumber, User left,
+	public User(String name, String id, String age, String password, String email, String phoneNumber, User left,
 			User right) {
-		this.name = name;
-		this.id = id;
+		super(name, id, age);
 		this.password = password;
 		this.email = email;
-		this.age = age;
 		this.phoneNumber = phoneNumber;
 		this.left = left;
 		this.right = right;
-		customList = new ArrayList<CustomList>();
+		customList = new ArrayList<>();
 		sortListByName();
 	}
 
@@ -95,41 +81,11 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 	// Methods
 	// -----------------------------------------------------------------
 
-	/**
-	 * Method to get the attribute name
-	 * 
-	 * @return User's name
-	 */
-	public String getName() {
-		return name;
-	}
+	
 
-	/**
-	 * Method to set the attribute name
-	 * 
-	 * @param name - New User's name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 
-	/**
-	 * Method to get the attribute id
-	 * 
-	 * @return User's id
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * Method to set the attribute id
-	 * 
-	 * @param id - New User's id
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
+	
 
 	/**
 	 * Method to get the attribute password
@@ -165,24 +121,6 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	/**
-	 * Method to get the attribute age
-	 * 
-	 * @return User's age
-	 */
-	public String getAge() {
-		return age;
-	}
-
-	/**
-	 * Method to set the attribute age
-	 * 
-	 * @param age - New User's age
-	 */
-	public void setAge(String age) {
-		this.age = age;
 	}
 
 	/**
@@ -545,7 +483,7 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 	
 	@Override
 	public String toString() {
-		return "+User [name=" + name + ", id=" + id + ", password=" + password + ", email=" + email + ", age=" + age
+		return "+User [name=" + getName() + ", id=" + getId() + ", password=" + password + ", email=" + email + ", age=" + getAge()
 				+ ", phoneNumber=" + phoneNumber + "\n"+ favoriteHotelsText() + "\n" + reservedRoomText() +
 				"\n"+ searchHistoryText() + "\n" + searchHistoryText() + "]";
 	}
@@ -573,5 +511,9 @@ public class User implements Comparator<User>, AddFavoriteHotelToTree {
 		}else {
 			record = searchT;
 		}
+	}
+	
+	public void deleteRecord() {
+		record = null;
 	}
 }// final
