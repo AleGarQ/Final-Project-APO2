@@ -6,7 +6,7 @@ import java.util.Comparator;
 import exceptions.ExistentException;
 import exceptions.ListNotFoundException;
 
-public class User extends Person implements Comparator<User>, AddFavoriteHotelToTree {
+public class User extends Person implements Comparator<User>, AddFavoriteHotelToTree, addRecordToTree {
 
 	// -----------------------------------------------------------------
 	// Attributes and relations
@@ -503,6 +503,7 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		}	
 	}
 	
+	@Override
 	public void addRecordFinal(String search) {
 		SearchHistory searchT = new SearchHistory(search, null, null);
 		
