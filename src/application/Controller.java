@@ -1,6 +1,7 @@
 package application;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javax.swing.JScrollBar;
@@ -19,6 +20,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -32,6 +34,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.*;
 
 public class Controller implements Initializable {
@@ -205,20 +208,43 @@ public class Controller implements Initializable {
 		dte2.setTextAlignment(TextAlignment.LEFT);
 		DatePicker date2 = new DatePicker();
 		Button search = new Button("Buscar");
+		VBox hotelsOrder = new VBox();
+		
 		search.setOnAction(e -> {
 			String searching = city.getText();
+			system.sortHotelsByCity();
+			ArrayList<Hotel> hotels = system.searchHotelsByCity(searching);
+			
+			for(int i = 0; i < hotels.size(); i++) {
+				Label hotelsName = new Label(hotels.get(i).getName());
+				
+				hotelsOrder.getChildren().add(hotelsName);
+			}
+			
+			ScrollPane sb2 = new ScrollPane(hotelsOrder);
+			sb2.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
+			Scene sc2 = new Scene(sb2);
+			Stage s = new Stage();
+			s.setOnCloseRequest(event ->{
+				hotelsOrder.getChildren().clear();
+			});
+			s.setTitle("Hoteles Disponibles");
+			s.setScene(sc2);
+			s.show();
+			
 		});
 		sb.setMin(0);
-		sb.setMax(reserveScreen.getHeight()+20);
+		sb.setMax(reserveScreen.getHeight()+30);
 		sb.setValue(100);
 		sb.valueProperty().addListener(ev -> {
 			reserveScreen.setTranslateY(-sb.getValue());
 		});
-
+		
 		order.getChildren().addAll(cty, city, dte1, date1, dte2, date2, search);
 		reserveScreen.setCenter(order);
 		reserveScreen.setTop(lblres);
 		reserveScreen.setRight(sb);
+		
 		
 		// User's information Tab---------------------------------------
 		BorderPane infoScreen = new BorderPane();

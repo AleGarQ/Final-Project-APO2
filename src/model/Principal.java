@@ -431,6 +431,16 @@ public class Principal implements AddUserToTree {
 
 		return found1;
 	}
+	
+	public ArrayList<Hotel> searchHotelsByCity(String city) {
+		ArrayList<Hotel> perCity = new ArrayList<>();
+		for (int i = 0; i < hotels.size(); i++) {
+			if (hotels.get(i).getCity().equalsIgnoreCase(city)) {
+				perCity.add(hotels.get(i));
+			}
+		}
+		return perCity;
+	}
 
 	public void serializeHotelsAndRooms() {
 		try {
