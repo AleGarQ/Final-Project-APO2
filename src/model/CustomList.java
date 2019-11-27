@@ -1,6 +1,6 @@
 package model;
 
-public class CustomList {
+public class CustomList implements AddHotelToLinkedList{
 
 	// -----------------------------------------------------------------
 	// Attributes and relations
@@ -78,6 +78,8 @@ public class CustomList {
 	 * 
 	 * @return If the hotel is in the list or not
 	 */
+	
+	@Override
 	public boolean searchHotelListed(String id) {
 		boolean esta = false;
 		if(hotelList != null) {
@@ -99,6 +101,8 @@ public class CustomList {
 	 * 
 	 * @param newHotelToList - New hotel to add
 	 */
+	
+	@Override
 	public void addHotelToList(Hotel newHotelToList) {
 		if (newHotelToList != null) {
 			HotelsListed newHotelToList1 = new HotelsListed(newHotelToList.getName(), newHotelToList.getId(),
