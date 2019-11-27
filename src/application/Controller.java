@@ -211,12 +211,13 @@ public class Controller implements Initializable {
 		VBox hotelsOrder = new VBox();
 		
 		search.setOnAction(e -> {
+			hotelsOrder.getChildren().clear();
 			String searching = city.getText();
 			system.sortHotelsByCity();
 			ArrayList<Hotel> hotels = system.searchHotelsByCity(searching);
 			
 			for(int i = 0; i < hotels.size(); i++) {
-				Label hotelsName = new Label(hotels.get(i).getName());
+				Label hotelsName = new Label(hotels.get(i).toString());
 				
 				hotelsOrder.getChildren().add(hotelsName);
 			}
