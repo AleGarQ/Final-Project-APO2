@@ -65,7 +65,7 @@ class PrincipalTest {
 		assertEquals(h, p.searchHotelById("423"));
 	}
 	
-	boolean addFavoriteRoomAux(FavoriteHotel f) {
+	boolean addFavoriteRoomAux(Hotel f) {
 		boolean result = false;
 		if(p.getUsers().getfHotel() == f) {
 			result = true;
@@ -74,12 +74,13 @@ class PrincipalTest {
 	}
 	
 	@Test
-	void addFavoriteRoomTest() throws ExistentException, UnderAge {
+	void addFavoriteRoomTest() throws ExistentException {
 		init();
 		User u = new User("I", "132", "02/12/2000", "u", "u", "123456", null, null);
 		p.setUsers(u);
-		FavoriteHotel fH = new FavoriteHotel("Marriot", "423", "50000", 5, 4.5, "Cali", null, null);
-		p.addFavoriteRoom2("423", p.getUsers());
+		Hotel fH = new Hotel("Marriot", "423", "50000", 5, 4.5, "Cali");
+		p.getHotels().add(fH);
+		p.addFavoriteRoomFinal("423");
 		assertTrue(addFavoriteRoomAux(fH));
 	}
 }
