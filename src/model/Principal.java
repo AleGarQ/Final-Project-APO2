@@ -3,7 +3,6 @@ package model;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -45,8 +44,16 @@ public class Principal implements AddUserToTree {
 	 */
 	public Principal() {
 		hotels = new ArrayList<Hotel>();
-		init();
+//		init();
 		loadHotels();
+		try {
+			loadUsers();
+		}catch(ExistentException e) {
+			e.getMessage();
+		}catch(UnderAge e) {
+			e.getMessage();
+		}
+		serializeHotelsAndRooms();
 	}
 
 	// -----------------------------------------------------------------
@@ -54,13 +61,6 @@ public class Principal implements AddUserToTree {
 	// -----------------------------------------------------------------
 
 	public void init() {
-		users = new User("Alejandro Garcia", "1193151954", "22/01/2001","Elclasico1", "alejo.gar.122@gmail.com",
-				"3114209888", null, null);
-		User userAux = new User("Isaac", "1321",  "02/12/2000","p", "p", "3312", null, null);
-		users.setRight(userAux);
-
-		
-
 		FavoriteHotel fhAux = new FavoriteHotel("Marriot", "1007707024", "150000", 5, 4.7, "Cali", null, null);
 		users.setfHotel(fhAux);
 
@@ -73,15 +73,13 @@ public class Principal implements AddUserToTree {
 		listica.add(clAux);
 		users.setCustomList(listica);
 
-//		Hotel hotel = new Hotel("Marriot", "1007707024", "150000", 5, 4.7, "Cali");
-//		Room roomi = new Room("A1", "101", Room.DOUBLE, false, hotel.getName());
-//		hotel.setRooms(roomi);
-//		hotels.add(hotel);
+		Hotel hotel = new Hotel("Marriot", "1007707024", "150000", 5, 4.7, "Cali");
+		Room roomi = new Room("A1", "101", Room.DOUBLE, false, hotel.getName());
+		hotel.setRooms(roomi);
+		hotels.add(hotel);
 		
-//		ReservedRoom rrAux = new ReservedRoom("A1", "101", Room.DOUBLE, false, hotel.getName(), null, null);
-//		users.setRRooms(rrAux);
-		
-	//	serializeHotelsAndRooms();
+		ReservedRoom rrAux = new ReservedRoom("A1", "101", Room.DOUBLE, false, hotel.getName(), null, null);
+		users.setRRooms(rrAux);
 
 	//	generateUserArchive();
 	}
@@ -529,7 +527,7 @@ public class Principal implements AddUserToTree {
 	public void loadUsers() throws ExistentException, UnderAge {
 		
 		try {
-			File file = new File("files/Users file");
+			File file = new File("files/Usersfile.csv");
 			
 			if(file.exists()) {
 				FileReader fileR = new FileReader(file);
@@ -537,20 +535,18 @@ public class Principal implements AddUserToTree {
 				String line = br.readLine();
 				
 				while(line != null) {
-					
-						String parts[] = line.split(",");
-						String name = parts[0];
-						String id = parts[1];
-						String password = parts[2];
-						String email = parts[3];
-						String age = parts[4];
-						String phoneNumber = parts[5];
+					String parts[] = line.split(",");
+					String name = parts[0];
+					String id = parts[1];
+					String age = parts[2];
+					String password = parts[3];
+					String email = parts[4];
+					String phoneNumber = parts[5];
 						
-						User epale = new User(name, id, age, password, email, phoneNumber, null, null);
-						addNewUserFinal(epale);
+					User epale = new User(name, id, age, password, email, phoneNumber, null, null);
+					addNewUserFinal(epale);
 						
-						line = br.readLine();
-					
+					line = br.readLine();
 				}
 				br.close();
 				fileR.close();

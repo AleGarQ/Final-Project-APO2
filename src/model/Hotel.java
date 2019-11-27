@@ -186,8 +186,8 @@ public class Hotel implements Comparable<Hotel>, Serializable{
 	
 	@Override
 	public String toString() {
-		return "Hotel [name=" + name + ", id=" + id + ", priceRange=" + priceRange + ", stars=" + stars + ", score="
-				+ score + ", city=" + city + "]";
+		return "" + name + "\nid: " + id + "\nMedia de precio: " + priceRange + "\nEstrellas: " + stars + "\nPuntuacion: "
+				+ score + "\nCiudad: " + city + "\n----------------------------------------------";
 	}
 	
 	public Room reserveRoom(String idRoom) {
