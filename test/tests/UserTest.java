@@ -21,6 +21,12 @@ class UserTest {
 		fH3.setLeft(fH2);
 		fH3.setRight(fH);
 		user.setfHotel(fH3);
+		CustomList cl = new CustomList("Epale", null);
+		HotelsListed hL = new HotelsListed("Marriot", "523", "50000", 5, 4.5, "Cali");
+		cl.setHotelList(hL);
+		ArrayList<CustomList> customLists = new ArrayList<>();
+		customLists.add(cl);
+		user.setCustomList(customLists);
 //		ReservedRoom r = new ReservedRoom("01", "123", 1, true, null, null);
 //		ReservedRoom r2 = new ReservedRoom("25", "456", 4, true, null, null);
 //		ReservedRoom r3 = new ReservedRoom("11", "832", 3, true, null, null);
@@ -64,13 +70,43 @@ class UserTest {
 	@Test
 	void createNewCustomListTest() throws ListNotFoundException {
 		init();
-		HotelsListed hL = new HotelsListed("Marriot", "523", "50000", 5, 4.5, "Cali");
-		HotelsListed hL2 = new HotelsListed("Inter", "323", "65000", 5, 5.0, "Cali");
-		hL.setNext(hL2);
-		hL2.setPrevious(hL);
-		CustomList cL = new CustomList("ListaNueva", hL);
 		user.createNewCustomList("ListaNueva");
-		user.addHotelToCustomList("ListaNueva", hL);
-		assertEquals(user.getCustomList(), cL);
+		
+		boolean esta = false;
+		for(int i = 0; i < user.getCustomList().size() && !esta; i ++) {
+			if(user.getCustomList().get(i).getListName().equals("ListaNueva")) {
+				esta = true;
+			}
+		}
+		
+		assertTrue(esta);
+		
+	}
+	
+	@Test
+	void addHotelToCustomListTest() throws ListNotFoundException {
+		init();
+		HotelsListed hL = new HotelsListed("Marriot", "343434343", "50000", 5, 4.5, "Cali");
+		user.addHotelToCustomList("Epale", hL);
+		
+		HotelsListed temp = null;
+		boolean ya = false;
+		
+		for(int i = 0; i < user.getCustomList().size() && !ya; i++) {
+			if(user.getCustomList().get(i).getListName().equals("Epale")) {
+				temp = user.getCustomList().get(i).getHotelList();
+				ya = true;
+			}
+		}
+		
+		boolean para = false;
+		while(temp != null && !para) {
+			if(temp.getId().equals(hL.getId())) {
+				para = true;
+			}else {
+				temp = temp.getNext();
+			}
+		}
+		assertTrue(para);
 	}
 }

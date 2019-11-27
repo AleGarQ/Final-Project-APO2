@@ -46,7 +46,7 @@ public class Principal implements AddUserToTree {
 	public Principal() {
 		hotels = new ArrayList<Hotel>();
 		init();
-		loadHotels();
+		//loadHotels();
 	}
 
 	// -----------------------------------------------------------------
@@ -81,7 +81,7 @@ public class Principal implements AddUserToTree {
 //		ReservedRoom rrAux = new ReservedRoom("A1", "101", Room.DOUBLE, false, hotel.getName(), null, null);
 //		users.setRRooms(rrAux);
 		
-		serializeHotelsAndRooms();
+	//	serializeHotelsAndRooms();
 
 	//	generateUserArchive();
 	}
@@ -537,7 +537,7 @@ public class Principal implements AddUserToTree {
 				String line = br.readLine();
 				
 				while(line != null) {
-					if(line.charAt(0) != '#') {
+					
 						String parts[] = line.split(",");
 						String name = parts[0];
 						String id = parts[1];
@@ -549,10 +549,11 @@ public class Principal implements AddUserToTree {
 						User epale = new User(name, id, password, email, age, phoneNumber, null, null);
 						addNewUserFinal(epale);
 						
-						br.readLine();
-					}
+						line = br.readLine();
+					
 				}
 				br.close();
+				fileR.close();
 			}
 		}catch(IOException e) {
 			e.printStackTrace();
