@@ -67,8 +67,11 @@ class PrincipalTest {
 	
 	boolean addFavoriteRoomAux(Hotel f) {
 		boolean result = false;
-		if(p.getUsers().getfHotel() == f) {
-			result = true;
+		FavoriteHotel aux = p.getUsers().getfHotel();
+		while(aux != null && !result) {
+			if(aux.getId().equals(f.getId())) {
+				result = true;
+			}
 		}
 		return result;
 	}
@@ -78,6 +81,7 @@ class PrincipalTest {
 		init();
 		User u = new User("I", "132", "02/12/2000", "u", "u", "123456", null, null);
 		p.setUsers(u);
+		p.setIdActual(u.getId());
 		Hotel fH = new Hotel("Marriot", "423", "50000", 5, 4.5, "Cali");
 		p.getHotels().add(fH);
 		p.addFavoriteRoomFinal("423");

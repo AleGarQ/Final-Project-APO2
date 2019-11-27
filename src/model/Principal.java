@@ -602,9 +602,13 @@ public class Principal implements AddUserToTree {
 		if(idActual.equals(node.getId())) {
 			node.addNewFavoriteHotelFinal(addFavoriteRoom1(idHotel));
 		}else if(idActual.compareTo(node.getId()) < 0) {
-			addFavoriteRoom2(idHotel, node.getLeft());
+			if(node.getLeft() != null) {
+				addFavoriteRoom2(idHotel, node.getLeft());
+			}		
 		}else {
-			addFavoriteRoom2(idHotel, node.getRight());
+			if(node.getRight() != null) {
+				addFavoriteRoom2(idHotel, node.getRight());
+			}	
 		}
 	}
 	
