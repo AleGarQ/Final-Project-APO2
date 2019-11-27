@@ -211,4 +211,17 @@ public class Hotel implements Comparable<Hotel>, Serializable{
 		}
 		return temp;
 	}
+	
+	public void addRoom(Room room) {
+		if(room != null) {
+			if(rooms == null) {
+				rooms = room;
+			}else {
+				Room aux = rooms;
+				aux.setPrevious(room);
+				room.setNext(aux);
+				rooms = room;
+			}
+		}	
+	}
 }//final

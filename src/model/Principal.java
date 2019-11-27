@@ -46,6 +46,7 @@ public class Principal implements AddUserToTree {
 		hotels = new ArrayList<Hotel>();
 //		init();
 		loadHotels();
+		addRoom();
 		try {
 			loadUsers();
 		}catch(ExistentException e) {
@@ -560,9 +561,13 @@ public class Principal implements AddUserToTree {
 		if(idActual.equals(node.getId())) {
 			node.addReservedRoom(nueva);
 		}else if(idActual.compareTo(node.getId()) < 0) {
-			addReservedRoom(nueva, node.getLeft());
+			if(node.getLeft() != null) {
+				addReservedRoom(nueva, node.getLeft());
+			}	
 		}else {
-			addReservedRoom(nueva, node.getRight());
+			if(node.getRight() != null) {
+				addReservedRoom(nueva, node.getRight());
+			}
 		}
 	}
 	
@@ -622,9 +627,13 @@ public class Principal implements AddUserToTree {
 		if(idActual.equals(node.getId())) {
 			node.createNewCustomList(listName);
 		}else if(idActual.compareTo(node.getId()) < 0) {
-			createCustomList1(listName, node.getLeft());
+			if(node.getLeft() != null) {
+				createCustomList1(listName, node.getLeft());
+			}
 		}else {
-			createCustomList1(listName, node.getRight());
+			if(node.getRight() != null) {
+				createCustomList1(listName, node.getRight());
+			}
 		}
 	} 
 	
@@ -638,9 +647,13 @@ public class Principal implements AddUserToTree {
 		if(idActual.equals(node.getId())) {
 			node.addRecordFinal(search);
 		}else if(idActual.compareTo(node.getId()) < 0) {
-			addRecord(search, node.getLeft());
+			if(node.getLeft() != null) {
+				addRecord(search, node.getLeft());
+			}
 		}else {
-			addRecord(search, node.getRight());
+			if(node.getRight() != null) {
+				addRecord(search, node.getRight());
+			}
 		}
 	}
 	
@@ -654,9 +667,13 @@ public class Principal implements AddUserToTree {
 		if(idActual.equals(node.getId())) {
 			node.addHotelToCustomList(listName, newHotelToList);
 		}else if(idActual.compareTo(node.getId()) < 0) {
-			addHotelToCustomList(listName, newHotelToList, node.getLeft());
+			if(node.getLeft() != null) {
+				addHotelToCustomList(listName, newHotelToList, node.getLeft());
+			}
 		}else {
-			addHotelToCustomList(listName, newHotelToList, node.getRight());
+			if(node.getRight() != null) {
+				addHotelToCustomList(listName, newHotelToList, node.getRight());
+			}
 		}
 	}
 	
@@ -674,15 +691,65 @@ public class Principal implements AddUserToTree {
 		if(idActual.equals(node.getId())) {
 			node.deleteRecord();
 		}else if(idActual.compareTo(node.getId()) < 0) {
-			deleteRecord(node.getLeft());
+			if(node.getLeft() != null) {
+				deleteRecord(node.getLeft());
+			}
 		}else {
-			deleteRecord(node.getRight());
+			if(node.getRight() != null) {
+				deleteRecord(node.getRight());
+			}
 		}
 	}
 	
 	public void deleteRecordFinal() {
 		if(users != null) {
 			deleteRecord(users);
+		}
+	}
+	
+	public void addRoom() {
+		for(int i = 0; i < hotels.size(); i++) {
+			String nHotel = hotels.get(i).getName();
+			Room aux1 = new Room("A1", "100", Room.INDIVIDUAL, false, nHotel);
+			hotels.get(i).addRoom(aux1);
+			Room aux2 = new Room("A2", "100", Room.INDIVIDUAL, false, nHotel);
+			hotels.get(i).addRoom(aux2);
+			Room aux3 = new Room("A3", "100", Room.INDIVIDUAL, false, nHotel);
+			hotels.get(i).addRoom(aux3);
+			Room aux4 = new Room("A4", "100", Room.INDIVIDUAL, false, nHotel);
+			hotels.get(i).addRoom(aux4);
+			Room aux5 = new Room("A5", "100", Room.INDIVIDUAL, false, nHotel);
+			hotels.get(i).addRoom(aux5);
+			Room aux6 = new Room("B1", "100", Room.DOUBLE, false, nHotel);
+			hotels.get(i).addRoom(aux6);
+			Room aux7 = new Room("B2", "100", Room.DOUBLE, false, nHotel);
+			hotels.get(i).addRoom(aux7);
+			Room aux8 = new Room("B3", "100", Room.DOUBLE, false, nHotel);
+			hotels.get(i).addRoom(aux8);
+			Room aux9 = new Room("B4", "100", Room.DOUBLE, false, nHotel);
+			hotels.get(i).addRoom(aux9);
+			Room aux10 = new Room("B5", "100", Room.DOUBLE, false, nHotel);
+			hotels.get(i).addRoom(aux10);
+			Room aux11 = new Room("C1", "100", Room.FAMILY, false, nHotel);
+			hotels.get(i).addRoom(aux11);
+			Room aux12 = new Room("C2", "100", Room.FAMILY, false, nHotel);
+			hotels.get(i).addRoom(aux12);
+			Room aux13 = new Room("C3", "100", Room.FAMILY, false, nHotel);
+			hotels.get(i).addRoom(aux13);
+			Room aux14 = new Room("C4", "100", Room.FAMILY, false, nHotel);
+			hotels.get(i).addRoom(aux14);
+			Room aux15 = new Room("C5", "100", Room.FAMILY, false, nHotel);
+			hotels.get(i).addRoom(aux15);
+			Room aux16 = new Room("D1", "100", Room.MULTIPLE, false, nHotel);
+			hotels.get(i).addRoom(aux16);
+			Room aux17 = new Room("D2", "100", Room.MULTIPLE, false, nHotel);
+			hotels.get(i).addRoom(aux17);
+			Room aux18 = new Room("D3", "100", Room.MULTIPLE, false, nHotel);
+			hotels.get(i).addRoom(aux18);
+			Room aux19 = new Room("D4", "100", Room.MULTIPLE, false, nHotel);
+			hotels.get(i).addRoom(aux19);
+			Room aux20 = new Room("D5", "100", Room.MULTIPLE, false, nHotel);
+			hotels.get(i).addRoom(aux20);
 		}
 	}
 }// final
