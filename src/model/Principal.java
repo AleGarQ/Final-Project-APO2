@@ -47,7 +47,6 @@ public class Principal implements AddUserToTree {
 		hotels = new ArrayList<Hotel>();
 		init();
 		loadHotels();
-		
 	}
 
 	// -----------------------------------------------------------------
