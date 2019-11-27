@@ -54,9 +54,9 @@ public class Principal implements AddUserToTree {
 	// -----------------------------------------------------------------
 
 	public void init() {
-		users = new User("Alejandro Garcia", "1193151954", "Elclasico1", "alejo.gar.122@gmail.com", "22/01/2001",
+		users = new User("Alejandro Garcia", "1193151954", "22/01/2001","Elclasico1", "alejo.gar.122@gmail.com",
 				"3114209888", null, null);
-		User userAux = new User("Isaac", "1321", "p", "p", "02/12/2000", "3312", null, null);
+		User userAux = new User("Isaac", "1321",  "02/12/2000","p", "p", "3312", null, null);
 		users.setRight(userAux);
 
 		
@@ -546,7 +546,7 @@ public class Principal implements AddUserToTree {
 						String age = parts[4];
 						String phoneNumber = parts[5];
 						
-						User epale = new User(name, id, password, email, age, phoneNumber, null, null);
+						User epale = new User(name, id, age, password, email, phoneNumber, null, null);
 						addNewUserFinal(epale);
 						
 						line = br.readLine();
@@ -667,6 +667,22 @@ public class Principal implements AddUserToTree {
 			if(users != null) {
 				addHotelToCustomList(listName, toAdd, users);
 			}
+		}
+	}
+	
+	public void deleteRecord(User node) {
+		if(idActual.equals(node.getId())) {
+			node.deleteRecord();
+		}else if(idActual.compareTo(node.getId()) < 0) {
+			deleteRecord(node.getLeft());
+		}else {
+			deleteRecord(node.getRight());
+		}
+	}
+	
+	public void deleteRecordFinal() {
+		if(users != null) {
+			deleteRecord(users);
 		}
 	}
 }// final
