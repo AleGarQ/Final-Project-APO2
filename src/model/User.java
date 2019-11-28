@@ -579,5 +579,5 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 	public void deleteRecord() {
 		record = null;
 	}
-	//Nombre, email, telefono
+	
 }// final
