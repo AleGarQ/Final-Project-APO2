@@ -1,6 +1,6 @@
 package model;
 
-public class CustomList implements AddHotelToLinkedList{
+public class CustomList implements AddHotelToLinkedList {
 
 	// -----------------------------------------------------------------
 	// Attributes and relations
@@ -78,36 +78,37 @@ public class CustomList implements AddHotelToLinkedList{
 	 * 
 	 * @return If the hotel is in the list or not
 	 */
-	
+
 	@Override
 	public boolean searchHotelListed(String id) {
 		boolean esta = false;
-		if(hotelList != null) {
+		if (hotelList != null) {
 			HotelsListed aux = hotelList;
-			while(aux != null && !esta) {
-				if(aux.getId().compareTo(id) == 0) {
+			while (aux != null && !esta) {
+				if (aux.getId().compareTo(id) == 0) {
 					esta = true;
-				}else {
+				} else {
 					aux = aux.getNext();
 				}
 			}
 		}
-		
+
 		return esta;
 	}
-	
+
 	/**
 	 * Method to add an hotel to the list
 	 * 
 	 * @param newHotelToList - New hotel to add
 	 */
-	
+
 	@Override
 	public void addHotelToList(Hotel newHotelToList) {
 		if (newHotelToList != null) {
 			HotelsListed newHotelToList1 = new HotelsListed(newHotelToList.getName(), newHotelToList.getId(),
-					newHotelToList.getPriceRange(), newHotelToList.getStars(), newHotelToList.getScore(), newHotelToList.getCity());
-			if(searchHotelListed(newHotelToList1.getId()) == false) {
+					newHotelToList.getPriceRange(), newHotelToList.getStars(), newHotelToList.getScore(),
+					newHotelToList.getCity());
+			if (searchHotelListed(newHotelToList1.getId()) == false) {
 				if (hotelList == null) {
 					hotelList = newHotelToList1;
 				} else {
@@ -116,31 +117,33 @@ public class CustomList implements AddHotelToLinkedList{
 					newHotelToList1.setNext(aux);
 					hotelList = newHotelToList1;
 				}
-			}	
+			}
 		}
 	}
-	
-	public void sortHotelsByName() {		
-		if(hotelList != null) {
+
+	/**
+	 * Method to sort the list by name
+	 */
+	public void sortHotelsByName() {
+		if (hotelList != null) {
 			boolean ord;
 			do {
 				ord = false;
 				HotelsListed temp = hotelList;
 				HotelsListed tempN = hotelList.getNext();
 				HotelsListed temp2 = null;
-				
-			
-				while(tempN != null) {
-					if(temp.compare(temp, tempN) > 0) {
+
+				while (tempN != null) {
+					if (temp.compare(temp, tempN) > 0) {
 						ord = true;
-						if(temp2 != null) {
+						if (temp2 != null) {
 							HotelsListed next2 = tempN.getNext();
 							temp2.setNext(tempN);
 							tempN.setPrevious(temp2);
 							tempN.setNext(temp);
 							temp.setPrevious(tempN);
 							temp.setNext(next2);
-						}else {
+						} else {
 							HotelsListed tempN2 = tempN.getNext();
 							hotelList = tempN;
 							tempN.setNext(temp);
@@ -148,39 +151,41 @@ public class CustomList implements AddHotelToLinkedList{
 							temp.setNext(tempN2);
 							tempN2.setPrevious(temp);
 						}
-						temp2= tempN;
+						temp2 = tempN;
 						tempN = temp.getNext().getNext();
-					}else {
+					} else {
 						temp2 = temp;
 						temp = tempN;
 						tempN = tempN.getNext();
 					}
 				}
-			}while(ord);
+			} while (ord);
 		}
 	}
-	
-	public void sortHotelsByPriceRange() {		
-		if(hotelList != null) {
+
+	/**
+	 * Method to sort the list by price range
+	 */
+	public void sortHotelsByPriceRange() {
+		if (hotelList != null) {
 			boolean ord;
 			do {
 				ord = false;
 				HotelsListed temp = hotelList;
 				HotelsListed tempN = hotelList.getNext();
 				HotelsListed temp2 = null;
-				
-			
-				while(tempN != null) {
-					if(temp.getPriceRange().compareTo(tempN.getPriceRange()) > 0) {
+
+				while (tempN != null) {
+					if (temp.getPriceRange().compareTo(tempN.getPriceRange()) > 0) {
 						ord = true;
-						if(temp2 != null) {
+						if (temp2 != null) {
 							HotelsListed next2 = tempN.getNext();
 							temp2.setNext(tempN);
 							tempN.setPrevious(temp2);
 							tempN.setNext(temp);
 							temp.setPrevious(tempN);
 							temp.setNext(next2);
-						}else {
+						} else {
 							HotelsListed tempN2 = tempN.getNext();
 							hotelList = tempN;
 							tempN.setNext(temp);
@@ -188,39 +193,41 @@ public class CustomList implements AddHotelToLinkedList{
 							temp.setNext(tempN2);
 							tempN2.setPrevious(temp);
 						}
-						temp2= tempN;
+						temp2 = tempN;
 						tempN = temp.getNext().getNext();
-					}else {
+					} else {
 						temp2 = temp;
 						temp = tempN;
 						tempN = tempN.getNext();
 					}
 				}
-			}while(ord);
+			} while (ord);
 		}
 	}
-	
-	public void sortHotelsByStarsInDescendingOrder() {		
-		if(hotelList != null) {
+
+	/**
+	 * Method to sort the list by stars in descending order
+	 */
+	public void sortHotelsByStarsInDescendingOrder() {
+		if (hotelList != null) {
 			boolean ord;
 			do {
 				ord = false;
 				HotelsListed temp = hotelList;
 				HotelsListed tempN = hotelList.getNext();
 				HotelsListed temp2 = null;
-				
-			
-				while(tempN != null) {
-					if(temp.getStars() < tempN.getStars()) {
+
+				while (tempN != null) {
+					if (temp.getStars() < tempN.getStars()) {
 						ord = true;
-						if(temp2 != null) {
+						if (temp2 != null) {
 							HotelsListed next2 = tempN.getNext();
 							temp2.setNext(tempN);
 							tempN.setPrevious(temp2);
 							tempN.setNext(temp);
 							temp.setPrevious(tempN);
 							temp.setNext(next2);
-						}else {
+						} else {
 							HotelsListed tempN2 = tempN.getNext();
 							hotelList = tempN;
 							tempN.setNext(temp);
@@ -228,39 +235,41 @@ public class CustomList implements AddHotelToLinkedList{
 							temp.setNext(tempN2);
 							tempN2.setPrevious(temp);
 						}
-						temp2= tempN;
+						temp2 = tempN;
 						tempN = temp.getNext().getNext();
-					}else {
+					} else {
 						temp2 = temp;
 						temp = tempN;
 						tempN = tempN.getNext();
 					}
 				}
-			}while(ord);
+			} while (ord);
 		}
 	}
-	
-	public void sortHotelsByScoreInDescendingOrder() {		
-		if(hotelList != null) {
+
+	/**
+	 * Method to sort the list by score in descending order
+	 */
+	public void sortHotelsByScoreInDescendingOrder() {
+		if (hotelList != null) {
 			boolean ord;
 			do {
 				ord = false;
 				HotelsListed temp = hotelList;
 				HotelsListed tempN = hotelList.getNext();
 				HotelsListed temp2 = null;
-				
-			
-				while(tempN != null) {
-					if(temp.getScore() < tempN.getScore()) {
+
+				while (tempN != null) {
+					if (temp.getScore() < tempN.getScore()) {
 						ord = true;
-						if(temp2 != null) {
+						if (temp2 != null) {
 							HotelsListed next2 = tempN.getNext();
 							temp2.setNext(tempN);
 							tempN.setPrevious(temp2);
 							tempN.setNext(temp);
 							temp.setPrevious(tempN);
 							temp.setNext(next2);
-						}else {
+						} else {
 							HotelsListed tempN2 = tempN.getNext();
 							hotelList = tempN;
 							tempN.setNext(temp);
@@ -268,39 +277,41 @@ public class CustomList implements AddHotelToLinkedList{
 							temp.setNext(tempN2);
 							tempN2.setPrevious(temp);
 						}
-						temp2= tempN;
+						temp2 = tempN;
 						tempN = temp.getNext().getNext();
-					}else {
+					} else {
 						temp2 = temp;
 						temp = tempN;
 						tempN = tempN.getNext();
 					}
 				}
-			}while(ord);
+			} while (ord);
 		}
 	}
-	
-	public void sortHotelsByCity() {		
-		if(hotelList != null) {
+
+	/**
+	 * Method to sort the list by city
+	 */
+	public void sortHotelsByCity() {
+		if (hotelList != null) {
 			boolean ord;
 			do {
 				ord = false;
 				HotelsListed temp = hotelList;
 				HotelsListed tempN = hotelList.getNext();
 				HotelsListed temp2 = null;
-				
-			
-				while(tempN != null) {
-					if(temp.getCity().compareTo(tempN.getCity()) > 0) {
+
+				while (tempN != null) {
+					if (temp.getCity().compareTo(tempN.getCity()) > 0) {
 						ord = true;
-						if(temp2 != null) {
+						if (temp2 != null) {
 							HotelsListed next2 = tempN.getNext();
 							temp2.setNext(tempN);
 							tempN.setPrevious(temp2);
 							tempN.setNext(temp);
 							temp.setPrevious(tempN);
 							temp.setNext(next2);
-						}else {
+						} else {
 							HotelsListed tempN2 = tempN.getNext();
 							hotelList = tempN;
 							tempN.setNext(temp);
@@ -308,37 +319,46 @@ public class CustomList implements AddHotelToLinkedList{
 							temp.setNext(tempN2);
 							tempN2.setPrevious(temp);
 						}
-						temp2= tempN;
+						temp2 = tempN;
 						tempN = temp.getNext().getNext();
-					}else {
+					} else {
 						temp2 = temp;
 						temp = tempN;
 						tempN = tempN.getNext();
 					}
 				}
-			}while(ord);
+			} while (ord);
 		}
 	}
-	
+
+	/**
+	 * Method to get a String with the hotels information
+	 * @return Hotels information
+	 */
 	public String hotelsListedText() {
 		String toString = "";
 		HotelsListed aux = hotelList;
-		
-		while(aux != null) {
+
+		while (aux != null) {
 			toString += aux.toString() + ", ";
 		}
-		
+
 		return toString;
 	}
 
+	/**
+	 * Method to get the list information
+	 */
 	@Override
 	public String toString() {
 		return "Lista: " + listName + hotelsListedText();
 	}
-	
+
+	/**
+	 * Method to get the list information
+	 */
 	public String toString1() {
 		return "Lista: " + listName;
 	}
-	
-	
+
 }// final
