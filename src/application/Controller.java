@@ -32,6 +32,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.*;
+import threads.CargaUserHilo;
+import threads.CargarHotelThread;
 
 public class Controller implements Initializable {
 	private Principal system = new Principal();
@@ -54,7 +56,7 @@ public class Controller implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		loadAll();
 	}
 	
 	public void signInScreen() {
@@ -528,7 +530,7 @@ public class Controller implements Initializable {
 			orde.getChildren().add(lbl);
 		}
 	}
-	
+
 	public void showFavoriteHotels() {
 		or.getChildren().clear();
 		ArrayList<Label> favs = hotelsToFav;
@@ -536,5 +538,13 @@ public class Controller implements Initializable {
 			Label lbl = new Label(favs.get(i).getText());
 			or.getChildren().add(lbl);
 		}
+	}
+
+	public void loadAll() {
+		CargaUserHilo user = new CargaUserHilo(system);
+		CargarHotelThread hotel = new CargarHotelThread(system); 
+		user.start();
+		hotel.start();
+
 	}
 }

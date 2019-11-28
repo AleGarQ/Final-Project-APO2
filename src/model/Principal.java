@@ -41,48 +41,12 @@ public class Principal implements AddUserToTree {
 	 * Constructor of the Principal class
 	 */
 	public Principal() {
-		hotels = new ArrayList<Hotel>();
-//		init();
-		loadHotels();
-		addRoom();
-		try {
-			loadUsers();
-		}catch(ExistentException e) {
-			e.getMessage();
-		}catch(UnderAge e) {
-			e.getMessage();
-		}
-		serializeHotelsAndRooms();
-		generateUserArchive();
+		
 	}
 
 	// -----------------------------------------------------------------
 	// Methods
 	// -----------------------------------------------------------------
-
-	public void init() {
-		FavoriteHotel fhAux = new FavoriteHotel("Marriot", "1007707024", "150000", 5, 4.7, "Cali", null, null);
-		users.setfHotel(fhAux);
-
-		SearchHistory shAux = new SearchHistory("Sandra Rueda en bola", null, null);
-		users.setRecord(shAux);
-
-		HotelsListed hlAux = new HotelsListed("Marriot", "1007707024", "150000", 5, 4.7, "Cali");
-		CustomList clAux = new CustomList("Los más perrenques", hlAux);
-		ArrayList<CustomList> listica = new ArrayList<>();
-		listica.add(clAux);
-		users.setCustomList(listica);
-
-		Hotel hotel = new Hotel("Marriot", "1007707024", "150000", 5, 4.7, "Cali");
-		Room roomi = new Room("A1", "101", Room.DOUBLE, false, hotel.getName());
-		hotel.setRooms(roomi);
-		hotels.add(hotel);
-		
-		ReservedRoom rrAux = new ReservedRoom("A1", "101", Room.DOUBLE, false, hotel.getName(), null, null);
-		users.setRRooms(rrAux);
-
-	//	generateUserArchive();
-	}
 
 	/**
 	 * Method to get the attribute idActual
