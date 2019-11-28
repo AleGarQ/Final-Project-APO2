@@ -573,7 +573,6 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		record = null;
 	}
 	
-<<<<<<< HEAD
 	public ArrayList<Room> arrayRooms(){
 		ArrayList<Room> aux = new ArrayList<Room>();
 		Room temp = rRooms;
@@ -585,6 +584,5 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		
 		return aux;
 	}
-=======
->>>>>>> f4d33501512d75610ab01acdba3fb10879ab73fb
+
 }// final
