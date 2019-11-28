@@ -227,7 +227,7 @@ public class Hotel implements Comparable<Hotel>, Serializable{
 	}
 	
 	public ArrayList<Room> arrayRooms(){
-		ArrayList<Room> aux = null;
+		ArrayList<Room> aux = new ArrayList<Room>();
 		Room temp = rooms;
 		
 		while(temp != null) {

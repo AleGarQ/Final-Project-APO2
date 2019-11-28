@@ -14,7 +14,14 @@
     -fx-font-size: 14px;
     -fx-padding: 12 45 12 45;
 }
+ScrollPane{
+    -fx-background-color: #acb3f7;
+    -fx-alignment: center;
+    -fx-padding: 10;
+}
+
 VBox, AnchorPane{
+    -fx-background-color: #acb3f7;
     -fx-alignment: center;
     -fx-padding: 10;
 }

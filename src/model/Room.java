@@ -201,8 +201,8 @@ public class Room implements Serializable{
 
 	@Override
 	public String toString() {
-		return "\nNumero de habitacion: " + number + "\nId: " + id + "\nTipo de camas: " + typeOfBeds + "\nDisponibilidad" + availability
-				+ "\nHotel: " + hotel+ "\n---------------------------";
+		return "\nNumero de habitacion: " + number + "\nId: " + id + "\nCantidad de camas: " + typeOfBeds + "\nDisponibilidad: " + availability
+				+ "\nHotel: " + hotel+ "\n------------------------------";
 	}
 	
 }//final

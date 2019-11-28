@@ -26,6 +26,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -239,18 +240,51 @@ public class Controller implements Initializable {
 				for (int i = 0; i < hotels.size(); i++) {
 					Label hotelsName = new Label(hotels.get(i).toString());
 					hotelsName.setId(hotels.get(i).getId());
-					int j = i;
+					
 					hotelsName.setOnMouseClicked(event -> {
 						hotelsOrder.getChildren().clear();
-						Label rooms = new Label(hotels.get(j).getRooms().toString());
-						hotelsOrder.getChildren().addAll(hotelsName, rooms);
+						String nm = hotelsName.getText()+"/b";
+						hotelsName.setText(nm);
+						hotelsName.setFont(new Font("Arial", 15));
+						ArrayList<Room> rooms = system.arrayRooms(hotelsName.getId());
+						GridPane gp = new GridPane();
+						
+						for(int j = 0; j < rooms.size(); j++) {
+							Label lblrooms = new Label(rooms.get(j).toString());
+							lblrooms.setId(rooms.get(j).getId());
+							
+							lblrooms.setOnMouseClicked(ee ->{
+								hotelsOrder.getChildren().clear();
+								Button reservation = new Button("Reservar");
+								
+								reservation.setOnAction(action -> {
+									system.reserveRoom(hotelsName.getId(), lblrooms.getId());
+								});
+								
+								Button back = new Button("Atras");
+								
+								back.setOnAction(act ->{
+									hotelsOrder.getChildren().clear();
+									gp.getChildren().add(lblrooms);
+									hotelsOrder.getChildren().addAll(hotelsName, gp);
+								});
+								
+								hotelsOrder.getChildren().addAll(lblrooms, reservation, back);
+							});
+							
+							for(int k = 0; k < 1; k++) {
+								gp.add(lblrooms, k, j);
+							}
+						}
+						
+						hotelsOrder.getChildren().addAll(hotelsName, gp);
 					});
 
 					hotelsOrder.getChildren().add(hotelsName);
 				}
 
 				sb2.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
-				Scene sc2 = new Scene(sb2);
+				Scene sc2 = new Scene(sb2, 400, sb2.getHeight());
 				Stage s = new Stage();
 				s.setOnCloseRequest(event -> {
 					hotelsOrder.getChildren().clear();
@@ -258,6 +292,10 @@ public class Controller implements Initializable {
 				s.setTitle("Hoteles Disponibles");
 				s.setScene(sc2);
 				s.show();
+				reserveScreen.setDisable(true);
+				s.setOnCloseRequest(eve ->{
+					reserveScreen.setDisable(false);
+				});
 			}
 		});
 		sb.setMin(0);
@@ -288,11 +326,9 @@ public class Controller implements Initializable {
 		email.setDisable(true);
 		TextField name = new TextField(actualUser.getName());
 		name.setDisable(true);
-		TextField id = new TextField(actualUser.getId());
-		id.setDisable(true);
 		TextField phone = new TextField(actualUser.getPhoneNumber());
 		phone.setDisable(true);
-		vbl.getChildren().addAll(name, email, id, phone);
+		vbl.getChildren().addAll(name, email, phone);
 
 		for (int i = 0; i < vbl.getChildren().size(); i++) {
 			Image img = new Image("/resources/Editar.png");
@@ -383,10 +419,9 @@ public class Controller implements Initializable {
 		// Stage set----------------------------------------------------
 		TabPane tp = new TabPane(reserve, reserved, recent, favs, custom, perfil);
 		tp.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
-		Scene sc2 = new Scene(tp);
+		Scene sc2 = new Scene(tp, 470, reserveScreen.getHeight()-200);
 		Stage s = new Stage();
-		tp.setMinHeight(reserveScreen.getHeight());
-		tp.setMinWidth(reserveScreen.getWidth());
+		
 		s.setTitle("Inicio");
 		s.setScene(sc2);
 		s.setOnCloseRequest(e ->{
