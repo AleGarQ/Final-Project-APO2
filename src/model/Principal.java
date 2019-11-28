@@ -55,6 +55,7 @@ public class Principal implements AddUserToTree {
 			e.getMessage();
 		}
 		serializeHotelsAndRooms();
+		generateUserArchive();
 	}
 
 	// -----------------------------------------------------------------
@@ -431,7 +432,7 @@ public class Principal implements AddUserToTree {
 	}
 	
 	public ArrayList<Hotel> searchHotelsByCity(String city) {
-		ArrayList<Hotel> perCity = new ArrayList<>();
+		ArrayList<Hotel> perCity = new ArrayList<Hotel>();
 		for (int i = 0; i < hotels.size(); i++) {
 			if (hotels.get(i).getCity().equalsIgnoreCase(city)) {
 				perCity.add(hotels.get(i));
@@ -454,7 +455,7 @@ public class Principal implements AddUserToTree {
 	}
 
 	public ArrayList<User> arrayToText() {
-		ArrayList<User> usersArray = new ArrayList<>();
+		ArrayList<User> usersArray = new ArrayList<User>();
 
 		if (users != null) {
 			User auxP = users;
@@ -474,21 +475,6 @@ public class Principal implements AddUserToTree {
 				pw.write(usuarios.get(i).toString());
 			}
 			pw.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void generateUserArchive2() {
-		try {
-			File file = new File("files/Users");
-			FileWriter fw = new FileWriter(file);
-			BufferedWriter bw = new BufferedWriter(fw);
-			
-			for(int i = 0; i < arrayToText().size(); i++) {
-				bw.write(arrayToText().get(i).toString());
-			}
-			bw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -578,14 +564,14 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
-	public void reserveRoom(String hotelName, String idRoom) {
+	public void reserveRoom(String hotelID, String idRoom) {
 		
 		boolean ya = false;
 		for(int i = 0; i < hotels.size() && !ya; i++) {
-			if(hotels.get(i).getName().equals(hotelName)) {
+			if(hotels.get(i).getId().equals(hotelID)) {
 				Room aux = hotels.get(i).reserveRoom(idRoom);
 				ya = true;
-				ReservedRoom temp = new ReservedRoom(aux.getNumber(), aux.getId(), aux.getTypeOfBeds(), aux.getAvailability(), aux.getHotel(), null, null);
+				ReservedRoom temp = new ReservedRoom(aux.getNumber(), aux.getId(), aux.getTypeOfBeds(), false, aux.getHotel(), null, null);
 				addReservedRoomFinal(temp);
 			}
 		}
@@ -710,26 +696,26 @@ public class Principal implements AddUserToTree {
 	public void addRoom() {
 		for(int i = 0; i < hotels.size(); i++) {
 			String nHotel = hotels.get(i).getName();
-			Room aux1 = new Room("A1", "101", Room.INDIVIDUAL, false, nHotel);
-			Room aux2 = new Room("A2", "102", Room.INDIVIDUAL, false, nHotel);
-			Room aux3 = new Room("A3", "103", Room.INDIVIDUAL, false, nHotel);
-			Room aux4 = new Room("A4", "104", Room.INDIVIDUAL, false, nHotel);
-			Room aux5 = new Room("A5", "105", Room.INDIVIDUAL, false, nHotel);
-			Room aux6 = new Room("B1", "201", Room.DOUBLE, false, nHotel);
-			Room aux7 = new Room("B2", "202", Room.DOUBLE, false, nHotel);
-			Room aux8 = new Room("B3", "203", Room.DOUBLE, false, nHotel);
-			Room aux9 = new Room("B4", "204", Room.DOUBLE, false, nHotel);
-			Room aux10 = new Room("B5", "205", Room.DOUBLE, false, nHotel);
-			Room aux11 = new Room("C1", "301", Room.FAMILY, false, nHotel);
-			Room aux12 = new Room("C2", "302", Room.FAMILY, false, nHotel);
-			Room aux13 = new Room("C3", "303", Room.FAMILY, false, nHotel);
-			Room aux14 = new Room("C4", "304", Room.FAMILY, false, nHotel);
-			Room aux15 = new Room("C5", "305", Room.FAMILY, false, nHotel);
-			Room aux16 = new Room("D1", "401", Room.MULTIPLE, false, nHotel);
-			Room aux17 = new Room("D2", "402", Room.MULTIPLE, false, nHotel);
-			Room aux18 = new Room("D3", "403", Room.MULTIPLE, false, nHotel);
-			Room aux19 = new Room("D4", "404", Room.MULTIPLE, false, nHotel);
-			Room aux20 = new Room("D5", "405", Room.MULTIPLE, false, nHotel);
+			Room aux1 = new Room("A1", "101", Room.INDIVIDUAL, true, nHotel);
+			Room aux2 = new Room("A2", "102", Room.INDIVIDUAL, true, nHotel);
+			Room aux3 = new Room("A3", "103", Room.INDIVIDUAL, true, nHotel);
+			Room aux4 = new Room("A4", "104", Room.INDIVIDUAL, true, nHotel);
+			Room aux5 = new Room("A5", "105", Room.INDIVIDUAL, true, nHotel);
+			Room aux6 = new Room("B1", "201", Room.DOUBLE, true, nHotel);
+			Room aux7 = new Room("B2", "202", Room.DOUBLE, true, nHotel);
+			Room aux8 = new Room("B3", "203", Room.DOUBLE, true, nHotel);
+			Room aux9 = new Room("B4", "204", Room.DOUBLE, true, nHotel);
+			Room aux10 = new Room("B5", "205", Room.DOUBLE, true, nHotel);
+			Room aux11 = new Room("C1", "301", Room.FAMILY, true, nHotel);
+			Room aux12 = new Room("C2", "302", Room.FAMILY, true, nHotel);
+			Room aux13 = new Room("C3", "303", Room.FAMILY, true, nHotel);
+			Room aux14 = new Room("C4", "304", Room.FAMILY, true, nHotel);
+			Room aux15 = new Room("C5", "305", Room.FAMILY, true, nHotel);
+			Room aux16 = new Room("D1", "401", Room.MULTIPLE, true, nHotel);
+			Room aux17 = new Room("D2", "402", Room.MULTIPLE, true, nHotel);
+			Room aux18 = new Room("D3", "403", Room.MULTIPLE, true, nHotel);
+			Room aux19 = new Room("D4", "404", Room.MULTIPLE, true, nHotel);
+			Room aux20 = new Room("D5", "405", Room.MULTIPLE, true, nHotel);
 			hotels.get(i).addRoom(aux20);
 			hotels.get(i).addRoom(aux19);
 			hotels.get(i).addRoom(aux18);
@@ -764,5 +750,61 @@ public class Principal implements AddUserToTree {
 			}
 		}
 		return aux;
+	}
+	
+	public void changeName(String name1,  User node) {
+		if(idActual.equals(node.getId())) {
+			node.setName(name1);
+		}else if(idActual.compareTo(node.getId()) < 0) {
+			if(node.getLeft() != null) {
+				changeName(name1, node.getLeft());
+			}
+		}else {
+			if(node.getRight() != null) {
+				changeName(name1, node.getRight());
+			}
+		}
+	}
+	
+	public void changeEmail(String email1,  User node) {
+		if(idActual.equals(node.getId())) {
+			node.setEmail(email1);
+		}else if(idActual.compareTo(node.getId()) < 0) {
+			if(node.getLeft() != null) {
+				changeEmail(email1, node.getLeft());
+			}
+		}else {
+			if(node.getRight() != null) {
+				changeEmail(email1, node.getRight());
+			}
+		}
+	}
+	
+	public void changePhone(String phone,  User node) {
+		if(idActual.equals(node.getId())) {
+			node.setPhoneNumber(phone);
+		}else if(idActual.compareTo(node.getId()) < 0) {
+			if(node.getLeft() != null) {
+				changePhone(phone, node.getLeft());
+			}
+		}else {
+			if(node.getRight() != null) {
+				changePhone(phone, node.getRight());
+			}
+		}
+	}
+	
+	public void changeDataFinal(String name1, String email1, String phone) {
+		if(users != null) {
+			if(name1 != null && name1 != "") {
+				changeName(name1, users);
+			}
+			if(email1 != null && email1 != "") {
+				changeEmail(email1, users);
+			}
+			if(phone != null && phone != "") {
+				changePhone(phone, users);
+			}
+		}
 	}
 }// final
