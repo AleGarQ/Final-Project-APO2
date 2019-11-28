@@ -32,7 +32,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.*;
-import threads.CargaHilo;
+import threads.CargaUserHilo;
+import threads.CargarHotelThread;
 
 public class Controller implements Initializable {
 	private Principal system = new Principal();
@@ -460,7 +461,9 @@ public class Controller implements Initializable {
 	}
 	
 	public void loadAll() {
-		CargaHilo carga = new CargaHilo(system);
-		carga.start();
+		CargaUserHilo user = new CargaUserHilo(system);
+		CargarHotelThread hotel = new CargarHotelThread(system); 
+		user.start();
+		hotel.start();
 	}
 }
