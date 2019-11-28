@@ -109,4 +109,21 @@ class UserTest {
 		}
 		assertTrue(para);
 	}
+	
+	@Test
+	void addRecordTest() {
+		init();
+		Hotel h = new Hotel("Marriot", "343434343", "50000", 5, 4.5, "Cali");
+		user.addRecordFinal(h.getName());
+		assertEquals(user.getRecord().getText(), "Marriot");
+	}
+	
+	@Test
+	void deleteRecordTest() {
+		init();
+		Hotel h = new Hotel("Marriot", "343434343", "50000", 5, 4.5, "Cali");
+		user.addRecordFinal(h.getName());
+		user.deleteRecord();
+		assertEquals(user.getRecord(), null);
+	}
 }
