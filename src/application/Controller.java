@@ -36,7 +36,19 @@ import threads.CargaUserHilo;
 import threads.CargarHotelThread;
 
 public class Controller implements Initializable {
+	
+	// -----------------------------------------------------------------
+	// Attributes and relations
+	// -----------------------------------------------------------------
+	
+	/**
+	 * Relation whit class Principal
+	 */
 	private Principal system = new Principal();
+	
+	/**
+	 * User who join in
+	 */
 	private User actualUser;
 	private VBox o = new VBox();
 	private VBox ord = new VBox();
