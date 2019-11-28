@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"model","l":"AddFavoriteHotelToTree"},{"l":"All Classes","url":"allclasses-index.html"}]
