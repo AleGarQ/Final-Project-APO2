@@ -55,6 +55,7 @@ public class Principal implements AddUserToTree {
 			e.getMessage();
 		}
 		serializeHotelsAndRooms();
+		generateUserArchive();
 	}
 
 	// -----------------------------------------------------------------
@@ -431,7 +432,7 @@ public class Principal implements AddUserToTree {
 	}
 	
 	public ArrayList<Hotel> searchHotelsByCity(String city) {
-		ArrayList<Hotel> perCity = new ArrayList<>();
+		ArrayList<Hotel> perCity = new ArrayList<Hotel>();
 		for (int i = 0; i < hotels.size(); i++) {
 			if (hotels.get(i).getCity().equalsIgnoreCase(city)) {
 				perCity.add(hotels.get(i));
@@ -454,7 +455,7 @@ public class Principal implements AddUserToTree {
 	}
 
 	public ArrayList<User> arrayToText() {
-		ArrayList<User> usersArray = new ArrayList<>();
+		ArrayList<User> usersArray = new ArrayList<User>();
 
 		if (users != null) {
 			User auxP = users;
@@ -474,21 +475,6 @@ public class Principal implements AddUserToTree {
 				pw.write(usuarios.get(i).toString());
 			}
 			pw.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void generateUserArchive2() {
-		try {
-			File file = new File("files/Users");
-			FileWriter fw = new FileWriter(file);
-			BufferedWriter bw = new BufferedWriter(fw);
-			
-			for(int i = 0; i < arrayToText().size(); i++) {
-				bw.write(arrayToText().get(i).toString());
-			}
-			bw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
