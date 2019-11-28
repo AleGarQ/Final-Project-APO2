@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Hotel implements Comparable<Hotel>, Serializable{
 
@@ -223,5 +224,17 @@ public class Hotel implements Comparable<Hotel>, Serializable{
 				rooms = room;
 			}
 		}	
+	}
+	
+	public ArrayList<Room> arrayRooms(){
+		ArrayList<Room> aux = null;
+		Room temp = rooms;
+		
+		while(temp != null) {
+			aux.add(temp);
+			temp = temp.getNext();
+		}
+		
+		return aux;
 	}
 }//final

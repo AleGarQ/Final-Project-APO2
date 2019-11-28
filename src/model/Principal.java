@@ -752,4 +752,17 @@ public class Principal implements AddUserToTree {
 			hotels.get(i).addRoom(aux20);
 		}
 	}
+	
+	public ArrayList<Room> arrayRooms(String idHotel){
+		ArrayList<Room> aux = null;
+		boolean ya = false;
+		
+		for(int i = 0; i < hotels.size() && !ya; i++) {
+			if(hotels.get(i).getId().equals(idHotel)){
+				ya = true;
+				aux = hotels.get(i).arrayRooms();
+			}
+		}
+		return aux;
+	}
 }// final
