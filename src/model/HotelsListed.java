@@ -79,7 +79,7 @@ public class HotelsListed extends Hotel implements Comparator<HotelsListed>{
 	
 	@Override
 	public String toString() {
-		return "HotelsListed [name=" + getName() + ", id=" + getId() + ", priceRange=" + getPriceRange() + ", stars=" + getStars() + ", score="
-				+ getScore() + ", city=" + getCity() + "]";
+		return "Hotel: " + getName() + "\nId: " + getId() + "\nMedia de Precio: " + getPriceRange() + "\nEstrellas: " + getStars() + "\nPuntaje: "
+				+ getScore() + "\nCiudad: " + getCity();
 	}
 }// final

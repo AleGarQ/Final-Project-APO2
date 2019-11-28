@@ -113,8 +113,8 @@ public class CustomList implements AddHotelToLinkedList {
 					hotelList = newHotelToList1;
 				} else {
 					HotelsListed aux = hotelList;
-					aux.setPrevious(newHotelToList1);
 					newHotelToList1.setNext(aux);
+					aux.setPrevious(newHotelToList1);
 					hotelList = newHotelToList1;
 				}
 			}
@@ -340,7 +340,8 @@ public class CustomList implements AddHotelToLinkedList {
 		HotelsListed aux = hotelList;
 
 		while (aux != null) {
-			toString += aux.toString() + ", ";
+			toString += aux.toString() + "\n++++++++++++++\n";
+			aux = aux.getNext();
 		}
 
 		return toString;
@@ -351,14 +352,7 @@ public class CustomList implements AddHotelToLinkedList {
 	 */
 	@Override
 	public String toString() {
-		return "Lista: " + listName + hotelsListedText();
-	}
-
-	/**
-	 * Method to get the list information
-	 */
-	public String toString1() {
-		return "Lista: " + listName;
+		return "**********************************"+"\nLista: " + listName + "\n______________________\n" +hotelsListedText()+"\n-------------------------------------";
 	}
 
 }// final
