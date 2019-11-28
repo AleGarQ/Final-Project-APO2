@@ -32,6 +32,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.*;
+import threads.CargaHilo;
 
 public class Controller implements Initializable {
 	private Principal system = new Principal();
@@ -52,7 +53,7 @@ public class Controller implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		loadAll();
 	}
 	
 	public void signInScreen() {
@@ -456,5 +457,10 @@ public class Controller implements Initializable {
 			Label lbl = new Label(recent.get(i).getText());
 			orde.getChildren().add(lbl);
 		}
+	}
+	
+	public void loadAll() {
+		CargaHilo carga = new CargaHilo(system);
+		carga.start();
 	}
 }

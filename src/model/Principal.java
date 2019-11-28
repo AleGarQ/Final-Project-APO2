@@ -43,19 +43,7 @@ public class Principal implements AddUserToTree {
 	 * Constructor of the Principal class
 	 */
 	public Principal() {
-		hotels = new ArrayList<Hotel>();
-//		init();
-		loadHotels();
-		addRoom();
-		try {
-			loadUsers();
-		}catch(ExistentException e) {
-			e.getMessage();
-		}catch(UnderAge e) {
-			e.getMessage();
-		}
-		serializeHotelsAndRooms();
-		generateUserArchive();
+		
 	}
 
 	// -----------------------------------------------------------------
