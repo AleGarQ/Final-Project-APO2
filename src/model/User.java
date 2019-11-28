@@ -423,7 +423,7 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 	public String favoriteHotelsText() {
 		
 		String toString = "";
-		ArrayList<FavoriteHotel> epale = new ArrayList<>();
+		ArrayList<FavoriteHotel> epale = new ArrayList<FavoriteHotel>();
 		
 		if(fHotel != null) {
 			FavoriteHotel auxSH = fHotel;
@@ -464,7 +464,7 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 	public String searchHistoryText() {
 		
 		String toString = "";
-		ArrayList<SearchHistory> epale = new ArrayList<>();
+		ArrayList<SearchHistory> epale = new ArrayList<SearchHistory>();
 		
 		if(record != null) {
 			SearchHistory auxSH = record;
