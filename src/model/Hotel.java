@@ -207,7 +207,6 @@ public class Hotel implements Comparable<Hotel>, Serializable{
 			if(rooms.getId().equals(idRoom)) {
 				rooms.setAvailability(false);
 				temp = rooms;
-				System.out.println("HOLA COMOSTAS");
 			}else {
 				Room aux = rooms;
 				boolean ya = false;

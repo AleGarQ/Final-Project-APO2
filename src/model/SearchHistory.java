@@ -4,36 +4,84 @@ import java.util.ArrayList;
 
 public class SearchHistory {
 
+	// -----------------------------------------------------------------
+	// Attributes and relations
+	// -----------------------------------------------------------------
+	
+	/**
+	 * Attribute text
+	 */
 	private String text;
+	/**
+	 * Relation with the SearchHistory in the left
+	 */
 	private SearchHistory left;
+	
+	/**
+	 * Relation with the SearchHistory in the right
+	 */
 	private SearchHistory right;
 
+	// -----------------------------------------------------------------
+	// Constructor
+	// -----------------------------------------------------------------
+	
+	/**
+	 * Constructor of the SearchHistory class
+	 * @param text - text searched
+	 * @param left - SearchHistory in the left
+	 * @param right - SearchHistory in the right
+	 */
 	public SearchHistory(String text, SearchHistory left, SearchHistory right) {
 		this.text = text;
 		this.left = left;
 		this.right = right;
 	}
 
+	/**
+	 * Method to get the attribute text
+	 * @return text searched
+	 */
 	public String getText() {
 		return text;
 	}
 
+	/**
+	 * Method to set the attribute text
+	 * @param text - new text
+	 */
 	public void setText(String text) {
 		this.text = text;
 	}
 
+	/**
+	 * Method to get the relation left
+	 * @return left
+	 */
 	public SearchHistory getLeft() {
 		return left;
 	}
 
+	/**
+	 * Method to set the relation left
+	 * @param left - new left
+	 */
 	public void setLeft(SearchHistory left) {
 		this.left = left;
 	}
 
+	/**
+	 * Method to get the relation right
+	 * @return right
+	 */
 	public SearchHistory getRight() {
 		return right;
 	}
 
+	/**
+	 * Method to set the relation right
+	 * @param right - new right
+	 */
 	public void setRight(SearchHistory right) {
 		this.right = right;
 	}
@@ -43,6 +91,10 @@ public class SearchHistory {
 		return "SearchHistory [text=" + text + "]";
 	}
 
+	/**
+	 * Method add objectos to an ArrayList
+	 * @param lista - ArrayList where objects will be added
+	 */
 	public void arrayToArchive(ArrayList<SearchHistory> lista) {
 
 		if (left != null) {
@@ -64,6 +116,10 @@ public class SearchHistory {
 		}
 	}
 
+	/**
+	 * Method to add a record
+	 * @param search - Search
+	 */
 	public void addRecord(SearchHistory search) {
 		if (search.getText().equals(text)) {
 		} else {
