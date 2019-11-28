@@ -43,7 +43,9 @@ public class Controller implements Initializable {
 	private VBox ord = new VBox();
 	private VBox orde = new VBox();
 	private VBox or = new VBox();
-	private ArrayList<Label> recentHotels = new ArrayList<Label>(); 
+	private ArrayList<Label> recentHotels = new ArrayList<Label>();
+	private ArrayList<Label> hotelsToFav = new ArrayList<Label>();
+	private ArrayList<CustomList> customL = new ArrayList<CustomList>();
 	@FXML
 	AnchorPane firstScreen = new AnchorPane();
 	@FXML
@@ -230,8 +232,6 @@ public class Controller implements Initializable {
 		TextField listName = new TextField();
 		Button ok = new Button("OK");
 		
-		//TODO
-		
 		textFieldListName.getChildren().addAll(petition, listName, ok);
 		
 		Button addList = new Button("Crear nueva lista");
@@ -239,7 +239,7 @@ public class Controller implements Initializable {
 			customListScreen.setDisable(true);
 			ScrollPane sp = new ScrollPane(textFieldListName);
 			textFieldListName.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
-			Scene sc2 = new Scene(sp, 400, sp.getHeight()-200);
+			Scene sc2 = new Scene(sp, 300, sp.getHeight()-200);
 			Stage s = new Stage();
 			s.setScene(sc2);
 			s.setOnCloseRequest(e ->{
@@ -247,16 +247,15 @@ public class Controller implements Initializable {
 			});
 			s.show();
 			ok.setOnAction(method ->{
-				createCustomList(listName.getText());
+				customL.add(new CustomList(listName.getText(), null));
+				createCustomList(listName.getText(), null);
 				customListScreen.setDisable(false);
 				s.close();
-				System.out.println("chispilachupa"+ listName.getText());
-				customListScreen.setCenter(ord);
 				listName.setText("");
 			});
 		});
 
-		
+		customListScreen.setCenter(ord);
 		HBox n = new HBox();
 		n.getChildren().addAll(lblcust, addList);
 		customListScreen.setTop(n);
@@ -342,12 +341,56 @@ public class Controller implements Initializable {
 				for (int i = 0; i < hotels.size(); i++) {
 					Label hotelsName = new Label(hotels.get(i).toString());
 					hotelsName.setId(hotels.get(i).getId());
-
+					int z = i;
+					
 					hotelsName.setOnMouseClicked(event -> {
 						recentHotels.add(hotelsName);
-//						showRecentSearched(recentHotels);
 						hotelsOrder.getChildren().clear();
 						hotelsName.setFont(new Font("Arial", 15));
+						HBox hotelOptions = new HBox();
+						
+						Button addToFavorites = new Button("Agregar hotel a favoritos");
+						addToFavorites.setOnAction(m ->{
+							try {
+								system.addFavoriteRoomFinal(hotelsName.getId());
+								hotelsToFav.add(hotelsName);
+							} catch(ExistentException er) {
+								Alert error = new Alert(AlertType.INFORMATION);
+								error.setTitle("Error");
+								error.setHeaderText("El hotel ya está en su lista de favoritos favoritos");
+								error.showAndWait();
+							}
+						});
+						
+						VBox tFListName = new VBox();
+						Label petit = new Label("Digite el nombre de la nueva lista");
+						TextField listName1 = new TextField();
+						Button ok1 = new Button("OK");
+						
+						
+						tFListName.getChildren().addAll(petit, listName1, ok1);
+						
+						Button addToCustomList = new Button("Agregar Hotel a lista personalizada");
+						addToCustomList.setOnAction(me ->{
+							reserveScreen.setDisable(true);
+							ScrollPane sp = new ScrollPane(tFListName);
+							tFListName.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
+							Scene sc2 = new Scene(sp, 300, sp.getHeight()-200);
+							Stage s = new Stage();
+							s.setScene(sc2);
+							s.setOnCloseRequest(met ->{
+								reserveScreen.setDisable(false);
+							});
+							s.show();
+							ok1.setOnAction(method ->{
+								createCustomList(listName1.getText(), hotels.get(z));
+								reserveScreen.setDisable(false);
+								s.close();
+								listName1.setText("");
+							});
+							
+						});
+						
 						ArrayList<Room> rooms = system.arrayRooms(hotelsName.getId());
 						VBox gp = new VBox();
 
@@ -382,11 +425,12 @@ public class Controller implements Initializable {
 							});
 								gp.getChildren().add(j, lblrooms);
 						}
-
-						hotelsOrder.getChildren().addAll(hotelsName, gp);
+						
+						hotelOptions.getChildren().addAll(addToFavorites, addToCustomList);
+						hotelsOrder.getChildren().addAll(hotelOptions, hotelsName, gp);
 					});
 
-					hotelsOrder.getChildren().add(hotelsName);
+					hotelsOrder.getChildren().addAll(hotelsName);
 				}
 
 				sb2.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
@@ -398,7 +442,7 @@ public class Controller implements Initializable {
 					reserveScreen.setDisable(false);
 					showReservedRooms();
 					showRecentSearched();
-					
+					showFavoriteHotels();
 				});
 				s.setTitle("Hoteles Disponibles");
 				s.setScene(sc2);
@@ -442,11 +486,38 @@ public class Controller implements Initializable {
 		}
 	}
 	
-	public void createCustomList(String listName) {
+	public void createCustomList(String listName, Hotel haveMeHere) {
 		ord.getChildren().clear();
+		ArrayList<CustomList> show = customL;
+		
+		if(haveMeHere == null) {
+			for(int i = 0; i < show.size(); i++) {
+				Label lbl = new Label(show.get(i).toString());
+				ord.getChildren().add(lbl);
+			}
+		}else if(show.size()>0){
+			boolean ya = false;
+			
+			for(int i = 0; i < show.size() && !ya; i++) {
+				if (show.get(i).getListName().equalsIgnoreCase(listName) && !ya) {
+					ya = true;
+					show.get(i).addHotelToList(haveMeHere);
+					ord.getChildren().clear();
+					Label lbl = new Label(show.get(i).toString());
+					ord.getChildren().add(lbl);
+					
+				}
+			}
+		}else {
+			Alert error = new Alert(AlertType.INFORMATION);
+			error.setTitle("Error");
+			error.setHeaderText("Primero debe crear una lista personalizada");
+			error.setContentText("Cree una lista personalizada y vuelva a intentarlo");
+			error.showAndWait();
+		}
+		
 		ArrayList<CustomList> lists = system.createCustomListFinal(listName);
-		for(int i = 0; i <= lists.size(); i++) {
-			System.out.println("Chingatumae");
+		for(int i = 0; i < lists.size(); i++) {
 			Label rRooms = new Label(lists.get(i).toString());
 			ord.getChildren().add(rRooms);
 		}
@@ -460,12 +531,22 @@ public class Controller implements Initializable {
 			orde.getChildren().add(lbl);
 		}
 	}
-	
+
+	public void showFavoriteHotels() {
+		or.getChildren().clear();
+		ArrayList<Label> favs = hotelsToFav;
+		for(int i = 0; i < favs.size(); i++) {
+			Label lbl = new Label(favs.get(i).getText());
+			or.getChildren().add(lbl);
+		}
+	}
+
 	public void loadAll() {
 		CargaUserHilo user = new CargaUserHilo(system);
 		CargarHotelThread hotel = new CargarHotelThread(system); 
 		user.start();
 		hotel.start();
+
 	}
 	
 	public void sortHotels(String indicator) {
