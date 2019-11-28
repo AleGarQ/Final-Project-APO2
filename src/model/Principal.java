@@ -363,6 +363,11 @@ public class Principal implements AddUserToTree {
 		}
 	}
 
+	/**
+	 * Method to search hotels with rooms to reserve
+	 * 
+	 * @return ArrayList with the hotels
+	 */
 	public ArrayList<Hotel> searchHotelsWithAvaiblesRoom() {
 		ArrayList<Hotel> avaibleHotels = new ArrayList<Hotel>();
 		for (int i = 0; i < hotels.size(); i++) {
@@ -381,6 +386,13 @@ public class Principal implements AddUserToTree {
 		return avaibleHotels;
 	}
 
+	/**
+	 * Method to search an hotel by name
+	 * 
+	 * @param hotelName - Hotel's name
+	 * @throws ListNotFoundException - Exception if the list is not found
+	 * @return The hotel that was found / Null
+	 */
 	public Hotel searchHotelByName(String hotelName) throws ListNotFoundException {
 		Hotel found1 = null;
 
@@ -400,12 +412,19 @@ public class Principal implements AddUserToTree {
 			}
 		}
 		if (found == false) {
-			throw new ListNotFoundException("No se ha encontrado ninguna lista con ese nombre");
+			throw new ListNotFoundException("No se ha encontrado ningun hotel con ese nombre");
 		}
 
 		return found1;
 	}
 
+	/**
+	 * Method to search an hotel by id
+	 * 
+	 * @param hotelName - Hotel's id
+	 * @throws ListNotFoundException - Exception if the list is not found
+	 * @return The hotel that was found / Null
+	 */
 	public Hotel searchHotelById(String hotelId) throws ListNotFoundException {
 		Hotel found1 = null;
 
@@ -431,6 +450,12 @@ public class Principal implements AddUserToTree {
 		return found1;
 	}
 	
+	/**
+	 * Method to search hotels by city
+	 * 
+	 * @param city - Hotel's city
+	 * @return An ArrayList with the hotels that were found / Null
+	 */
 	public ArrayList<Hotel> searchHotelsByCity(String city) {
 		ArrayList<Hotel> perCity = new ArrayList<Hotel>();
 		for (int i = 0; i < hotels.size(); i++) {
@@ -441,6 +466,9 @@ public class Principal implements AddUserToTree {
 		return perCity;
 	}
 
+	/**
+	 * Method to serialize hotels and rooms
+	 */
 	public void serializeHotelsAndRooms() {
 		try {
 			File f = new File("files/Hotels and Rooms");
@@ -454,6 +482,11 @@ public class Principal implements AddUserToTree {
 		}
 	}
 
+	/**
+	 * Method to create an ArrayList with the users
+	 * 
+	 * @return ArrayList with the users
+	 */
 	public ArrayList<User> arrayToText() {
 		ArrayList<User> usersArray = new ArrayList<User>();
 
@@ -466,6 +499,9 @@ public class Principal implements AddUserToTree {
 		return usersArray;
 	}
 
+	/**
+	 * Method to generate an archive with the information of all users
+	 */
 	public void generateUserArchive() {
 		ArrayList<User> usuarios = arrayToText();
 		try {
@@ -480,6 +516,9 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	/**
+	 * Method to load hotels from a CSV archive
+	 */
 	public void loadHotels() {
 		try {
 			File file = new File("files/Hotelsfile.csv");
@@ -511,6 +550,11 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	/**
+	 * Method to load users from a CSV archive
+	 * @throws ExistentException
+	 * @throws UnderAge
+	 */
 	public void loadUsers() throws ExistentException, UnderAge {
 		
 		try {
@@ -543,6 +587,12 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	/**
+	 * Method to add an hotel to the list of reserve
+	 * 
+	 * @param nueva - New ReservedRoom
+	 * @param node - Node to do recursion
+	 */
 	public void addReservedRoom(ReservedRoom nueva, User node) {
 		if(idActual.equals(node.getId())) {
 			node.addReservedRoom(nueva);
@@ -559,7 +609,11 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
-	
+	/**
+	 * Method to add a room to the reserve list
+	 * 
+	 * @param nueva - New ReservedRoom
+	 */
 	public void addReservedRoomFinal(ReservedRoom nueva) {
 		if(users != null) {
 			addReservedRoom(nueva, users);
@@ -567,6 +621,13 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+
+	/**
+	 * Method to reserve a room
+	 * 
+	 * @param hotelID - Hotel's ID
+	 * @param idRoom - Room's ID
+	 */
 	public Room reserveRoom(String hotelID, String idRoom) {
 		Room actual = null;
 		boolean ya = false;
@@ -582,6 +643,12 @@ public class Principal implements AddUserToTree {
 		return actual;
 	}
 	
+	/**
+	 * Method to add an HOTEL to the favorite list
+	 * 
+	 * @param idHotel - Hotel's ID
+	 * @return The hotel to add
+	 */
 	public Hotel addFavoriteRoom1(String idHotel) {
 		boolean ya = false;
 		Hotel temp = null;
@@ -594,6 +661,13 @@ public class Principal implements AddUserToTree {
 		return temp;
 	}
 	
+	/**
+	 * Method to add an HOTEL to the favorite list
+	 * 
+	 * @param idHotel - Hotel's ID
+	 * @param node - Node to do recursion
+	 * @throws ExistentException - It's throw if the hotel was already added
+	 */
 	public void addFavoriteRoom2(String idHotel, User node) throws ExistentException {
 		if(idActual.equals(node.getId())) {
 			node.addNewFavoriteHotelFinal(addFavoriteRoom1(idHotel));
@@ -608,13 +682,24 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	/**
+	 * Method to add an HOTEL to the favorite list
+	 * @param idHotel - Hotel's ID
+	 * @throws ExistentException - It's throw if the hotel was already added
+	 */
 	public void addFavoriteRoomFinal(String idHotel) throws ExistentException {
 		if(users != null) {
 			addFavoriteRoom2(idHotel, users);
 		}
 	}
 	
+	/**
+	 * Method to create a custom list
+	 * @param listName - Name of the new custom list
+	 * @param node - Node to do recursion
+	 */
 	public  ArrayList<CustomList> createCustomList1(String listName, User node, ArrayList<CustomList> lists) {
+
 		if(idActual.equals(node.getId())) {
 			node.createNewCustomList(listName);
 			lists = node.getCustomList();
@@ -630,9 +715,13 @@ public class Principal implements AddUserToTree {
 		return lists;
 	} 
 	
+
+	/**
+	 * Method to create a custom list
+	 * @param listName - Name of the new custom list
+	 */
 	public ArrayList<CustomList> createCustomListFinal(String listName) {
 		ArrayList<CustomList> lists = new ArrayList<CustomList>();
-		
 		if(users != null) {
 			lists = createCustomList1(listName, users, lists);
 		}
@@ -640,6 +729,11 @@ public class Principal implements AddUserToTree {
 		return lists;
 	}
 	
+	/**
+	 * Method to add a record
+	 * @param search - Text that has been searched
+	 * @param node - Node to do recursion
+	 */
 	public void addRecord(String search, User node) {
 		if(idActual.equals(node.getId())) {
 			node.addRecordFinal(search);
@@ -654,12 +748,23 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	/**
+	 * Method to add a record
+	 * @param search - Text that has been searched
+	 */
 	public void addRecordFinal(String search) {
 		if(users != null) {
 			addRecord(search, users);
 		}
 	}
 	
+	/**
+	 * Method to add an hotel to a custom list
+	 * @param listName - Name of the custom list where the hotel will be added
+	 * @param newHotelToList - Hotel to add
+	 * @param node - Node to do recursion
+	 * @throws ListNotFoundException - Is throw if the list doesn't exist
+	 */
 	public void addHotelToCustomList(String listName, HotelsListed newHotelToList, User node) throws ListNotFoundException {
 		if(idActual.equals(node.getId())) {
 			node.addHotelToCustomList(listName, newHotelToList);
@@ -674,6 +779,12 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	/**
+	 * Method add an hotel to a custom list
+	 * @param idHotel - Hotel's ID
+	 * @param listName - Name of the custom list where the hotel will be added
+	 * @throws ListNotFoundException - Its throw if the custom list doesn't exists
+	 */
 	public void addHotelToCustomListFinal(String idHotel, String listName) throws ListNotFoundException {
 		if(listName != null) {
 			Hotel temp = addFavoriteRoom1(idHotel);
@@ -684,6 +795,10 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	/**
+	 * Method to delete the search history
+	 * @param node - Node to do recursion
+	 */
 	public void deleteRecord(User node) {
 		if(idActual.equals(node.getId())) {
 			node.deleteRecord();
@@ -698,12 +813,18 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	/**
+	 * Method to delete the search history
+	 */
 	public void deleteRecordFinal() {
 		if(users != null) {
 			deleteRecord(users);
 		}
 	}
 	
+	/**
+	 * Method to add rooms to hotels
+	 */
 	public void addRoom() {
 		for(int i = 0; i < hotels.size(); i++) {
 			String nHotel = hotels.get(i).getName();
@@ -750,6 +871,11 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	/**
+	 * Method to create an ArrayList of rooms
+	 * @param idHotel
+	 * @return
+	 */
 	public ArrayList<Room> arrayRooms(String idHotel){
 		ArrayList<Room> aux = null;
 		boolean ya = false;
@@ -797,6 +923,12 @@ public class Principal implements AddUserToTree {
 		return aux;
 	}
 	
+
+	/**
+	 * Method to change an user's name
+	 * @param name1 - New name
+	 * @param node - node to do recursion
+	 */
 	public void changeName(String name1,  User node) {
 		if(idActual.equals(node.getId())) {
 			node.setName(name1);
@@ -811,6 +943,11 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	/**
+	 * Method to change user's email
+	 * @param email1 - New email
+	 * @param node - Node to do recursion
+	 */
 	public void changeEmail(String email1,  User node) {
 		if(idActual.equals(node.getId())) {
 			node.setEmail(email1);
@@ -825,6 +962,11 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	/**
+	 * Method to change the user's phone
+	 * @param phone - New phone
+	 * @param node - Node to do recursion
+	 */
 	public void changePhone(String phone,  User node) {
 		if(idActual.equals(node.getId())) {
 			node.setPhoneNumber(phone);
@@ -839,15 +981,21 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
+	/**
+	 * Method to change the user's data
+	 * @param name1 - New name
+	 * @param email1 - New email
+	 * @param phone - New phone
+	 */
 	public void changeDataFinal(String name1, String email1, String phone) {
 		if(users != null) {
-			if(name1 != null && name1 != "") {
+			if(name1 != null && name1 == "") {
 				changeName(name1, users);
 			}
-			if(email1 != null && email1 != "") {
+			if(email1 != null && email1 == "") {
 				changeEmail(email1, users);
 			}
-			if(phone != null && phone != "") {
+			if(phone != null && phone == "") {
 				changePhone(phone, users);
 			}
 		}

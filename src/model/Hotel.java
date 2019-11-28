@@ -185,12 +185,21 @@ public class Hotel implements Comparable<Hotel>, Serializable{
 		return name.compareTo(o.getName());
 	}
 	
+	/**
+	 * Method to get the hotel information
+	 * @return Hotel's information
+	 */
 	@Override
 	public String toString() {
 		return "" + name + "\nid: " + id + "\nMedia de precio: " + priceRange + "\nEstrellas: " + stars + "\nPuntuacion: "
 				+ score + "\nCiudad: " + city + "\n----------------------------------------------";
 	}
 	
+	/**
+	 * Method to reserve a room
+	 * @param idRoom - Room's ID
+	 * @return Room that was reserved
+	 */
 	public Room reserveRoom(String idRoom) {
 		Room temp = null;
 		
@@ -217,6 +226,10 @@ public class Hotel implements Comparable<Hotel>, Serializable{
 		return temp;
 	}
 	
+	/**
+	 * Method to add a room
+	 * @param room -  New room
+	 */
 	public void addRoom(Room room) {
 		if(room != null) {
 			if(rooms == null) {
@@ -230,6 +243,10 @@ public class Hotel implements Comparable<Hotel>, Serializable{
 		}	
 	}
 	
+	/**
+	 * Method to make an ArrayList of rooms
+	 * @return ArrayList of rooms
+	 */
 	public ArrayList<Room> arrayRooms(){
 		ArrayList<Room> aux = new ArrayList<Room>();
 		Room temp = rooms;

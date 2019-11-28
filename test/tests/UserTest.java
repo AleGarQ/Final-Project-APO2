@@ -27,14 +27,6 @@ class UserTest {
 		ArrayList<CustomList> customLists = new ArrayList<>();
 		customLists.add(cl);
 		user.setCustomList(customLists);
-//		ReservedRoom r = new ReservedRoom("01", "123", 1, true, null, null);
-//		ReservedRoom r2 = new ReservedRoom("25", "456", 4, true, null, null);
-//		ReservedRoom r3 = new ReservedRoom("11", "832", 3, true, null, null);
-//		user.setRRooms(r);
-//		r.setNext(r2);
-//		r2.setPrevious(r);
-//		r2.setNext(r3);
-//		r3.setPrevious(r2);
 	}
 
 	@Test
