@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 import model.*;
 import threads.CargaUserHilo;
 import threads.CargarHotelThread;
+import threads.SortHotelsThread;
 
 public class Controller implements Initializable {
 	
@@ -345,7 +346,7 @@ public class Controller implements Initializable {
 			} else {
 				hotelsOrder.getChildren().clear();
 				String searching = city.getText();
-				system.sortHotelsByCity();
+				sortHotels("City");
 				ArrayList<Hotel> hotels = system.searchHotelsByCity(searching);
 				ScrollPane sb2 = new ScrollPane(hotelsOrder);
 
@@ -558,5 +559,10 @@ public class Controller implements Initializable {
 		user.start();
 		hotel.start();
 
+	}
+	
+	public void sortHotels(String indicator) {
+		SortHotelsThread sort = new SortHotelsThread(system, indicator);
+		sort.start();
 	}
 }
