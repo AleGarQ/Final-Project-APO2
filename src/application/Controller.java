@@ -234,13 +234,16 @@ public class Controller implements Initializable {
 				system.sortHotelsByCity();
 				ArrayList<Hotel> hotels = system.searchHotelsByCity(searching);
 				ScrollPane sb2 = new ScrollPane(hotelsOrder);
+				
 
 				for (int i = 0; i < hotels.size(); i++) {
 					Label hotelsName = new Label(hotels.get(i).toString());
-
+					hotelsName.setId(hotels.get(i).getId());
+					int j = i;
 					hotelsName.setOnMouseClicked(event -> {
 						hotelsOrder.getChildren().clear();
-						hotelsOrder.getChildren().addAll(hotelsName);
+						Label rooms = new Label(hotels.get(j).getRooms().toString());
+						hotelsOrder.getChildren().addAll(hotelsName, rooms);
 					});
 
 					hotelsOrder.getChildren().add(hotelsName);

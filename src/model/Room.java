@@ -198,4 +198,11 @@ public class Room implements Serializable{
 	public void setHotel(String hotel) {
 		this.hotel = hotel;
 	}
+
+	@Override
+	public String toString() {
+		return "\nNumero de habitacion: " + number + "\nId: " + id + "\nTipo de camas: " + typeOfBeds + "\nDisponibilidad" + availability
+				+ "\nHotel: " + hotel+ "\n---------------------------";
+	}
+	
 }//final
