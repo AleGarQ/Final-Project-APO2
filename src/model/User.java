@@ -342,6 +342,12 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		}
 	}
 
+	/**
+	 * Method to add a FavoriteRoom
+	 * 
+	 * @param newHotel - New Hotel to add to favorites
+	 * @param node - Node to do recursion
+	 */
 	@Override
 	public void addNewFavoriteHotel(FavoriteHotel newHotel, FavoriteHotel node) {
 		if (newHotel.getId().compareTo(node.getId()) < 0) {
@@ -359,6 +365,13 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		}
 	}
 
+	/**
+	 * Method to search if the the hotel is in the list 
+	 * 
+	 * @param newHotel - New Hotel to add to favorites
+	 * @param node - Node to do recursion
+	 * @return True if the hotel is in the list
+	 */
 	@Override
 	public boolean searchHotel(FavoriteHotel newHotel, FavoriteHotel node) {
 		if (newHotel.getId().compareTo(node.getId()) == 0) {
@@ -375,6 +388,11 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		return false;
 	}
 
+	/**
+	 * Method to add an hotel to the favorite's list 
+	 * 
+	 * @param newHotel - New Hotel to add to favorites
+	 */
 	@Override
 	public void addNewFavoriteHotelFinal(Hotel newHotel) throws ExistentException{
 		
@@ -395,6 +413,12 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		}
 	}
 	
+	/**
+	 * Method to search a custom list by name
+	 * 
+	 * @param listName - List name
+	 * @return The custom list if this is found
+	 */
 	public CustomList searchCustomListByName(String listName) throws ListNotFoundException {
 		CustomList found1 = null;
 		
@@ -420,6 +444,11 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		return found1;
 	}
 	
+	/**
+	 * Method to get the toString of all the favorite hotels
+	 * 
+	 * @return An String with the toString of all the favorite hotels
+	 */
 	public String favoriteHotelsText() {
 		
 		String toString = "";
@@ -440,6 +469,11 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		return toString;
 	}
 	
+	/**
+	 * Method to get the toString of all the reserved rooms
+	 * 
+	 * @return An String with the toString of all the reserved rooms
+	 */
 	public String reservedRoomText() {
 		String toString = "";
 		ReservedRoom aux = rRooms;
@@ -451,6 +485,11 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		return toString;
 	}
 	
+	/**
+	 * Method to get the toString of all the custom lists
+	 * 
+	 * @return An String with the toString of all the custom lists
+	 */
 	public String customListText() {
 		String toString = "";
 		
@@ -461,6 +500,11 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		return toString;
 	}
 	
+	/**
+	 * Method to get the toString of all the search history
+	 * 
+	 * @return An String with the toString of all the search history
+	 */
 	public String searchHistoryText() {
 		
 		String toString = "";
@@ -481,6 +525,11 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		return toString;
 	}
 	
+	/**
+	 * Method to get the user information
+	 * 
+	 * @return All the user information
+	 */
 	@Override
 	public String toString() {
 		return "+User [name=" + getName() + ", id=" + getId() + ", password=" + password + ", email=" + email + ", age=" + getAge()
@@ -488,6 +537,11 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 				"\n"+ searchHistoryText() + "\n" + searchHistoryText() + "]";
 	}
 	
+	/**
+	 * Method to add all the users to an ArrayList
+	 * 
+	 * @param lista - ArrayList where the users will be added
+	 */
 	public void arrayToArchive(ArrayList<User> lista){
 		
 		if(left != null) {
@@ -503,6 +557,11 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		}	
 	}
 	
+	/**
+	 * Method to add a search to the list
+	 * 
+	 * @param search - The search
+	 */
 	@Override
 	public void addRecordFinal(String search) {
 		SearchHistory searchT = new SearchHistory(search, null, null);
@@ -514,6 +573,9 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 		}
 	}
 	
+	/**
+	 * Method to delete the search history
+	 */
 	public void deleteRecord() {
 		record = null;
 	}
