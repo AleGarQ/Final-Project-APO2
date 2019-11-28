@@ -256,20 +256,13 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 	 */
 	public void addReservedRoom(ReservedRoom chosenRoom) {
 		ReservedRoom aux = rRooms;
+		chosenRoom.setAvailability(false);
 		if (aux == null) {
-			chosenRoom.setAvailability(false);
 			setRRooms(chosenRoom);
 		} else {
-			boolean added = false;
-			while (aux != null && !added) {
-				if (aux.getNext() == null) {
-					aux.setNext(chosenRoom);
-					chosenRoom.setAvailability(false);
-					added = true;
-				} else {
-					aux = aux.getNext();
-				}
-			}
+			chosenRoom.setNext(aux);
+			aux.setPrevious(chosenRoom);
+			rRooms = chosenRoom;
 		}
 	}
 
@@ -579,5 +572,16 @@ public class User extends Person implements Comparator<User>, AddFavoriteHotelTo
 	public void deleteRecord() {
 		record = null;
 	}
-	//Nombre, email, telefono
+	
+	public ArrayList<Room> arrayRooms(){
+		ArrayList<Room> aux = new ArrayList<Room>();
+		Room temp = rRooms;
+		
+		while(temp != null) {
+			aux.add(temp);
+			temp = temp.getNext();
+		}
+		
+		return aux;
+	}
 }// final

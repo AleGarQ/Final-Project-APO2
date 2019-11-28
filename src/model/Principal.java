@@ -546,9 +546,11 @@ public class Principal implements AddUserToTree {
 	public void addReservedRoom(ReservedRoom nueva, User node) {
 		if(idActual.equals(node.getId())) {
 			node.addReservedRoom(nueva);
+			
 		}else if(idActual.compareTo(node.getId()) < 0) {
 			if(node.getLeft() != null) {
 				addReservedRoom(nueva, node.getLeft());
+				
 			}	
 		}else {
 			if(node.getRight() != null) {
@@ -561,20 +563,23 @@ public class Principal implements AddUserToTree {
 	public void addReservedRoomFinal(ReservedRoom nueva) {
 		if(users != null) {
 			addReservedRoom(nueva, users);
+			
 		}
 	}
 	
-	public void reserveRoom(String hotelID, String idRoom) {
-		
+	public Room reserveRoom(String hotelID, String idRoom) {
+		Room actual = null;
 		boolean ya = false;
 		for(int i = 0; i < hotels.size() && !ya; i++) {
 			if(hotels.get(i).getId().equals(hotelID)) {
 				Room aux = hotels.get(i).reserveRoom(idRoom);
 				ya = true;
 				ReservedRoom temp = new ReservedRoom(aux.getNumber(), aux.getId(), aux.getTypeOfBeds(), false, aux.getHotel(), null, null);
+				actual = temp;
 				addReservedRoomFinal(temp);
 			}
 		}
+		return actual;
 	}
 	
 	public Hotel addFavoriteRoom1(String idHotel) {
@@ -609,24 +614,30 @@ public class Principal implements AddUserToTree {
 		}
 	}
 	
-	public void createCustomList1(String listName, User node) {
+	public  ArrayList<CustomList> createCustomList1(String listName, User node, ArrayList<CustomList> lists) {
 		if(idActual.equals(node.getId())) {
 			node.createNewCustomList(listName);
+			lists = node.getCustomList();
 		}else if(idActual.compareTo(node.getId()) < 0) {
 			if(node.getLeft() != null) {
-				createCustomList1(listName, node.getLeft());
+				createCustomList1(listName, node.getLeft(), lists);
 			}
 		}else {
 			if(node.getRight() != null) {
-				createCustomList1(listName, node.getRight());
+				createCustomList1(listName, node.getRight(), lists);
 			}
 		}
+		return lists;
 	} 
 	
-	public void createCustomListFinal(String listName) {
+	public ArrayList<CustomList> createCustomListFinal(String listName) {
+		ArrayList<CustomList> lists = new ArrayList<CustomList>();
+		
 		if(users != null) {
-			createCustomList1(listName, users);
+			lists = createCustomList1(listName, users, lists);
 		}
+		System.out.println(lists.size());
+		return lists;
 	}
 	
 	public void addRecord(String search, User node) {
@@ -748,6 +759,40 @@ public class Principal implements AddUserToTree {
 				ya = true;
 				aux = hotels.get(i).arrayRooms();
 			}
+		}
+		return aux;
+	}
+	
+	public User findUserById(String id, User node) {
+		if (node != null) {
+			
+			if (id.compareTo(node.getId()) == 0) {
+				return node;
+			} else if (id.compareTo(node.getId()) < 0) {
+				if(node.getLeft() != null) {
+				return findUserById(id, node.getLeft());
+				}
+			} else {
+				if(node.getRight() != null) {
+				return findUserById(id, node.getRight());
+				}
+			}
+		}
+		return null;
+
+	}
+	
+	public ArrayList<Room> arrayReservedRooms(String idUser){
+		ArrayList<Room> aux = new ArrayList<Room>();
+		boolean ya = false;
+		if((idUser.equals(""))==false) {
+			User newU = findUserById(idUser, users);
+			if(newU != null && !ya) {
+				
+				ya = true;
+				aux = newU.arrayRooms();
+			}
+			
 		}
 		return aux;
 	}

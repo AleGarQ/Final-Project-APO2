@@ -26,8 +26,8 @@ public class ReservedRoom extends Room {
 
 	@Override
 	public String toString() {
-		return "ReservedRoom [number=" + getNumber() + ", id=" + getId() + ", typeOfBeds=" + getTypeOfBeds() +
-				", availability=" + getAvailability() + "]";
+		return "\nNumero de habitacion: " + getNumber() + "\nId: " + getId() + "\nCantidad de camas: " + getTypeOfBeds() + "\nDisponibilidad: " 
+				+ getAvailability() +  "\nHotel: " + getHotel() +  "\n------------------------------";
 	}
 	
 }

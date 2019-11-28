@@ -26,8 +26,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -37,6 +37,9 @@ import model.*;
 public class Controller implements Initializable {
 	private Principal system = new Principal();
 	private User actualUser;
+	private VBox o = new VBox();
+	private VBox ord = new VBox();
+	private VBox or = new VBox();
 	@FXML
 	AnchorPane firstScreen = new AnchorPane();
 	@FXML
@@ -181,136 +184,6 @@ public class Controller implements Initializable {
 	}
 
 	public void principalScreen() {
-		// Hotel reservations tab---------------------------------------
-		BorderPane reserveScreen = new BorderPane();
-		ScrollBar sb = new ScrollBar();
-		sb.setOrientation(Orientation.VERTICAL);
-		VBox order = new VBox();
-		Tab reserve = new Tab("Reservar", reserveScreen);
-		reserve.setClosable(false);
-		Label lblres = new Label("Reservar un hotel");
-		lblres.setFont(new Font("Arial", 20));
-		lblres.setTextAlignment(TextAlignment.CENTER);
-		Label cty = new Label("Ciudad a visitar:");
-		cty.setFont(new Font("Arial", 15));
-		cty.setTextAlignment(TextAlignment.LEFT);
-		TextField city = new TextField();
-		city.setPromptText("Ciudad");
-		Label dte1 = new Label("Fecha de ida:");
-		dte1.setFont(new Font("Arial", 15));
-		dte1.setTextAlignment(TextAlignment.LEFT);
-		DatePicker date1 = new DatePicker();
-		date1.getEditor().setDisable(true);
-		Label dte2 = new Label("Fecha de regreso:");
-		dte2.setFont(new Font("Arial", 15));
-		dte2.setTextAlignment(TextAlignment.LEFT);
-		DatePicker date2 = new DatePicker();
-		date2.getEditor().setDisable(true);
-		Button search = new Button("Buscar");
-		VBox hotelsOrder = new VBox();
-		
-		search.setOnAction(e -> {
-			
-			if(city.getText().equals("")){
-				Alert error = new Alert(AlertType.INFORMATION);
-				error.setTitle("Error");
-				error.setHeaderText("No se puede dejar el campo CIUDAD vacio");
-				error.setContentText("Ingrese una ciudad y vuelva a intentarlo");
-				error.showAndWait();
-			}else if(date1.getEditor().getText().equals("")) {
-				Alert error = new Alert(AlertType.INFORMATION);
-				error.setTitle("Error");
-				error.setHeaderText("No se puede dejar la fecha de ida vacia");
-				error.setContentText("Ingrese una fecha de ida y vuelva a intentarlo");
-				error.showAndWait();
-			}else if(date2.getEditor().getText().equals("")) {
-				Alert error = new Alert(AlertType.INFORMATION);
-				error.setTitle("Error");
-				error.setHeaderText("No se puede dejar la fecha de regreso vacia");
-				error.setContentText("Ingrese una fecha de regreso y vuelva a intentarlo");
-				error.showAndWait();
-			}else {
-				hotelsOrder.getChildren().clear();
-				String searching = city.getText();
-				system.sortHotelsByCity();
-				ArrayList<Hotel> hotels = system.searchHotelsByCity(searching);
-				ScrollPane sb2 = new ScrollPane(hotelsOrder);
-				
-
-				for (int i = 0; i < hotels.size(); i++) {
-					Label hotelsName = new Label(hotels.get(i).toString());
-					hotelsName.setId(hotels.get(i).getId());
-					
-					hotelsName.setOnMouseClicked(event -> {
-						hotelsOrder.getChildren().clear();
-						String nm = hotelsName.getText()+"/b";
-						hotelsName.setText(nm);
-						hotelsName.setFont(new Font("Arial", 15));
-						ArrayList<Room> rooms = system.arrayRooms(hotelsName.getId());
-						GridPane gp = new GridPane();
-						
-						for(int j = 0; j < rooms.size(); j++) {
-							Label lblrooms = new Label(rooms.get(j).toString());
-							lblrooms.setId(rooms.get(j).getId());
-							
-							lblrooms.setOnMouseClicked(ee ->{
-								hotelsOrder.getChildren().clear();
-								Button reservation = new Button("Reservar");
-								
-								reservation.setOnAction(action -> {
-									system.reserveRoom(hotelsName.getId(), lblrooms.getId());
-								});
-								
-								Button back = new Button("Atras");
-								
-								back.setOnAction(act ->{
-									hotelsOrder.getChildren().clear();
-									gp.getChildren().add(lblrooms);
-									hotelsOrder.getChildren().addAll(hotelsName, gp);
-								});
-								
-								hotelsOrder.getChildren().addAll(lblrooms, reservation, back);
-							});
-							
-							for(int k = 0; k < 1; k++) {
-								gp.add(lblrooms, k, j);
-							}
-						}
-						
-						hotelsOrder.getChildren().addAll(hotelsName, gp);
-					});
-
-					hotelsOrder.getChildren().add(hotelsName);
-				}
-
-				sb2.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
-				Scene sc2 = new Scene(sb2, 400, sb2.getHeight());
-				Stage s = new Stage();
-				s.setOnCloseRequest(event -> {
-					hotelsOrder.getChildren().clear();
-				});
-				s.setTitle("Hoteles Disponibles");
-				s.setScene(sc2);
-				s.show();
-				reserveScreen.setDisable(true);
-				s.setOnCloseRequest(eve ->{
-					reserveScreen.setDisable(false);
-				});
-			}
-		});
-		sb.setMin(0);
-		sb.setMax(reserveScreen.getHeight()+30);
-		sb.setValue(100);
-		sb.valueProperty().addListener(ev -> {
-			reserveScreen.setTranslateY(-sb.getValue());
-		});
-		
-		order.getChildren().addAll(cty, city, dte1, date1, dte2, date2, search);
-		reserveScreen.setCenter(order);
-		reserveScreen.setTop(lblres);
-		reserveScreen.setRight(sb);
-		
-		
 		// User's information Tab---------------------------------------
 		BorderPane infoScreen = new BorderPane();
 		HBox ap = new HBox();
@@ -370,7 +243,6 @@ public class Controller implements Initializable {
 
 		// Favorites Hotels tab-----------------------------------------
 		BorderPane favoritesScreen = new BorderPane();
-		VBox or = new VBox();
 		Tab favs = new Tab("Favoritos", favoritesScreen);
 		favs.setClosable(false);
 		Label lblfav = new Label("Hoteles Favoritos");
@@ -382,24 +254,57 @@ public class Controller implements Initializable {
 
 		// Custom List Tab----------------------------------------------
 		BorderPane customListScreen = new BorderPane();
-		VBox ord = new VBox();
 		Tab custom = new Tab("Listas Personalizadas", customListScreen);
 		custom.setClosable(false);
 		Label lblcust = new Label("Listas Personalizadas");
 		lblcust.setFont(new Font("Arial", 20));
 		lblcust.setTextAlignment(TextAlignment.CENTER);
+		
+		VBox textFieldListName = new VBox();
+		Label petition = new Label("Digite el nombre de la nueva lista");
+		TextField listName = new TextField();
+		Button ok = new Button("OK");
+		
+		//TODO
+		
+		textFieldListName.getChildren().addAll(petition, listName, ok);
+		
+		Button addList = new Button("Crear nueva lista");
+		addList.setOnAction(showTF ->{
+			customListScreen.setDisable(true);
+			ScrollPane sp = new ScrollPane(textFieldListName);
+			textFieldListName.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
+			Scene sc2 = new Scene(sp, 400, sp.getHeight()-200);
+			Stage s = new Stage();
+			s.setScene(sc2);
+			s.setOnCloseRequest(e ->{
+				customListScreen.setDisable(false);
+			});
+			s.show();
+			ok.setOnAction(method ->{
+				createCustomList(listName.getText());
+				customListScreen.setDisable(false);
+				s.close();
+				System.out.println("chispilachupa"+ listName.getText());
+				customListScreen.setCenter(ord);
+				listName.setText("");
+			});
+		});
 
-		customListScreen.setCenter(ord);
-		customListScreen.setTop(lblcust);
+		
+		HBox n = new HBox();
+		n.getChildren().addAll(lblcust, addList);
+		customListScreen.setTop(n);
 
 		// Reserved Room Tab----------------------------------------------
 		BorderPane reservedScreen = new BorderPane();
-		VBox o = new VBox();
+		
 		Tab reserved = new Tab("Reservas", reservedScreen);
 		reserved.setClosable(false);
 		Label lblrese = new Label("Habitaciones Reservadas");
 		lblrese.setFont(new Font("Arial", 20));
 		lblrese.setTextAlignment(TextAlignment.CENTER);
+		
 
 		reservedScreen.setCenter(o);
 		reservedScreen.setTop(lblrese);
@@ -415,7 +320,137 @@ public class Controller implements Initializable {
 
 		recentSearchScreen.setCenter(orde);
 		recentSearchScreen.setTop(lblrecent);
+		
+		// Hotel reservations tab---------------------------------------
+		BorderPane reserveScreen = new BorderPane();
+		ScrollBar sb = new ScrollBar();
+		sb.setOrientation(Orientation.VERTICAL);
+		VBox order = new VBox();
+		Tab reserve = new Tab("Reservar", reserveScreen);
+		reserve.setClosable(false);
+		Label lblres = new Label("Reservar un hotel");
+		lblres.setFont(new Font("Arial", 20));
+		lblres.setTextAlignment(TextAlignment.CENTER);
+		Label cty = new Label("Ciudad a visitar:");
+		cty.setFont(new Font("Arial", 15));
+		cty.setTextAlignment(TextAlignment.LEFT);
+		TextField city = new TextField();
+		city.setPromptText("Ciudad");
+		Label dte1 = new Label("Fecha de ida:");
+		dte1.setFont(new Font("Arial", 15));
+		dte1.setTextAlignment(TextAlignment.LEFT);
+		DatePicker date1 = new DatePicker();
+		date1.getEditor().setDisable(true);
+		Label dte2 = new Label("Fecha de regreso:");
+		dte2.setFont(new Font("Arial", 15));
+		dte2.setTextAlignment(TextAlignment.LEFT);
+		DatePicker date2 = new DatePicker();
+		date2.getEditor().setDisable(true);
+		Button search = new Button("Buscar");
+		VBox hotelsOrder = new VBox();
+
+		search.setOnAction(e -> {
+
+			if (city.getText().equals("")) {
+				Alert error = new Alert(AlertType.INFORMATION);
+				error.setTitle("Error");
+				error.setHeaderText("No se puede dejar el campo CIUDAD vacio");
+				error.setContentText("Ingrese una ciudad y vuelva a intentarlo");
+				error.showAndWait();
+			} else if (date1.getEditor().getText().equals("")) {
+				Alert error = new Alert(AlertType.INFORMATION);
+				error.setTitle("Error");
+				error.setHeaderText("No se puede dejar la fecha de ida vacia");
+				error.setContentText("Ingrese una fecha de ida y vuelva a intentarlo");
+				error.showAndWait();
+			} else if (date2.getEditor().getText().equals("")) {
+				Alert error = new Alert(AlertType.INFORMATION);
+				error.setTitle("Error");
+				error.setHeaderText("No se puede dejar la fecha de regreso vacia");
+				error.setContentText("Ingrese una fecha de regreso y vuelva a intentarlo");
+				error.showAndWait();
+			} else {
+				hotelsOrder.getChildren().clear();
+				String searching = city.getText();
+				system.sortHotelsByCity();
+				ArrayList<Hotel> hotels = system.searchHotelsByCity(searching);
+				ScrollPane sb2 = new ScrollPane(hotelsOrder);
+
+				for (int i = 0; i < hotels.size(); i++) {
+					Label hotelsName = new Label(hotels.get(i).toString());
+					hotelsName.setId(hotels.get(i).getId());
+
+					hotelsName.setOnMouseClicked(event -> {
+						hotelsOrder.getChildren().clear();
+						hotelsName.setFont(new Font("Arial", 15));
+						ArrayList<Room> rooms = system.arrayRooms(hotelsName.getId());
+						VBox gp = new VBox();
+
+						for (int j = 0; j < rooms.size(); j++) {
+							Label lblrooms = new Label(rooms.get(j).toString());
+							lblrooms.setId(rooms.get(j).getId());
+							int k = j;
+							
+							lblrooms.setOnMouseClicked(ee -> {
+								hotelsOrder.getChildren().clear();
+								Button reservation = new Button("Reservar");
+
+								reservation.setOnAction(action -> {
+									
+									Room actual = system.reserveRoom(hotelsName.getId(), lblrooms.getId());
+									hotelsOrder.getChildren().clear();
+									Label lblmod = new Label(actual.toString());
+									gp.getChildren().add(k, lblmod);
+									hotelsOrder.getChildren().addAll(hotelsName, gp);
+									
+								});
+
+								Button back = new Button("Atras");
+
+								back.setOnAction(act -> {
+									hotelsOrder.getChildren().clear();
+									gp.getChildren().add(k, lblrooms);
+									hotelsOrder.getChildren().addAll(hotelsName, gp);
+								});
+
+								hotelsOrder.getChildren().addAll(lblrooms, reservation, back);
+							});
+								gp.getChildren().add(j, lblrooms);
+						}
+
+						hotelsOrder.getChildren().addAll(hotelsName, gp);
+					});
+
+					hotelsOrder.getChildren().add(hotelsName);
+				}
+
+				sb2.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
+				Scene sc2 = new Scene(sb2, 400, sb2.getHeight());
+				Stage s = new Stage();
+				s.setOnCloseRequest(event -> {
+					hotelsOrder.getChildren().clear();
+					reserveScreen.setDisable(false);
+					showReservedRooms();
+				});
+				s.setTitle("Hoteles Disponibles");
+				s.setScene(sc2);
+				s.show();
+				reserveScreen.setDisable(true);
 				
+			}
+		});
+		sb.setMin(0);
+		sb.setMax(reserveScreen.getHeight() + 30);
+		sb.setValue(100);
+		sb.valueProperty().addListener(ev -> {
+			reserveScreen.setTranslateY(-sb.getValue());
+		});
+
+		order.getChildren().addAll(cty, city, dte1, date1, dte2, date2, search);
+		reserveScreen.setCenter(order);
+		reserveScreen.setTop(lblres);
+		reserveScreen.setRight(sb);
+
 		// Stage set----------------------------------------------------
 		TabPane tp = new TabPane(reserve, reserved, recent, favs, custom, perfil);
 		tp.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
@@ -428,5 +463,24 @@ public class Controller implements Initializable {
 			firstScreen.setDisable(false);
 		});
 		s.show();
+	}
+	
+	public void showReservedRooms() {
+		o.getChildren().clear();
+		ArrayList<Room> arRooms = system.arrayReservedRooms(actualUser.getId());
+		for(int i = 0; i < arRooms.size(); i++) {
+			Label rRooms = new Label(arRooms.get(i).toString());
+			o.getChildren().add(rRooms);
+		}
+	}
+	
+	public void createCustomList(String listName) {
+		ord.getChildren().clear();
+		ArrayList<CustomList> lists = system.createCustomListFinal(listName);
+		for(int i = 0; i <= lists.size(); i++) {
+			System.out.println("Chingatumae");
+			Label rRooms = new Label(lists.get(i).toString());
+			ord.getChildren().add(rRooms);
+		}
 	}
 }

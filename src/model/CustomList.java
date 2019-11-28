@@ -333,7 +333,11 @@ public class CustomList implements AddHotelToLinkedList{
 
 	@Override
 	public String toString() {
-		return "CustomList [listName=" + listName + hotelsListedText() + "]";
+		return "Lista: " + listName + hotelsListedText();
+	}
+	
+	public String toString1() {
+		return "Lista: " + listName;
 	}
 	
 	
