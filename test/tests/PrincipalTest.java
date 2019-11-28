@@ -89,7 +89,7 @@ class PrincipalTest {
 	}
 	
 	@Test
-	void createCustomListFinal() {
+	void createCustomListTest() {
 		init();
 		User u = new User("I", "132", "02/12/2000", "u", "u", "123456", null, null);
 		p.setUsers(u);
