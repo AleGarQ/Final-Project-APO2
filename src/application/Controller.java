@@ -4,9 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-
 import exceptions.ExistentException;
 import exceptions.UnderAge;
 import exceptions.WrongInformation;
@@ -34,7 +31,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.*;
 
 public class Controller implements Initializable {
@@ -53,7 +49,7 @@ public class Controller implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 	}
-
+	
 	public void signInScreen() {
 		firstScreen.getChildren().clear();
 		VBox vb = new VBox(4);
@@ -203,36 +199,63 @@ public class Controller implements Initializable {
 		dte1.setFont(new Font("Arial", 15));
 		dte1.setTextAlignment(TextAlignment.LEFT);
 		DatePicker date1 = new DatePicker();
+		date1.getEditor().setDisable(true);
 		Label dte2 = new Label("Fecha de regreso:");
 		dte2.setFont(new Font("Arial", 15));
 		dte2.setTextAlignment(TextAlignment.LEFT);
 		DatePicker date2 = new DatePicker();
+		date2.getEditor().setDisable(true);
 		Button search = new Button("Buscar");
 		VBox hotelsOrder = new VBox();
 		
 		search.setOnAction(e -> {
-			hotelsOrder.getChildren().clear();
-			String searching = city.getText();
-			system.sortHotelsByCity();
-			ArrayList<Hotel> hotels = system.searchHotelsByCity(searching);
 			
-			for(int i = 0; i < hotels.size(); i++) {
-				Label hotelsName = new Label(hotels.get(i).toString());
-				
-				hotelsOrder.getChildren().add(hotelsName);
-			}
-			
-			ScrollPane sb2 = new ScrollPane(hotelsOrder);
-			sb2.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
-			Scene sc2 = new Scene(sb2);
-			Stage s = new Stage();
-			s.setOnCloseRequest(event ->{
+			if(city.getText().equals("")){
+				Alert error = new Alert(AlertType.INFORMATION);
+				error.setTitle("Error");
+				error.setHeaderText("No se puede dejar el campo CIUDAD vacio");
+				error.setContentText("Ingrese una ciudad y vuelva a intentarlo");
+				error.showAndWait();
+			}else if(date1.getEditor().getText().equals("")) {
+				Alert error = new Alert(AlertType.INFORMATION);
+				error.setTitle("Error");
+				error.setHeaderText("No se puede dejar la fecha de ida vacia");
+				error.setContentText("Ingrese una fecha de ida y vuelva a intentarlo");
+				error.showAndWait();
+			}else if(date2.getEditor().getText().equals("")) {
+				Alert error = new Alert(AlertType.INFORMATION);
+				error.setTitle("Error");
+				error.setHeaderText("No se puede dejar la fecha de regreso vacia");
+				error.setContentText("Ingrese una fecha de regreso y vuelva a intentarlo");
+				error.showAndWait();
+			}else {
 				hotelsOrder.getChildren().clear();
-			});
-			s.setTitle("Hoteles Disponibles");
-			s.setScene(sc2);
-			s.show();
-			
+				String searching = city.getText();
+				system.sortHotelsByCity();
+				ArrayList<Hotel> hotels = system.searchHotelsByCity(searching);
+				ScrollPane sb2 = new ScrollPane(hotelsOrder);
+
+				for (int i = 0; i < hotels.size(); i++) {
+					Label hotelsName = new Label(hotels.get(i).toString());
+
+					hotelsName.setOnMouseClicked(event -> {
+						hotelsOrder.getChildren().clear();
+						hotelsOrder.getChildren().addAll(hotelsName);
+					});
+
+					hotelsOrder.getChildren().add(hotelsName);
+				}
+
+				sb2.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
+				Scene sc2 = new Scene(sb2);
+				Stage s = new Stage();
+				s.setOnCloseRequest(event -> {
+					hotelsOrder.getChildren().clear();
+				});
+				s.setTitle("Hoteles Disponibles");
+				s.setScene(sc2);
+				s.show();
+			}
 		});
 		sb.setMin(0);
 		sb.setMax(reserveScreen.getHeight()+30);
