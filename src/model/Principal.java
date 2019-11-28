@@ -196,25 +196,26 @@ public class Principal implements AddUserToTree {
 
 	@Override
 	public void addNewUserFinal(User newUser) throws ExistentException, UnderAge {
-		if (newUser != null) {
-			String[] ageA = newUser.getAge().split("/");
-			int age = Integer.parseInt(ageA[2]);
-
-			if (2019 - age >= 18) {
-				if(users == null) {
-					users = newUser;
-				}else {
-					if (searchUser(newUser, users) == false) {
-						addNewUser(newUser, users);
-					} else {
-						throw new ExistentException("El correo ingresado ya está registrado");
-					}
-				}	
+		if(newUser.getName().equals("") || newUser.getId().equals("") || newUser.getPassword().equals("") 
+				|| newUser.getEmail().equals("") || newUser.getPhoneNumber().equals("")) {
+			throw new NullPointerException("Alguno de los campos requeridos se encuentra vacio");
+		}
+		
+		String[] ageA = newUser.getAge().split("/");
+		int age = Integer.parseInt(ageA[2]);
+		
+		if (2019 - age >= 18) {
+			if (users == null) {
+				users = newUser;
 			} else {
-				throw new UnderAge("No esta permitido crear cuentas a un menor de edad");
+				if (searchUser(newUser, users) == false) {
+					addNewUser(newUser, users);
+				} else {
+					throw new ExistentException("El correo ingresado ya está registrado");
+				}
 			}
 		} else {
-			throw new NullPointerException("El usuario nuevo está vacío");
+			throw new UnderAge("No esta permitido crear cuentas a un menor de edad");
 		}
 	}
 
@@ -989,13 +990,13 @@ public class Principal implements AddUserToTree {
 	 */
 	public void changeDataFinal(String name1, String email1, String phone) {
 		if(users != null) {
-			if(name1 != null && name1 == "") {
+			if(name1 != null && (name1.equals("")==false)) {
 				changeName(name1, users);
 			}
-			if(email1 != null && email1 == "") {
+			if(email1 != null && (email1.equals("")==false)) {
 				changeEmail(email1, users);
 			}
-			if(phone != null && phone == "") {
+			if(phone != null && (phone.equals("")==false)) {
 				changePhone(phone, users);
 			}
 		}

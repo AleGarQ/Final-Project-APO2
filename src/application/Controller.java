@@ -27,7 +27,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -39,7 +38,9 @@ public class Controller implements Initializable {
 	private User actualUser;
 	private VBox o = new VBox();
 	private VBox ord = new VBox();
+	private VBox orde = new VBox();
 	private VBox or = new VBox();
+	private ArrayList<Label> recentHotels = new ArrayList<Label>(); 
 	@FXML
 	AnchorPane firstScreen = new AnchorPane();
 	@FXML
@@ -129,7 +130,7 @@ public class Controller implements Initializable {
 				String mail = email.getText();
 				String bDate = age.getText();
 				String pNumber = phone.getText();
-				actualUser = new User(name, iD, pW, mail, bDate, pNumber, null, null);
+				actualUser = new User(name, iD, bDate, pW, mail, pNumber, null, null);
 				system.addNewUserFinal(actualUser);
 				welcome(mail);
 			} catch (ExistentException error) {
@@ -143,6 +144,24 @@ public class Controller implements Initializable {
 				user.setTitle("Error");
 				user.setHeaderText(error.getMessage());
 				user.setContentText("Pidale a un adulto responsable que cree la cuenta por usted");
+				user.showAndWait();
+			} catch (ArrayIndexOutOfBoundsException error) {
+				Alert user = new Alert(AlertType.INFORMATION);
+				user.setTitle("Error");
+				user.setHeaderText("La fecha indicada no tiene el formato correcto");
+				user.setContentText("Por favor escriba su fecha de nacimiento en formato DD/MM/YYYY");
+				user.showAndWait();
+			} catch (NullPointerException error) {
+				Alert user = new Alert(AlertType.INFORMATION);
+				user.setTitle("Error");
+				user.setHeaderText(error.getMessage());
+				user.setContentText("Por favor llene todos los campos requeridos y vuelva a intentarlo");
+				user.showAndWait();
+			} catch (NumberFormatException error) {
+				Alert user = new Alert(AlertType.INFORMATION);
+				user.setTitle("Error");
+				user.setHeaderText("La fecha indicada no tiene el formato correcto");
+				user.setContentText("Por favor escriba su fecha de nacimiento en formato DD/MM/YYYY (Numeros)");
 				user.showAndWait();
 			}
 		});
@@ -184,63 +203,6 @@ public class Controller implements Initializable {
 	}
 
 	public void principalScreen() {
-		// User's information Tab---------------------------------------
-		BorderPane infoScreen = new BorderPane();
-		HBox ap = new HBox();
-		VBox vbl = new VBox();
-		VBox vbb = new VBox();
-		VBox vbr = new VBox();
-		Label lbl = new Label("Informacion Personal");
-		lbl.setFont(new Font("Arial", 20));
-		lbl.setTextAlignment(TextAlignment.CENTER);
-		Tab perfil = new Tab(actualUser.getName(), infoScreen);
-		perfil.setClosable(false);
-		TextField email = new TextField(actualUser.getEmail());
-		email.setDisable(true);
-		TextField name = new TextField(actualUser.getName());
-		name.setDisable(true);
-		TextField phone = new TextField(actualUser.getPhoneNumber());
-		phone.setDisable(true);
-		vbl.getChildren().addAll(name, email, phone);
-
-		for (int i = 0; i < vbl.getChildren().size(); i++) {
-			Image img = new Image("/resources/Editar.png");
-			ImageView edit = new ImageView(img);
-			edit.setFitHeight(20);
-			edit.setFitWidth(20);
-			Button b = new Button("", edit);
-			int j = i;
-			b.setOnAction(e -> {
-				vbl.getChildren().get(j).setDisable(false);
-				vbr.getChildren().get(j).setVisible(true);
-				b.setVisible(false);
-			});
-			vbb.getChildren().add(b);
-		}
-
-		for (int i = 0; i < vbl.getChildren().size(); i++) {
-			Image im = new Image("/resources/Ready.png");
-			ImageView rdy = new ImageView(im);
-			rdy.setFitHeight(20);
-			rdy.setFitWidth(20);
-			int j = i;
-			Button ready = new Button("", rdy);
-			ready.setVisible(false);
-
-			ready.setOnAction(r -> {
-				ready.setVisible(false);
-				vbl.getChildren().get(j).setDisable(true);
-				vbb.getChildren().get(j).setVisible(true);
-				// TODO
-			});
-
-			vbr.getChildren().add(i, ready);
-		}
-
-		ap.getChildren().addAll(vbl, vbb, vbr);
-		infoScreen.setCenter(ap);
-		infoScreen.setTop(lbl);
-
 		// Favorites Hotels tab-----------------------------------------
 		BorderPane favoritesScreen = new BorderPane();
 		Tab favs = new Tab("Favoritos", favoritesScreen);
@@ -298,7 +260,6 @@ public class Controller implements Initializable {
 
 		// Reserved Room Tab----------------------------------------------
 		BorderPane reservedScreen = new BorderPane();
-		
 		Tab reserved = new Tab("Reservas", reservedScreen);
 		reserved.setClosable(false);
 		Label lblrese = new Label("Habitaciones Reservadas");
@@ -311,7 +272,6 @@ public class Controller implements Initializable {
 		
 		//Recent Search Tab----------------------------------------------
 		BorderPane recentSearchScreen = new BorderPane();
-		VBox orde = new VBox();
 		Tab recent = new Tab("Recientes", recentSearchScreen);
 		recent.setClosable(false);
 		Label lblrecent = new Label("Busquedas Recientes");
@@ -381,6 +341,8 @@ public class Controller implements Initializable {
 					hotelsName.setId(hotels.get(i).getId());
 
 					hotelsName.setOnMouseClicked(event -> {
+						recentHotels.add(hotelsName);
+//						showRecentSearched(recentHotels);
 						hotelsOrder.getChildren().clear();
 						hotelsName.setFont(new Font("Arial", 15));
 						ArrayList<Room> rooms = system.arrayRooms(hotelsName.getId());
@@ -429,8 +391,11 @@ public class Controller implements Initializable {
 				Stage s = new Stage();
 				s.setOnCloseRequest(event -> {
 					hotelsOrder.getChildren().clear();
+					orde.getChildren().clear();
 					reserveScreen.setDisable(false);
 					showReservedRooms();
+					showRecentSearched();
+					
 				});
 				s.setTitle("Hoteles Disponibles");
 				s.setScene(sc2);
@@ -452,7 +417,7 @@ public class Controller implements Initializable {
 		reserveScreen.setRight(sb);
 
 		// Stage set----------------------------------------------------
-		TabPane tp = new TabPane(reserve, reserved, recent, favs, custom, perfil);
+		TabPane tp = new TabPane(reserve, reserved, recent, favs, custom);
 		tp.getStylesheets().add(getClass().getResource("stylePrincipalScreen.css").toExternalForm());
 		Scene sc2 = new Scene(tp, 470, reserveScreen.getHeight()-200);
 		Stage s = new Stage();
@@ -481,6 +446,15 @@ public class Controller implements Initializable {
 			System.out.println("Chingatumae");
 			Label rRooms = new Label(lists.get(i).toString());
 			ord.getChildren().add(rRooms);
+		}
+	}
+	
+	public void showRecentSearched() {
+		orde.getChildren().clear();
+		ArrayList<Label> recent = recentHotels;
+		for(int i = 0; i < recent.size(); i++) {
+			Label lbl = new Label(recent.get(i).getText());
+			orde.getChildren().add(lbl);
 		}
 	}
 }
